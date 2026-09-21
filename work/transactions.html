@@ -159,10 +159,15 @@
              the same move made on card-dashboard.html the day before. A .shots
              block inside .case-section__body spans the full media column, wider
              than the .prose above it, which is the same one-up treatment section
-             05 uses. -->
+             05 uses.
+
+             --bare, not the plain .shot__frame: this WebP is RGBA with fully
+             transparent corners and a soft shadow already composited into its alpha,
+             so the frame's radius, stroke, tint and shadow were all drawing a second
+             time around an image that had them. -->
         <div class="shots">
           <figure class="shot">
-            <div class="shot__frame">
+            <div class="shot__frame shot__frame--bare">
               <img src="../assets/img/transactions/evidence-reviews.webp"
                    alt="Two panels side by side. A photo of a hand tapping a Prime Visa card on a card reader at a grocery checkout, and the Amazon reviews page for the card filtered to 1 star only, showing 9,289 ratings with reviews titled Most difficult card to access online and Impossible to deal with web site, both describing failed attempts to sign in and see a balance."
                    width="1800" height="805" loading="lazy" decoding="async">
@@ -250,7 +255,7 @@
           <p>
             Through multiple reviews with teams across Amazon and Chase, I delivered a user-centric
             experience that achieved 90% of our original UX vision by the September 2024 release. The
-            rest of the vision shipped by 2025.
+            rest shipped by September 2025, so the whole vision is now live.
           </p>
           <p>
             Accessibility annotations were a deliverable here, not a review step. Reading order,
@@ -275,8 +280,8 @@
             <span class="stat__label">Spend lift, 36% of it off Amazon</span>
           </p>
           <p class="stat">
-            <span class="stat__value num" data-count>90%</span>
-            <span class="stat__label">Of the UX vision shipped by September 2024</span>
+            <span class="stat__value num" data-count>100%</span>
+            <span class="stat__label">Of the UX vision shipped by September 2025</span>
           </p>
         </div>
       </div>

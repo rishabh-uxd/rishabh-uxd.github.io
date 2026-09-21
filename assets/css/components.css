@@ -1085,8 +1085,20 @@ a:hover .arrow, .btn:hover .arrow { transform: translateX(5px); }
    apart read as a smudge. With no frame drawn there is no second curve to collide
    with, so the padding had nothing left to separate and went with it. The phones
    are about 12% wider as a result, which is the standing direction on using the
-   available width. .shots' own gap does the separating now. */
-.shot__frame--device {
+   available width. .shots' own gap does the separating now.
+
+   --bare shares every declaration and exists for the same reason under a different
+   name: a flat artifact whose own corners and shadow are already in its alpha
+   channel, so .shot__frame's radius, stroke, tint and shadow all land a second time
+   around something that has them. Added on 2026-09-21 at the user's request, who
+   described the doubled frame on transactions/evidence-reviews.webp as "the weird
+   box/border/background". Named for what it does rather than reusing --device,
+   because the image is not a device and the next reader should not have to work out
+   why a reviews page is one. Same precondition as --device and it is the whole
+   reason this is safe: **check the asset's corners are transparent before using it**,
+   or an opaque rectangle loses the framing that was hiding its edges. */
+.shot__frame--device,
+.shot__frame--bare {
   padding: 0;
   border: 0;
   border-radius: 0;
