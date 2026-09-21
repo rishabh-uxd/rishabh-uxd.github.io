@@ -226,18 +226,33 @@
      the type is 20px or 28px. 58 is the largest value that stays inside the 80
      ceiling, and it buys 4 characters of width for nothing.
 
-     Measured span of the column, and characters at the longest line:
-       390 -> 100%, 40 chars     1512 -> 100%, 68
-       744 -> 100%, 78           1920 -> 100%, 80
-      1280 -> 100%, 78           2560 ->  81%, 80
+     THE CAP IS THE SMALLEST SIZE THAT STILL SPANS, not the most comfortable one.
+     Span and size are locked together and cannot be traded: 58ch is the 80
+     character line, so the size at which the block fills the column is exactly the
+     size at which the line reaches the ceiling. That makes the cap the one real
+     decision here, and it was measured rather than chosen. Span of the image, and
+     characters at the longest line, at five candidate caps:
+
+              1280        1512        1920        2560
+       20px   84% / 79    88% / 79    75% / 79    61% / 79
+       22px   92% / 79    96% / 79    83% / 79    67% / 79
+       24px  100% / 77   100% / 77    90% / 77    73% / 77   <- this one
+       26px  100% / 75   100% / 70    98% / 77    79% / 77
+       28px  100% / 75   100% / 63   100% / 77    85% / 77
+
+     24px is the first row that reaches a true 100% at the two common laptop
+     widths, and every row above it leaves the paragraph visibly short of the
+     screens it introduces, which is the defect this token exists to fix. 26px and
+     28px buy the last of the span at 1920 and 2560, and they were rejected: the
+     user reported 28px as reading too large against 20px body copy, and 4px over
+     body is as far as this should go for two more percent of width on a monitor
+     size most readers do not have. The paragraph falling 10% short at 1920 is the
+     price, and it is cheaper than type that reads as a heading.
+
      At and below 744 the column is already narrower than the block, so nothing
-     changes there. Past about 1980 the type stops growing and the paragraph stops
-     spanning: filling 1208px would need 34.7px, which is within a pixel of
-     --t-display-3's 36px cap at that viewport, and body copy set to the size of
-     the h2 above it is a worse fault than a short line. Wide monitors keep the
-     white space, which is what --measure-case does there too. */
+     changes there. */
   --measure-case-wide: 58ch;
-  --t-body-lead: clamp(var(--t-body-case), 2vw, 1.75rem);
+  --t-body-lead: clamp(var(--t-body-case), 2vw, 1.5rem);
 
   /* The gap between screens in a .shots run. Extracted from .shots so
      .shots--solo can subtract it: a lone portrait phone is sized to exactly the
