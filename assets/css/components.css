@@ -1004,7 +1004,7 @@ a:hover .arrow, .btn:hover .arrow { transform: translateX(5px); }
    the same reason. Ordinary .prose in a case section is unaffected and still
    carries --measure-case.
 
-   Leading is NOT touched, though 28px type at --lh-relaxed looks loosely stacked
+   Leading is NOT touched, though the enlarged type at --lh-relaxed looks stacked
    and the instinct is to bring it down a step. WCAG 1.4.8 asks for line spacing of
    at least 1.5 within a paragraph, and it is the same success criterion as the 80
    character ceiling this rule is built around. --lh-snug is 1.16 and --lh-normal is
