@@ -1,0 +1,44 @@
+/* ==========================================================================
+   PALETTE  "cobalt"   cream paper + electric cobalt
+   Iteration 2's blue brought onto a light canvas. Confident, familiar.
+   Load AFTER tokens.css. Overrides tokens only, never a component rule.
+   ========================================================================== */
+
+:root {
+  --bg: #FAF6EE;
+  --bg-raised: #FFFFFF;
+  --bg-raised-2: #F2ECE0;
+  --bg-glass: rgba(255, 255, 255, 0.62);
+  --bg-glass-strong: rgba(255, 255, 255, 0.84);
+
+  --bg-dark: #0E1016;
+  --bg-dark-raised: #171A23;
+
+  --text: #14161B;      /* 16.2:1 on --bg */
+  --text-dim: #4E525C;  /* 7.7:1 */
+  --text-faint: #5D616B; /* 5.7:1, labels 13px and up only */
+  --text-on-dark: #FAF6EE;
+  --text-on-dark-2: #B6BAC6;
+
+  --stroke: rgba(20, 22, 27, 0.10);
+  --stroke-strong: rgba(20, 22, 27, 0.22);
+  --stroke-on-dark: rgba(250, 246, 238, 0.14);
+
+  --accent: #1A56C4;      /* 6.7:1 under white text */
+  --accent-2: #123C8C;
+  --accent-lift: #2E79E8; /* 3.8:1 on --bg */
+  --accent-3: #7FB2FF;    /* decorative only */
+
+  --shadow-sm: 0 1px 2px rgba(24, 34, 60, 0.08);
+  --shadow-md: 0 18px 40px -22px rgba(24, 34, 60, 0.30);
+  --shadow-lg: 0 44px 90px -40px rgba(24, 34, 60, 0.38);
+}
+
+.on-dark {
+  --bg-raised-2: #1F2330;
+  --text-faint: #8A8E9C;
+}
+
+/* PREVIEW ONLY. See forest.css. */
+.palette-preview .project__media img,
+.palette-preview .hero__portrait img { filter: hue-rotate(209deg); }

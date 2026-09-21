@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Improving Basket Building · Rishabh Singh</title>
+<meta name="description" content="Amazon's basket building offers only reach a product page, so customers buying from the search results page never see one. I sized the gap, wrote the UX strategy, and shipped the front end for the first experiment.">
+<meta name="author" content="Rishabh Singh">
+<meta name="theme-color" content="#FBF7F1">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Improving Basket Building · Rishabh Singh">
+<meta property="og:description" content="Basket building never reached Amazon's search results page, where a growing share of purchases happen. I volunteered into an AI pilot to close that gap.">
+<meta property="og:url" content="https://www.rishabhsingh.design/work/basket-building.html">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="canonical" href="https://www.rishabhsingh.design/work/basket-building.html">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/components.css">
+</head>
+
+<body>
+<a class="skip-link" href="#background">Skip to the case study</a>
+
+<div class="progress" aria-hidden="true"><div class="progress__fill"></div></div>
+
+<!-- ======================= NAV ======================= -->
+<header class="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="../index.html" aria-label="Rishabh Singh, home">
+      <span class="nav__dot" aria-hidden="true"></span> Rishabh Singh
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a class="nav__link" href="../index.html#work">Work</a>
+      <a class="nav__link" href="../about.html">About</a>
+      <a class="nav__link" href="#contact">Contact</a>
+      <a class="btn btn--primary" href="https://docs.google.com/document/d/1EHUuTUFj9zlCdyJktXC0rGSdesHq1b7P/edit" target="_blank" rel="noopener">Résumé <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ======================= CASE HERO ======================= -->
+  <section class="case-hero case-hero--split">
+    <div class="aurora" aria-hidden="true">
+      <span class="aurora__blob aurora__blob--1"></span>
+      <span class="aurora__blob aurora__blob--2"></span>
+    </div>
+
+    <div class="container case-hero__inner">
+      <a class="case-back" href="../index.html#work">
+        <span class="case-back__glyph" aria-hidden="true">←</span> All work
+      </a>
+
+      <div class="case-hero__grid">
+        <div>
+          <p class="label case-hero__cat">
+            <span aria-hidden="true">🤖</span> AI Builder
+          </p>
+
+          <!-- No deck on this page, and now on none of them. The home page band
+               already carries the positioning sentence, and section 01 opens on the
+               same problem in full, so a deck here said it a third time. The numbers
+               it held (4 in 10, half entirely on search results) are in section 03
+               next to the analysis that produced them, which is where they belong.
+               The removed copy is recorded in iterations/12-basket-building-rename.
+               This page was the first to drop the deck and the other four followed;
+               see iterations/17-heroes-without-decks. -->
+          <h1 class="mega case-hero__title" data-split>
+            Improving <span class="grad-text">Basket Building</span>
+          </h1>
+
+          <!-- Inside the hero's text column, not a sibling of .case-hero__grid.
+               All five case studies do this now; it started here. The text column
+               holds an eyebrow and one headline and no deck, so it read as a small
+               island beside a full height phone; the rail is the mass it was
+               missing, and putting it beside the phone instead of below it also
+               brings Role / Team / Timeline back above the fold, which the taller
+               64vh phone had pushed past it.
+
+               It sits in the text column rather than as a third grid item in row
+               two. That version was tried first and looked worse: the phone then
+               has to span both rows, a spanning item distributes its height over
+               the rows it covers, and the headline and the rail ended up shoved to
+               opposite ends of a 922px phone.
+
+               The cost is source order, title then credits then screen, which
+               stacked on a phone would open on metadata. The 62rem block in
+               components.css fixes that with display: contents on this wrapper
+               and order on the rail, so the stacked order is title, screen,
+               credits. The CSS keys off this <dl> being inside the text column of
+               a .case-hero--split grid, so moving it back out to a sibling of the
+               grid is the whole change. Do not. -->
+          <dl class="case-meta reveal">
+            <div>
+              <dt class="label">Role</dt>
+              <dd>UX and front-end build</dd>
+            </div>
+            <div>
+              <dt class="label">Team</dt>
+              <dd>A PM, an engineer, and me</dd>
+            </div>
+            <div>
+              <dt class="label">Timeline</dt>
+              <dd class="num">April 2026 to now</dd>
+            </div>
+            <div>
+              <dt class="label">Org</dt>
+              <!-- The &nbsp; keeps "consumer electronics" together. Without it the
+                   cell wraps to three lines with "electronics" alone on the last
+                   one, which is the only orphan in the whole rail. Do not "clean
+                   it up". -->
+              <dd>North America Stores Design, Basket Building for consumer&nbsp;electronics</dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- Basket building happens in the app, on a phone, so the hero takes the
+             .case-hero__device treatment Pay Bill and Transactions use rather
+             than the desktop .chrome-frame this page carried while it was on
+             placeholder art. A div, not a figure, because the caption is gone and
+             a figure with nothing to caption is an empty promise to a screen
+             reader. The alt text carries the whole description.
+
+             --bare, unlike the other three phone heroes: the offer this screen
+             exists to show runs to the bottom of it, so a panel cropping the
+             phone cropped the point, and a tinted rounded platform put a second
+             box around a device that is already a box. See the --bare note in
+             components.css. -->
+        <div class="case-hero__media reveal-pop">
+          <div class="case-hero__device case-hero__device--bare">
+            <img src="../assets/img/basket-building/treatment-single.webp"
+                 alt="Amazon search results in the app with the add to cart panel open over them. It reads Added to cart, then Get this item in a bundle and save $499.99, then one bundle card pairing the TV with an LG soundbar at 25 percent off, with Bundle details and Switch to bundle buttons."
+                 width="840" height="1787" decoding="async">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 01 BACKGROUND ======================= -->
+  <section class="case-section" id="background" aria-labelledby="background-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">01</span>
+        <h2 class="display-3 case-section__title" id="background-heading">Background</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <figure class="pull-quote">
+          <blockquote>
+            <p>
+              I was disappointed when I got my Xbox. I realized I needed the HDMI cord to make it HD
+              and I wasn't aware of that when I bought it.
+            </p>
+          </blockquote>
+          <figcaption>Research participant, Basket Building customer study</figcaption>
+        </figure>
+
+        <div class="prose">
+          <p>
+            Buying one product is rarely enough to use it. A TV needs a mount, a cable, maybe a
+            soundbar. Amazon's Basket Building org closes that gap two ways, each one a program with
+            its own team: bundles, which a seller packages and prices together, and complementary
+            recommendations, which the customer judges individually. I design across both, for
+            consumer electronics.
+          </p>
+          <p>
+            Every one of those offers lives on a product page or is initiated from one. Customers do
+            still buy that way, but our clickstream analysis showed a growing number adding to cart
+            straight from the search results page and checking out from there, never opening a product
+            page at all. That path has no basket building on it, and we wanted to reach that traffic
+            too.
+          </p>
+          <p>
+            None of the basket building teams had the bandwidth to take it on. So when Amazon launched
+            an experimental role called the AI Builder, asking whether a pod of three could use AI to
+            carry a feature from analysis all the way to production, I volunteered.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 02 GOALS ======================= -->
+  <section class="case-section" aria-labelledby="goals-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">02</span>
+        <h2 class="display-3 case-section__title" id="goals-heading">Project goals</h2>
+      </div>
+
+      <!-- One goal, one number, one date. The number is the org's target, not this
+           project's result, and the copy says so in as many words: handing a whole
+           org metric to a pod of three would be exactly the overclaim the voice
+           rules exist to stop. Keep "No one project moves a number that size on its
+           own" if you touch this paragraph. The strategy, the design framework and
+           the two experiment types all used to sit here and now live in section 04,
+           because this section is what the reader has to carry into the rest of the
+           page and three deliverables ago it was carrying six things. -->
+      <div class="case-section__body reveal">
+        <div class="prose">
+          <p>
+            Units per purchase is an org-wide metric, and the goal set across Basket Building was to
+            <strong>move it from 4.07 to 4.33</strong>.
+            No one project moves a number that size on its own. Extending basket building to the search
+            results page was the unclaimed piece of it, because the customers checking out from there
+            are never offered the items that complete their setup, and this project was my attempt to
+            take that piece as far as it would go.
+          </p>
+          <p>
+            The project was initiated in April 2026. I sized the opportunity, designed the
+            experiences, and wrote the front-end code that ships them.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 03 TEAM AND ROLE ======================= -->
+  <section class="case-section" aria-labelledby="role-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">03</span>
+        <h2 class="display-3 case-section__title" id="role-heading">Team and role</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <div class="prose">
+          <p>
+            The AI Builder pod was a Product Manager, a Software Engineer, and me. I owned the UX and
+            the front-end build:
+          </p>
+        </div>
+
+        <ul class="case-list">
+          <li>Interaction design flows</li>
+          <li>High-fidelity mock ups</li>
+          <li>The interactive prototype</li>
+          <li>Organizing leadership reviews</li>
+          <li>Accessibility annotations</li>
+          <li>Writing the production front-end code with AI agents, submitted through Amazon's engineering review process</li>
+        </ul>
+
+        <div class="prose">
+          <p>
+            I picked up the product analysis too. A pod of three doesn't split work by title, and the
+            case for building on search results needed evidence before anyone would fund a design, so
+            I went and built it:
+            AI agents tracing 1.6 million purchase journeys through Amazon's clickstream data. In
+            practice I was wearing the analyst hat, the designer hat, and the front-end engineer hat,
+            with the PM and the engineer as partners on hypothesis and backend.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 04 DESIGN AND OUTCOMES ======================= -->
+  <section class="case-section" aria-labelledby="outcomes-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">04</span>
+        <h2 class="display-3 case-section__title" id="outcomes-heading">Design and outcomes</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <div class="prose">
+          <p>
+            Our clickstream analysis showed that 4 in 10 consumer electronics purchases happen without
+            the customer ever seeing a bundle, and about half of those happen entirely on the search
+            results page, with no product page visit at all. That validated the decision to bring
+            basket building there first.
+          </p>
+          <p>
+            Synthesizing 11 prior Basket Building studies told me who I would be designing for. 64% of
+            customers do look for the complementary items themselves, either at the same time as the
+            main product or right after buying it. What came through in every study was how they
+            described doing it: a hunting mission. Product names don't say what the thing actually is,
+            compatibility with what they already own is hard to confirm, and nothing explains why one
+            accessory is the better choice for the thing they are trying to do. The demand was never
+            the problem. The work of satisfying it was being left to the customer.
+          </p>
+          <p>
+            There was no brief to work from, so the first deliverable was a UX strategy rather than a
+            screen. It proposed two experiments that differ on two axes, who assembles the set and
+            when the offer arrives: the seller's set, offered right after the customer adds to cart
+            and accepted in a tap, or the customer's own set, assembled before anything goes in the
+            cart. Each carried its own treatments, so the org could learn not just whether basket
+            building works on search results but which version of it customers are receptive to.
+          </p>
+        </div>
+
+        <ul class="case-list">
+          <li>
+            <strong>Bundle Swap.</strong> Post add to cart. The seller's set, offered the instant a
+            customer adds to cart, one tap to switch to it. Three CX treatments. This is the one that
+            launched.
+          </li>
+          <li>
+            <strong>Build Your Own Bundle.</strong> Before add to cart. The customer assembles their
+            own set of complements first. Two concepts, slated for a later experiment.
+          </li>
+          <li>
+            <strong>An interactive prototype</strong> for leadership alignment.
+          </li>
+        </ul>
+
+        <div class="prose">
+          <p>
+            The three gaps in that hunt, naming, compatibility and accessory value, became the brief
+            for all five designs. Seller bundle names were all over the place ("TV + S95TR SB Bundle"), so alongside them I proposed
+            a naming framework that leads with what is new to the customer: "with [Brand] [Product]
+            [Key Feature]". The customer has just added the first item to cart, so the card should only
+            spend their attention on what they don't already know.
+          </p>
+          <p>
+            I then used AI agents to write the front-end code and submitted my first production code
+            review within the first week. When we learned a designer's verification isn't enough for
+            production code, we set up a two-step review where I verify the customer experience and my
+            engineering partner verifies the code. <strong>That process became part of the playbook my
+            org adopted as the pilot's primary deliverable.</strong> Bundle Swap launched with its three treatments,
+            which makes it the first basket building offer Amazon has ever put on the search results
+            page. It read out at an 11% swap rate, and units per purchase rose 0.11 on the purchases
+            that saw the offer.
+          </p>
+        </div>
+
+        <!-- Two callouts, and these two specifically. The band closes the outcomes
+             section, so it carries the experiment's read-out and nothing else. What
+             came out of it: 64% and 4 in 10, which are research inputs section 01
+             and section 03 already state in prose, and Week 1 and 1 playbook, which
+             are process rather than result and are both still in the paragraph
+             above. See iterations/18-outcome-band-width.
+
+             Both of these numbers appear on the handoff's NEVER publish list
+             (line 29) as hypothetical modeling. They are NOT hypothetical any
+             more: the user confirmed on 20 September 2026 that Bundle Swap has
+             read out and both are measured. The handoff still has to be corrected.
+             Do not remove them on the strength of that stale list.
+
+             +0.11 carries no percent sign on purpose. Units per purchase is a
+             count, not a proportion, and section 02 states the org goal as 4.07 to
+             4.33, so a percent here would contradict the scale the page already
+             set. The label says "units per purchase" rather than UPPu for the same
+             reason section 02 does: the acronym is internal. "Treated" is left in
+             the label because the prose sentence directly above it spells out what
+             treated means, and spelling it out twice put a one-word widow on the
+             third line. -->
+        <div class="stat-band">
+          <p class="stat">
+            <span class="stat__value num" data-count>11%</span>
+            <span class="stat__label">Bundle Swap rate, customers who switched to the seller's bundle</span>
+          </p>
+          <p class="stat">
+            <span class="stat__value num" data-count>+0.11</span>
+            <span class="stat__label">Units per purchase on treated purchases</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 05 EXPERIENCE ======================= -->
+  <section class="case-section" aria-labelledby="experience-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">05</span>
+        <h2 class="display-3 case-section__title" id="experience-heading">Experience</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <!-- The prototype opens the Experience section, so the one thing on this
+             page a reviewer can actually operate comes before the stills.
+             It runs on arrival; see site.js section 8a. -->
+        <figure class="proto-block reveal">
+          <!-- A figcaption, not a p: .proto-block is a <figure>, and a figure with no
+               figcaption promises a caption it does not have. This label IS the
+               caption. It is the first child, which figcaption allows, and
+               .proto-flag sets its own box so nothing moves. -->
+          <figcaption class="proto-flag"><span class="proto-flag__pip" aria-hidden="true"></span> Live prototype</figcaption>
+
+          <!-- .proto-embed--wide, not the plain .proto-embed: this prototype draws
+               its own phone frame and carries its own controls above it, so it needs
+               the full column and no second bezel around it.
+
+               A real src, not data-src, and no play cover: this one runs on arrival.
+               loading="lazy" is what keeps it off the critical path instead, and it
+               sits in section 05, far below the fold, so the browser will not fetch
+               it until the visitor is nearly there. Because the src is in the markup
+               the prototype also runs with JavaScript off. -->
+          <div class="proto-embed proto-embed--wide">
+            <iframe src="../prototypes/basket-building/index.html" loading="lazy"
+                    title="Interactive prototype: five CX treatments for basket building on search results"></iframe>
+          </div>
+
+          <p class="proto-open">
+            <a class="link-underline" href="../prototypes/basket-building/index.html" target="_blank" rel="noopener">
+              Open the prototype full screen <span aria-hidden="true">&#8599;</span>
+            </a>
+          </p>
+
+          <!-- No figcaption. The prototype carries its own h1 and instruction line
+               inside the iframe, so a caption under it restated what the visitor had
+               already read above the phone. The iframe's title attribute is what
+               names this region for a screen reader. -->
+        </figure>
+
+        <!-- Iteration 20 took every still out of this section, on the grounds that
+             the prototype reaches all five phone states by itself. Iteration 21 put
+             two back, and they are the exception that proves the rule: these are the
+             two Build Your Own Bundle desktop screens, and the prototype does NOT
+             contain them. It only has the mobile treatments. The seven stills that
+             came out are still archived in
+             iterations/20-basket-building-prototype-only/removed-shots.html, and the
+             test for adding any of them back is unchanged: the prototype has to be
+             unable to show it. -->
+
+        <!-- .shots-group, not a bare .prose followed by a bare .shots: the
+             paragraph and the two screens are one thought, and the wrapper is what
+             lets the CSS put more air above the pair than between them. Without it
+             the paragraph sat flush against .proto-block's bottom border and read
+             as part of the prototype panel. -->
+        <div class="shots-group">
+          <div class="prose">
+            <p>
+              Experiment strategy 2 is the one being built now. It moves the offer earlier, putting the
+              basket building opportunity on the search results page before the customer has added
+              anything to their cart, so assembling the set is where the purchase starts rather than
+              something bolted on after it. The screens below are the desktop version of that idea.
+            </p>
+          </div>
+
+          <!-- A one-up .shots run, not --pair: these are 1.6:1 desktop captures, and
+               the one-up slot is the full .case-section__body column, which is both the
+               widest the site has to offer and the only place a full search results
+               page is legible. Plain .shot__frame, not --device: the images carry their
+               own ~13px corner arc at render size against the frame's 28px, which is
+               far enough apart to read as two separate curves, so they do not need the
+               --device padding that pulls a phone bezel off the frame edge. Using
+               --device here would also cost 96px of column to padding, which is the
+               opposite of what these screens need.
+
+               Source and encode: iterations/21-byob-search-screens/proc.py. Both are
+               2416px wide, exactly 2x the 1208px the column reaches at a 2560 viewport.
+               Both have transparent rounded corners, so the RGB under them is zeroed;
+               read the script's header before re-encoding either one. -->
+          <div class="shots">
+            <figure class="shot">
+              <div class="shot__frame">
+                <img src="../assets/img/basket-building/byob-search-entry.webp"
+                     alt="Amazon desktop search results for 65 inch oled tv. The first result, an LG OLED television, carries an extra line reading Bundle and save up to $499.99 on this item, above a strip headed Select compatible accessories with thumbnails of HDMI cables, TV mounts and streaming devices."
+                     width="2416" height="1478" loading="lazy" decoding="async">
+              </div>
+              <figcaption><b>The offer, before anything is in the cart.</b> The entry point sits in the search result itself, so the customer meets the complete setup at the moment they are choosing the television, not after they have committed to it.</figcaption>
+            </figure>
+
+            <figure class="shot">
+              <div class="shot__frame">
+                <img src="../assets/img/basket-building/byob-search-panel.webp"
+                     alt="A panel over the same search results, headed Complete your TV setup and save, reading Select any 2 of the essential items and save 10% on your entire order, with an empty progress bar marked 0 of 2. The chosen television is pinned at the top, and below it tabs for Immersive sound, Wall mounting, and Cables and connections show a grid of soundbars, each with a checkbox, rating, price and Details link. A footer totals the order and offers Add TV to cart."
+                     width="2416" height="1512" loading="lazy" decoding="async">
+              </div>
+              <figcaption><b>Assembling the set.</b> The customer builds their own bundle by mission rather than accepting a seller's, and the discount is earned by completing the set, so the progress bar is doing the persuading instead of a price.</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <p class="case-note">
+          <span aria-hidden="true">📝</span>
+          <span>The first experiment is live and the results are not in yet. In-depth details
+          and those results can be covered in person or during the interview process.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= NEXT ======================= -->
+  <nav class="next-case" aria-label="Next case study">
+    <div class="container">
+      <a class="next-case__link" href="card-dashboard.html">
+        <span>
+          <span class="label">Next case study</span>
+          <span class="display-2 next-case__title">Amazon Visa Card Dashboard</span>
+        </span>
+        <span class="next-case__glyph arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </nav>
+</main>
+
+<!-- ======================= CONTACT ======================= -->
+<!-- The one dark beat on the page. See .on-dark in tokens.css. -->
+<footer class="cta on-dark" id="contact">
+  <div class="aurora" aria-hidden="true" style="opacity: 0.5">
+    <span class="aurora__blob aurora__blob--2"></span>
+    <span class="aurora__blob aurora__blob--3"></span>
+  </div>
+
+  <div class="container cta__inner">
+    <p class="label label--accent">Contact</p>
+    <h2 class="display-1 cta__title reveal" style="margin-top: var(--s-4)">
+      Interested in working <span class="grad-text">together?</span>
+    </h2>
+    <p class="lead reveal">
+      These pages are a trailer. The rest, including the parts that didn't ship, is better in
+      conversation.
+    </p>
+
+    <div class="cta__contact reveal">
+      <a class="cta__line cta__line--email" href="mailto:rishabh.ux@gmail.com">
+        rishabh.ux@gmail.com <span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="cta__line cta__line--phone" href="tel:+18123619841">+1 (812) 361 9841</a>
+    </div>
+
+    <div class="cta__actions reveal">
+      <a class="btn btn--lg" href="https://docs.google.com/document/d/1EHUuTUFj9zlCdyJktXC0rGSdesHq1b7P/edit" target="_blank" rel="noopener">Résumé <span aria-hidden="true">↗</span></a>
+      <a class="btn btn--lg" href="https://www.linkedin.com/in/rishabh-singh-34b13a82/" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a>
+    </div>
+
+    <div class="cta__base">
+      <p>© <span data-year>2026</span> Rishabh Singh. Designed and built by me.</p>
+      <p>New York, NY</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>

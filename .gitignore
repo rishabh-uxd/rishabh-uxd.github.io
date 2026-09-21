@@ -1,0 +1,34 @@
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Nothing here is built, so there is no build output to ignore. If you ever add a
+# static host's CLI (netlify, vercel), ignore its local state here.
+.netlify/
+.vercel/
+
+# ---------------------------------------------------------------------------
+# Kept out of the public repo, September 2026. The GitHub remote is PUBLIC, and
+# the repo's job there is to serve the site, not to publish the workshop.
+#
+# iterations/ is 28M of design notes: every removed draft, every internal
+# deliberation, and the reasoning behind decisions that were reversed. Nothing
+# on the live site links to it, so excluding it costs the site nothing. The
+# local copies are untouched and are still the reference library CLAUDE.md and
+# DESIGN-SYSTEM.md point at. If the remote ever goes private, delete these two
+# lines and `git add iterations` to publish it again.
+iterations/
+
+# The prototype's build scripts have to contain the internal Amazon surface
+# names verbatim, because their whole job is to substitute those names out of
+# the generated HTML. That makes them unpublishable by construction, unlike
+# their output: prototypes/basket-building/index.html is generated, scrubbed,
+# and ships, because work/basket-building.html embeds it in an iframe.
+prototypes/**/*.py

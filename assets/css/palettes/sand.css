@@ -1,0 +1,41 @@
+/* ==========================================================================
+   PALETTE  "sand"   deep sand paper + deep forest green
+   Same accent as "forest" on a much deeper paper, so you can judge the
+   background on its own. Cards are warm off-white, not pure white.
+   Load AFTER tokens.css. Overrides tokens only, never a component rule.
+   ========================================================================== */
+
+:root {
+  --bg: #EDE4D6;
+  --bg-raised: #FBF7F0;
+  --bg-raised-2: #E4D9C7;
+  --bg-glass: rgba(251, 247, 240, 0.66);
+  --bg-glass-strong: rgba(251, 247, 240, 0.88);
+
+  --bg-dark: #14110C;
+  --bg-dark-raised: #1F1A13;
+
+  --text: #191409;      /* 13.9:1 on --bg */
+  --text-dim: #514834;  /* 7.0:1 */
+  --text-faint: #5E5540; /* 5.3:1, labels 13px and up only */
+  --text-on-dark: #EDE4D6;
+  --text-on-dark-2: #BDB3A2;
+
+  --stroke: rgba(25, 20, 9, 0.12);
+  --stroke-strong: rgba(25, 20, 9, 0.24);
+  --stroke-on-dark: rgba(237, 228, 214, 0.14);
+
+  --accent: #146A47;      /* 6.7:1 under white text */
+  --accent-2: #0E4E34;
+  --accent-lift: #2E8C62; /* 3.3:1 on --bg */
+  --accent-3: #6CCBA0;    /* decorative only */
+
+  --shadow-sm: 0 1px 2px rgba(60, 46, 28, 0.10);
+  --shadow-md: 0 18px 40px -22px rgba(60, 46, 28, 0.32);
+  --shadow-lg: 0 44px 90px -40px rgba(60, 46, 28, 0.40);
+}
+
+.on-dark {
+  --bg-raised-2: #29221A;
+  --text-faint: #918872;
+}

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  CASE STUDY TEMPLATE
+  ============================================================================
+  Copy this file to work/<slug>.html and replace every {{TOKEN}}. Do not change
+  the section order, the heading levels, or the class names. The structure IS
+  the template: it is what makes five case studies read as one portfolio.
+
+  Contract (read DESIGN-SYSTEM.md sections 3, 9, and 12 first):
+    1. Sections in this order, always: Background, Project goals, Team and role,
+       Design and outcomes, Experience. Numbered 01 to 05 in the sticky column.
+       This body treatment ("Ledger") is the adopted one and carries no modifier
+       class. Three alternatives were explored and rejected; see
+       iterations/07-case-body-candidates/.
+    2. Background OPENS with a real pull quote from a customer or a participant.
+       Never invent one. If there is no real quote, delete the <figure> instead.
+    3. Exactly one <h1> (the case title). Every section title is an <h2>.
+    4. NEVER use em dashes anywhere in copy, including the <title>.
+    5. Never publish a modeled, projected, or unmeasured number as an outcome.
+       Only figures from the content handoff's canonical list.
+    6. 2 to 4 stat callouts. data-count belongs only on a plain figure
+       ("23%", "2.3M"); leave wordy callouts ("Week 1") static.
+    7. Every image needs real alt text. Placeholders keep "Screen to be added:"
+       in the alt so a missing export is obvious in an audit. Real exports go in
+       assets/img/<slug>/ as WebP; phone screens belong in .shots--pair, never
+       the one-up .shots, and their frame needs .shot__frame--device, which
+       draws NO frame: the phone's own bezel is the frame and it sits directly
+       on the page. That means the export must have alpha 0 at all four corners
+       or four notches show. See DESIGN-SYSTEM.md section 7, "Screen exports".
+    8. The footnote and the contact footer are shared. Copy them verbatim.
+    9. Set --accent NOWHERE. A case study inherits the site accent.
+   10. Add no <style> block and no new stylesheet.
+   11. Numbers go in body copy, never overlaid on an image. A figure that has no
+       sentence around it has no meaning.
+   12. The prototype slot in section 05 is optional. Keep it only if a real
+       self-contained prototype exists under /prototypes/. Otherwise delete the
+       whole <figure class="proto-block">.
+
+  After copying, also:
+    - Point the previous case study's .next-case link at this page.
+    - Confirm the matching band on index.html links here.
+  ============================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{PROJECT TITLE}} · Rishabh Singh</title>
+<meta name="description" content="{{ONE SENTENCE, THE HOOK PLUS THE HEADLINE RESULT. ~155 CHARS.}}">
+<meta name="author" content="Rishabh Singh">
+<meta name="theme-color" content="#FBF7F1">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="{{PROJECT TITLE}} · Rishabh Singh">
+<meta property="og:description" content="{{SAME AS THE DESCRIPTION, OR SHORTER}}">
+<meta property="og:url" content="https://www.rishabhsingh.design/work/{{SLUG}}.html">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="canonical" href="https://www.rishabhsingh.design/work/{{SLUG}}.html">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/components.css">
+</head>
+
+<body>
+<a class="skip-link" href="#background">Skip to the case study</a>
+
+<div class="progress" aria-hidden="true"><div class="progress__fill"></div></div>
+
+<!-- ======================= NAV (shared, do not edit) ======================= -->
+<header class="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="../index.html" aria-label="Rishabh Singh, home">
+      <span class="nav__dot" aria-hidden="true"></span> Rishabh Singh
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a class="nav__link" href="../index.html#work">Work</a>
+      <a class="nav__link" href="../about.html">About</a>
+      <a class="nav__link" href="#contact">Contact</a>
+      <a class="btn btn--primary" href="https://docs.google.com/document/d/1EHUuTUFj9zlCdyJktXC0rGSdesHq1b7P/edit" target="_blank" rel="noopener">Résumé <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ======================= CASE HERO ======================= -->
+  <!-- .case-hero--split is the adopted hero for every case study. Do not remove
+       the modifier and do not overlay any figure on the media. -->
+  <section class="case-hero case-hero--split">
+    <div class="aurora" aria-hidden="true">
+      <span class="aurora__blob aurora__blob--1"></span>
+      <span class="aurora__blob aurora__blob--2"></span>
+    </div>
+
+    <div class="container case-hero__inner">
+      <a class="case-back" href="../index.html#work">
+        <span class="case-back__glyph" aria-hidden="true">←</span> All work
+      </a>
+
+      <div class="case-hero__grid">
+        <div>
+          <!-- The emoji is decorative and must stay aria-hidden. -->
+          <p class="label case-hero__cat">
+            <span aria-hidden="true">{{EMOJI}}</span> {{CATEGORY}}
+          </p>
+
+          <!-- One .grad-text span, on the distinctive part of the name. -->
+          <h1 class="mega case-hero__title" data-split>
+            {{TITLE FIRST PART}} <span class="grad-text">{{TITLE EMPHASIS}}</span>
+          </h1>
+
+          <!-- NO DECK. All five case studies run the hero as eyebrow, headline and
+               rail, nothing else. The deck was always the third telling of the same
+               thing: the home page band says it, section 01 then says it properly
+               at length, and a reader who clicked the band has just read it. The
+               hero's job is to name the project and show it.
+
+               The .case-hero__deck rule is still in components.css if a page ever
+               genuinely needs one. If you add it back, put it here, above the rail,
+               and put any number inside the sentence that gives it meaning, never
+               floated over the media and never repeating the rail. -->
+
+          <!-- The rail belongs in the text column on all five case studies, not in
+               a band under both columns: credits sit with the title, they fill the
+               width the headline does not use, and they stay above the fold beside
+               the visual. With no deck it is the whole second half of the column,
+               which is what gives the headline something to sit above. The CSS keys
+               off this <dl> being inside the text column of a .case-hero--split
+               grid, so its position in the markup is the whole switch. Stacked,
+               components.css dissolves this wrapper with display: contents and
+               orders the rail after the media, so a phone reads title, screen,
+               credits rather than opening on a table of metadata. Do not move it
+               back out. -->
+          <dl class="case-meta reveal">
+            <div>
+              <dt class="label">Role</dt>
+              <dd>{{ROLE}}</dd>
+            </div>
+            <div>
+              <dt class="label">Team</dt>
+              <dd>{{WHO ELSE WAS ON IT}}</dd>
+            </div>
+            <div>
+              <dt class="label">Timeline</dt>
+              <dd class="num">{{KICKOFF AND LAUNCH}}</dd>
+            </div>
+            <div>
+              <!-- Fourth cell is flexible: Org, Recognition, Platform. Drop it if empty. -->
+              <dt class="label">{{FOURTH LABEL}}</dt>
+              <dd>{{FOURTH VALUE}}</dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- The one hero image. Two frames, pick by surface:
+
+             A. APP, which is four of the five pages. Delete the .chrome-frame
+                block below and use this instead. A whole phone, no panel, no
+                crop, sized by height off --case-hero-phone-h, which also gives
+                the grid its wider 1.9fr text column through the
+                :has(.case-hero__device--bare) rule. The asset must have real
+                transparent corners, because the elevation is a drop-shadow
+                filter tracing the silhouette. See work/pay-bill.html:
+
+                  <div class="case-hero__media reveal-pop">
+                    <div class="case-hero__device case-hero__device--bare">
+                      <img src="../assets/img/<slug>/<screen>.webp" alt="..."
+                           width="840" height="1731" decoding="async">
+                    </div>
+                  </div>
+
+             B. WEB. .chrome-frame, below, which only KeyBank uses. A flat PNG
+                reads as a thing that runs, and the fake address bar carries the
+                real surface name in __url. This keeps the default 1.22fr track,
+                because a landscape screen genuinely fills its column.
+
+             The panelled .case-hero__device with no --bare is a third option that
+             no page currently takes: it crops the phone to a tinted 3/2 platform,
+             which is right only when a screen has to be shown larger than a whole
+             phone would allow. Do not reach for it by forgetting --bare.
+
+             NO HERO CAPTION, and note it is a <div>, not a <figure>: a figure with
+             no figcaption promises a caption it does not have. Which means the hero
+             image has to be SHIPPED WORK that needs no caveat, because there is now
+             nothing underneath it to carry one. If the best-looking screen is an
+             unlaunched concept, use the shipped screen here and give the concept a
+             properly captioned frame in Experience. Pay Bill is the worked example:
+             its hero was the slider concept, and the slider now sits in section 05
+             beside the screen that actually launched. An unlabelled concept in the
+             hero misrepresents the project. -->
+        <div class="case-hero__media reveal-pop">
+          <div class="chrome-frame">
+            <div class="chrome-frame__bar" aria-hidden="true">
+              <span class="chrome-frame__dot"></span>
+              <span class="chrome-frame__dot"></span>
+              <span class="chrome-frame__dot"></span>
+              <span class="chrome-frame__url">{{SURFACE URL}}</span>
+            </div>
+            <div class="chrome-frame__body">
+              <img src="../assets/img/{{LEDE IMAGE}}.svg"
+                   alt="{{WHAT A REVIEWER WOULD SEE IN THIS IMAGE}}"
+                   width="1600" height="1100" decoding="async">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 01 BACKGROUND ======================= -->
+  <section class="case-section" id="background" aria-labelledby="background-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">01</span>
+        <h2 class="display-3 case-section__title" id="background-heading">Background</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <!-- A REAL quote only. Delete the figure if there isn't one. -->
+        <figure class="pull-quote">
+          <blockquote>
+            <p>{{QUOTE, NO QUOTATION MARKS, THE CSS RULE IS THE QUOTE MARK}}</p>
+          </blockquote>
+          <figcaption>{{WHO SAID IT, WHERE, WHEN}}</figcaption>
+        </figure>
+
+        <div class="prose">
+          <p>{{WHAT THE PRODUCT IS AND WHO IT IS FOR}}</p>
+          <p>{{THE EVIDENCE THAT SOMETHING WAS WRONG, THEN WHY THE PROJECT EXISTED}}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 02 PROJECT GOALS ======================= -->
+  <section class="case-section" aria-labelledby="goals-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">02</span>
+        <h2 class="display-3 case-section__title" id="goals-heading">Project goals</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <div class="prose">
+          <p>{{THE GOAL, AND THE TARGET IT WAS MEASURED AGAINST}}</p>
+          <p>{{WHEN IT STARTED, AND WHAT WAS IN SCOPE:}}</p>
+        </div>
+
+        <ul class="case-list">
+          <li><strong>{{SCOPE ITEM}}.</strong> {{ONE LINE}}</li>
+          <li><strong>{{SCOPE ITEM}}.</strong> {{ONE LINE}}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 03 TEAM AND ROLE ======================= -->
+  <section class="case-section" aria-labelledby="role-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">03</span>
+        <h2 class="display-3 case-section__title" id="role-heading">Team and role</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <div class="prose">
+          <!-- The roster, then straight to the colon. Do not add a sentence about what
+               made the role unusual or what the job "was really about": that shape was
+               removed from Pay Bill and Transactions on 2026-09-20 at the user's
+               request. See iterations/38-team-role-second-sentence-removed/. The
+               .case-list below is where the role gets described. -->
+          <p>{{WHO WAS ON THE TEAM}}. My responsibilities were:</p>
+        </div>
+
+        <ul class="case-list">
+          <li>{{RESPONSIBILITY}}</li>
+          <li>{{RESPONSIBILITY}}</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 04 DESIGN AND OUTCOMES ======================= -->
+  <section class="case-section" aria-labelledby="outcomes-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">04</span>
+        <h2 class="display-3 case-section__title" id="outcomes-heading">Design and outcomes</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <div class="prose">
+          <p>{{WHAT I DESIGNED, PLAINLY AND IN ORDER}}</p>
+          <p>{{THE HARD PART. A CONSTRAINT, A CUT, OR A FAILURE, AND WHAT I DID ABOUT IT}}</p>
+          <p>{{WHEN IT SHIPPED AND WHERE THE NUMBERS BELOW COME FROM}}</p>
+        </div>
+
+        <!-- 2 to 4 callouts. data-count on plain figures only. -->
+        <div class="stat-band">
+          <p class="stat">
+            <span class="stat__value num" data-count>{{FIGURE}}</span>
+            <span class="stat__label">{{UNDER 8 WORDS}}</span>
+          </p>
+          <p class="stat">
+            <span class="stat__value num" data-count>{{FIGURE}}</span>
+            <span class="stat__label">{{UNDER 8 WORDS}}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 05 EXPERIENCE ======================= -->
+  <section class="case-section" aria-labelledby="experience-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">05</span>
+        <h2 class="display-3 case-section__title" id="experience-heading">Experience</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <!-- OPTIONAL prototype slot. Keep it only if this project has a
+             self-contained HTML prototype under /prototypes/, including one
+             built with AI; point data-src at its index.html. It goes FIRST in
+             this section so the thing a reviewer can operate comes before the
+             stills. Nothing loads until the cover is pressed.
+
+             If there is no prototype, DELETE this whole <figure>. Do not ship
+             .proto-embed--pending on a live page; an empty player reads worse
+             than no player. -->
+        <figure class="proto-block reveal">
+          <!-- A figcaption, not a p: .proto-block is a <figure>, and a figure with no
+               figcaption promises a caption it does not have. This label IS the
+               caption. It is the first child, which figcaption allows, and
+               .proto-flag sets its own box so nothing moves. -->
+          <figcaption class="proto-flag"><span class="proto-flag__pip" aria-hidden="true"></span> Live prototype</figcaption>
+
+          <div class="proto-embed" data-src="../prototypes/{{PROTOTYPE SLUG}}/index.html">
+            <iframe title="{{PROJECT}} interaction prototype" loading="lazy"></iframe>
+            <button class="proto-embed__cover" type="button">
+              <span class="proto-embed__play" aria-hidden="true">&#9654;</span>
+              <span class="proto-embed__label">Run the flow</span>
+              <span class="proto-embed__sub">Nothing loads until you press play.</span>
+            </button>
+          </div>
+
+          <p class="proto-open">
+            <a class="link-underline" href="../prototypes/{{PROTOTYPE SLUG}}/index.html" target="_blank" rel="noopener">
+              Open the prototype full screen <span aria-hidden="true">&#8599;</span>
+            </a>
+          </p>
+
+          <figcaption>{{WHAT THE PROTOTYPE DOES, AND WHY IT EXISTS}}</figcaption>
+        </figure>
+
+        <!-- THE CAPTION WIDTH RULE. A caption is exactly as wide as the image above
+             it. .shot figcaption carries no max-width, so it fills the figure and
+             shares a right edge with the screen. Do not add a max-width, an inline
+             width, or a wrapper to narrow one: an unaligned caption reads as a
+             mistake, which is why the rule exists.
+
+             That makes caption length a copy problem, not a CSS one. A one-up
+             .shots caption is about 160 characters a line at 1512 and 230 at 2560,
+             so KEEP A CAPTION TO TWO SENTENCES: a bold label, then one sentence on
+             what to notice. Three or four sentences becomes two very long lines,
+             which is the only way this rule can read badly. Section 3 has the
+             budget, section 9 has the line length reasoning. -->
+
+        <!-- .shots is one up. Use it for the screen that deserves the width. -->
+        <div class="shots">
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="../assets/img/placeholder-shot.svg"
+                   alt="Screen to be added: {{WHAT THIS WILL SHOW}}"
+                   width="1600" height="1000" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>{{LABEL}}.</b> {{WHAT TO NOTICE, AND WHEN IT SHIPPED}}</figcaption>
+          </figure>
+        </div>
+
+        <!-- .shots--pair is two up. Everything else goes here. -->
+        <div class="shots shots--pair">
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="../assets/img/placeholder-shot.svg"
+                   alt="Screen to be added: {{WHAT THIS WILL SHOW}}"
+                   width="1600" height="1000" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>{{LABEL}}.</b> {{WHAT TO NOTICE}}</figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="../assets/img/placeholder-shot.svg"
+                   alt="Screen to be added: {{WHAT THIS WILL SHOW}}"
+                   width="1600" height="1000" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>{{LABEL}}.</b> {{WHAT TO NOTICE}}</figcaption>
+          </figure>
+        </div>
+
+        <!-- Standard footnote. Use the pre-launch variant only if the work has
+             not shipped: "{{NAME}} is pre-launch. In-depth details and experiment
+             results can be covered in person or during the interview process." -->
+        <p class="case-note">
+          <span aria-hidden="true">📝</span>
+          <span>This page shows only parts of the project. In-depth and sensitive details, and the
+          end-to-end UX, can be covered in person or during the interview process.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= NEXT ======================= -->
+  <nav class="next-case" aria-label="Next case study">
+    <div class="container">
+      <a class="next-case__link" href="{{NEXT SLUG}}.html">
+        <span>
+          <span class="label">Next case study</span>
+          <span class="display-2 next-case__title">{{NEXT PROJECT TITLE}}</span>
+        </span>
+        <span class="next-case__glyph arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </nav>
+</main>
+
+<!-- ======================= CONTACT (shared, do not edit) ======================= -->
+<!-- The one dark beat on the page. See .on-dark in tokens.css. -->
+<footer class="cta on-dark" id="contact">
+  <div class="aurora" aria-hidden="true" style="opacity: 0.5">
+    <span class="aurora__blob aurora__blob--2"></span>
+    <span class="aurora__blob aurora__blob--3"></span>
+  </div>
+
+  <div class="container cta__inner">
+    <p class="label label--accent">Contact</p>
+    <h2 class="display-1 cta__title reveal" style="margin-top: var(--s-4)">
+      Interested in working <span class="grad-text">together?</span>
+    </h2>
+    <p class="lead reveal">
+      These pages are a trailer. The rest, including the parts that didn't ship, is better in
+      conversation.
+    </p>
+
+    <div class="cta__contact reveal">
+      <a class="cta__line cta__line--email" href="mailto:rishabh.ux@gmail.com">
+        rishabh.ux@gmail.com <span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="cta__line cta__line--phone" href="tel:+18123619841">+1 (812) 361 9841</a>
+    </div>
+
+    <div class="cta__actions reveal">
+      <a class="btn btn--lg" href="https://docs.google.com/document/d/1EHUuTUFj9zlCdyJktXC0rGSdesHq1b7P/edit" target="_blank" rel="noopener">Résumé <span aria-hidden="true">↗</span></a>
+      <a class="btn btn--lg" href="https://www.linkedin.com/in/rishabh-singh-34b13a82/" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a>
+    </div>
+
+    <div class="cta__base">
+      <p>© <span data-year>2026</span> Rishabh Singh. Designed and built by me.</p>
+      <p>New York, NY</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>

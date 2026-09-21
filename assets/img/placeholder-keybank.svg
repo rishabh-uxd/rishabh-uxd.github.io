@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1100" width="1600" height="1100" role="img" aria-label="Placeholder: banker-assisted account opening flow with a time comparison">
+<defs>
+  <linearGradient id="kb-a" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#6CCBA0"/><stop offset="1" stop-color="#0E4E34"/>
+  </linearGradient>
+  <radialGradient id="kb-g1" cx="0.5" cy="0.5" r="0.5">
+    <stop offset="0" stop-color="#6CCBA0" stop-opacity="0.2"/><stop offset="1" stop-color="#6CCBA0" stop-opacity="0"/>
+  </radialGradient>
+  <radialGradient id="kb-g2" cx="0.5" cy="0.5" r="0.5">
+    <stop offset="0" stop-color="#0E4E34" stop-opacity="0.27"/><stop offset="1" stop-color="#0E4E34" stop-opacity="0"/>
+  </radialGradient>
+</defs>
+
+<rect width="1600" height="1100" fill="#E6DCC9"/>
+<circle cx="1260" cy="300" r="440" fill="url(#kb-g1)"/>
+<circle cx="380" cy="820" r="460" fill="url(#kb-g2)"/>
+
+<!-- stepper -->
+<g>
+  <rect x="140" y="150" width="880" height="620" rx="32" fill="#FFFFFF" stroke="#191409" stroke-opacity=".12" stroke-width="2"/>
+
+  <g>
+    <rect x="188" y="216" width="784" height="6" rx="3" fill="#191409" fill-opacity=".10"/>
+    <rect x="188" y="216" width="470" height="6" rx="3" fill="url(#kb-a)"/>
+    <circle cx="200" cy="219" r="18" fill="#6CCBA0"/>
+    <circle cx="396" cy="219" r="18" fill="#6CCBA0"/>
+    <circle cx="592" cy="219" r="18" fill="#0E4E34"/>
+    <circle cx="788" cy="219" r="18" fill="#191409" fill-opacity=".12"/>
+    <circle cx="960" cy="219" r="18" fill="#191409" fill-opacity=".12"/>
+  </g>
+
+  <rect x="188" y="286" width="260" height="20" rx="10" fill="#191409" fill-opacity=".3"/>
+
+  <!-- form fields -->
+  <g>
+    <rect x="188" y="344" width="376" height="72" rx="14" fill="#191409" fill-opacity=".05" stroke="#191409" stroke-opacity=".10"/>
+    <rect x="596" y="344" width="376" height="72" rx="14" fill="#191409" fill-opacity=".05" stroke="#191409" stroke-opacity=".10"/>
+    <rect x="188" y="436" width="376" height="72" rx="14" fill="#191409" fill-opacity=".05" stroke="#191409" stroke-opacity=".10"/>
+    <rect x="596" y="436" width="376" height="72" rx="14" fill="url(#kb-a)" opacity=".18"/>
+    <rect x="596" y="436" width="376" height="72" rx="14" fill="none" stroke="url(#kb-a)" stroke-width="3"/>
+    <rect x="188" y="528" width="784" height="72" rx="14" fill="#191409" fill-opacity=".05" stroke="#191409" stroke-opacity=".10"/>
+  </g>
+  <g fill="#191409" fill-opacity=".22">
+    <rect x="216" y="362" width="90" height="10" rx="5"/><rect x="216" y="384" width="180" height="14" rx="7"/>
+    <rect x="624" y="362" width="90" height="10" rx="5"/><rect x="624" y="384" width="150" height="14" rx="7"/>
+    <rect x="216" y="454" width="90" height="10" rx="5"/><rect x="216" y="476" width="160" height="14" rx="7"/>
+    <rect x="624" y="454" width="90" height="10" rx="5"/>
+    <rect x="216" y="546" width="90" height="10" rx="5"/><rect x="216" y="568" width="300" height="14" rx="7"/>
+  </g>
+  <rect x="624" y="476" width="200" height="14" rx="7" fill="#191409" fill-opacity=".55"/>
+
+  <rect x="188" y="644" width="220" height="56" rx="28" fill="url(#kb-a)"/>
+  <rect x="428" y="644" width="180" height="56" rx="28" fill="none" stroke="#191409" stroke-opacity=".22" stroke-width="2"/>
+</g>
+
+<!-- banker + customer -->
+<g opacity=".9">
+  <rect x="1072" y="150" width="388" height="290" rx="28" fill="#191409" fill-opacity=".05" stroke="#191409" stroke-opacity=".10"/>
+  <circle cx="1160" cy="252" r="38" fill="url(#kb-a)" opacity=".8"/>
+  <circle cx="1268" cy="252" r="38" fill="#191409" fill-opacity=".14"/>
+  <path d="M1204 252 L1224 252" stroke="#191409" stroke-opacity=".3" stroke-width="3" stroke-dasharray="6 6"/>
+  <g fill="#191409" fill-opacity=".2">
+    <rect x="1104" y="326" width="324" height="12" rx="6"/>
+    <rect x="1104" y="352" width="240" height="12" rx="6"/>
+    <rect x="1104" y="378" width="280" height="12" rx="6"/>
+  </g>
+</g>
+
+<!-- time comparison -->
+<g>
+  <rect x="1072" y="472" width="388" height="298" rx="28" fill="#FFFFFF" stroke="#191409" stroke-opacity=".12" stroke-width="2"/>
+  <rect x="1104" y="512" width="180" height="14" rx="7" fill="#191409" fill-opacity=".3"/>
+
+  <rect x="1104" y="566" width="324" height="44" rx="12" fill="#0E4E34" opacity=".45"/>
+  <rect x="1104" y="566" width="60" height="44" rx="12" fill="#0E4E34" opacity=".0"/>
+  <rect x="1104" y="628" width="62" height="44" rx="12" fill="url(#kb-a)"/>
+  <g fill="#191409" fill-opacity=".4" font-family="'JetBrains Mono', ui-monospace, monospace" font-size="22">
+    <text x="1104" y="556">BEFORE</text>
+    <text x="1104" y="618">AFTER</text>
+  </g>
+  <rect x="1104" y="708" width="240" height="12" rx="6" fill="#191409" fill-opacity=".16"/>
+</g>
+
+<g font-family="'JetBrains Mono', ui-monospace, monospace" font-size="20" letter-spacing="3" fill="#7A6E55">
+  <text x="140" y="838">ONE GUIDED FLOW, THREE SYSTEMS BEHIND IT</text>
+  <text x="1072" y="838">55 MIN → UNDER 5</text>
+</g>
+</svg>

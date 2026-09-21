@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Amazon Visa Transactions · Rishabh Singh</title>
+<meta name="description" content="Managing the Amazon Visa meant leaving Amazon for Chase. I designed the transactions experience that replaced that handoff, and 1 and 2 star ratings fell 10%.">
+<meta name="author" content="Rishabh Singh">
+<meta name="theme-color" content="#FBF7F1">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Amazon Visa Transactions · Rishabh Singh">
+<meta property="og:description" content="Viewing, troubleshooting, and disputing Amazon Visa transactions, on Amazon. 1 and 2 star ratings fell 10% and the app rating rose to 4.1.">
+<meta property="og:url" content="https://www.rishabhsingh.design/work/transactions.html">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="canonical" href="https://www.rishabhsingh.design/work/transactions.html">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/components.css">
+</head>
+
+<body>
+<a class="skip-link" href="#background">Skip to the case study</a>
+
+<div class="progress" aria-hidden="true"><div class="progress__fill"></div></div>
+
+<!-- ======================= NAV (shared, do not edit) ======================= -->
+<header class="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="../index.html" aria-label="Rishabh Singh, home">
+      <span class="nav__dot" aria-hidden="true"></span> Rishabh Singh
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a class="nav__link" href="../index.html#work">Work</a>
+      <a class="nav__link" href="../about.html">About</a>
+      <a class="nav__link" href="#contact">Contact</a>
+      <a class="btn btn--primary" href="https://docs.google.com/document/d/1EHUuTUFj9zlCdyJktXC0rGSdesHq1b7P/edit" target="_blank" rel="noopener">Résumé <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ======================= CASE HERO ======================= -->
+  <section class="case-hero case-hero--split">
+    <div class="aurora" aria-hidden="true">
+      <span class="aurora__blob aurora__blob--1"></span>
+      <span class="aurora__blob aurora__blob--2"></span>
+    </div>
+
+    <div class="container case-hero__inner">
+      <a class="case-back" href="../index.html#work">
+        <span class="case-back__glyph" aria-hidden="true">←</span> All work
+      </a>
+
+      <div class="case-hero__grid">
+        <div>
+          <p class="label case-hero__cat">
+            <span aria-hidden="true">💳</span> Credit card servicing
+          </p>
+
+          <h1 class="mega case-hero__title" data-split>
+            Amazon Visa <span class="grad-text">Transactions</span>
+          </h1>
+
+          <!-- Inside the hero's text column, not a band under both columns. With the
+               deck gone this rail is the whole second half of the column: it gives
+               the headline something to sit above, fills the width the headline does
+               not use, and keeps Role / Team / Timeline above the fold beside the
+               visual instead of below it. The CSS keys off this <dl> being inside
+               the text column of a .case-hero--split grid, so moving it back out to
+               a sibling of .case-hero__grid is the whole change. Stacked,
+               components.css dissolves this wrapper with display: contents and
+               orders the rail after the media, so a phone reads title, screen,
+               credits and does not open on a table of metadata. -->
+          <dl class="case-meta reveal">
+            <div>
+              <dt class="label">Role</dt>
+              <dd>UX Designer, transactions end to end</dd>
+            </div>
+            <div>
+              <dt class="label">Team</dt>
+              <dd>Product Manager, me, 12 engineers</dd>
+            </div>
+            <div>
+              <dt class="label">Timeline</dt>
+              <dd class="num">Released October 2023, then September 2024</dd>
+            </div>
+            <div>
+              <dt class="label">Platform</dt>
+              <dd>Amazon shopping app and desktop web</dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- .case-hero__device, not .chrome-frame: transactions shipped first in the
+             Amazon shopping app, and browser chrome around a phone screen would be
+             a lie. The desktop page appears in Experience, in the annotation sheet.
+
+             --bare, so the phone is whole and sized by height with its own drop
+             shadow, the same as the other three phone heroes. A transactions list
+             is a list, and the panel was cutting it mid row, which made the screen
+             look like a fragment of itself. See the --bare note in
+             components.css. -->
+        <div class="case-hero__media reveal-pop">
+          <div class="case-hero__device case-hero__device--bare">
+            <img src="../assets/img/transactions/list-p1.webp"
+                 alt="The Transactions screen in the Amazon app, with a Filter and Sort control, a note that transaction information is fetched from Chase and not stored, a search by merchant or keywords field, two pending charges totalling 57 dollars 45 cents from CVS Pharmacy and GAP, and Activity since last statement showing a 487 dollar 21 cent Best Buy charge earning 2 percent."
+                 width="862" height="1776" decoding="async">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================= 01 BACKGROUND ======================= -->
+  <section class="case-section" id="background" aria-labelledby="background-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">01</span>
+        <h2 class="display-3 case-section__title" id="background-heading">Background</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <figure class="pull-quote">
+          <blockquote>
+            <p>If this is the Amazon credit card why can't I access the account from Amazon</p>
+          </blockquote>
+          <figcaption>1 star review, Amazon Visa customer, February 2021</figcaption>
+        </figure>
+
+        <div class="prose">
+          <p>
+            The Amazon Visa is the co-branded credit card with Chase, and Amazon's flagship payment
+            product. Until 2023, managing the Amazon Visa through Chase led to friction, with almost
+            half of 1 and 2 star reviews citing poor account management, 20% of new customers paying
+            late fees due to delays on receiving the physical card, and 6% closing their accounts in
+            2020.
+          </p>
+          <p>
+            To reduce late fees and improve ratings, Amazon's S-team brought card management
+            in-house. I led the UX for three key projects, Pay Bill, View Statements, and View
+            Transactions, using customer insights from research to shape the UX strategy and inform
+            product goals.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 02 PROJECT GOALS ======================= -->
+  <section class="case-section" aria-labelledby="goals-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">02</span>
+        <h2 class="display-3 case-section__title" id="goals-heading">Project goals</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <div class="prose">
+          <p>
+            The project aimed to reduce 1 and 2 star ratings by 10%, enabling customers to view,
+            troubleshoot, and dispute Amazon Visa transactions by providing fast and clear navigation
+            to transactions of interest and easier usability.
+          </p>
+          <p>
+            I scoped the competitor landscape, collaborated on business requirements, and obtained
+            alignment with Chase business and legal. The effort delivered four things:
+          </p>
+        </div>
+
+        <ul class="case-list">
+          <li><strong>A UX vision for transactions.</strong> The full experience, past what the first release could support.</li>
+          <li><strong>A UX proposal for the initial release.</strong> The subset that was feasible inside the platform we had.</li>
+          <li><strong>Accessibility annotations.</strong> Reading order, headings, roles, names, and states, handed over with the mocks.</li>
+          <li><strong>A testable prototype.</strong> Something reviewers and research could operate rather than read about.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 03 TEAM AND ROLE ======================= -->
+  <section class="case-section" aria-labelledby="role-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">03</span>
+        <h2 class="display-3 case-section__title" id="role-heading">Team and role</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <div class="prose">
+          <p>
+            A Product Manager, me as the UX Designer, and 12 engineers. My responsibilities were:
+          </p>
+        </div>
+
+        <ul class="case-list">
+          <li>Interaction design flows</li>
+          <li>High-fidelity mock ups</li>
+          <li>Prototyping</li>
+          <li>Organizing leadership reviews, at both Amazon and Chase</li>
+          <li>Accessibility annotations</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 04 DESIGN AND OUTCOMES ======================= -->
+  <section class="case-section" aria-labelledby="outcomes-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">04</span>
+        <h2 class="display-3 case-section__title" id="outcomes-heading">Design and outcomes</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <div class="prose">
+          <p>
+            After aligning on the UX vision at Amazon and collaborating with Chase, we faced
+            technical constraints due to Chase's API limitations, which impacted the initial feature
+            set. I refined the UX to focus on feasible features for the first release, and secured
+            Chase's commitment for future updates.
+          </p>
+          <p>
+            Through multiple reviews with teams across Amazon and Chase, I delivered a user-centric
+            experience that achieved 90% of our original UX vision by the September 2024 release. The
+            rest of the vision shipped by 2025.
+          </p>
+          <p>
+            Accessibility annotations were a deliverable here, not a review step. Reading order,
+            heading levels, roles, names, and states went to engineering with the mocks, including
+            visually hidden text that summarizes the pending total so a screen reader user hears it
+            from the heading instead of adding up the rows. The last two figures in Experience are the
+            annotation sheet and the VoiceOver output from the shipped page.
+          </p>
+        </div>
+
+        <div class="stat-band">
+          <p class="stat">
+            <span class="stat__value num" data-count>10%</span>
+            <span class="stat__label">Fewer 1 and 2 star ratings, against a 10% goal</span>
+          </p>
+          <p class="stat">
+            <span class="stat__value num" data-count>4.1</span>
+            <span class="stat__label">App rating, up 0.4 points</span>
+          </p>
+          <p class="stat">
+            <span class="stat__value num" data-count>+4.5%</span>
+            <span class="stat__label">Spend lift, 36% of it off Amazon</span>
+          </p>
+          <p class="stat">
+            <span class="stat__value num" data-count>90%</span>
+            <span class="stat__label">Of the UX vision shipped by September 2024</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 05 EXPERIENCE ======================= -->
+  <!-- Real exports. Phone screens are 862px wide WebP with transparent corners,
+       and .shot__frame--device draws no frame, so each phone sits directly on the
+       page on its own bezel. They pair two up. The wide artifacts, the reviews
+       evidence and the annotation sheet, take the one-up slot. -->
+  <section class="case-section" aria-labelledby="experience-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">05</span>
+        <h2 class="display-3 case-section__title" id="experience-heading">Experience</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <!-- The problem, before anything else in the section. -->
+        <div class="shots">
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="../assets/img/transactions/evidence-reviews.webp"
+                   alt="Two panels side by side. A photo of a hand tapping a Prime Visa card on a card reader at a grocery checkout, and the Amazon reviews page for the card filtered to 1 star only, showing 9,289 ratings with reviews titled Most difficult card to access online and Impossible to deal with web site, both describing failed attempts to sign in and see a balance."
+                   width="1800" height="805" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>The evidence.</b> The card's own reviews page, filtered to 1 star. What customers were rating was account management, not the card.</figcaption>
+          </figure>
+        </div>
+
+        <!-- P0, October 2023. -->
+        <div class="shots shots--pair">
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/transactions/list-p0.webp"
+                   alt="The Transactions screen at the first release, with a note that transaction information is fetched from Chase and not stored, a search by merchant or keywords field, a Pending section totalling 57 dollars 45 cents, and Activity since last statement listing a 487 dollar 21 cent Best Buy charge."
+                   width="862" height="1776" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>The list, October 2023.</b> Pending and posted activity, searchable, on Amazon for the first time. This is the version scoped to what the first release could support.</figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/transactions/detail-p0.webp"
+                   alt="A transaction detail screen for a 103 dollar 19 cent Best Buy charge on March 20, 2022, listing the method as in person, the transaction location with a phone number, the merchant type, and rewards of 1,039 points at 1 percent, above a See more details link and a Report a problem link."
+                   width="862" height="1776" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>Transaction detail.</b> Enough to recognize a charge: where it happened, when, how it was paid, and what it earned.</figcaption>
+          </figure>
+        </div>
+
+        <div class="shots shots--pair">
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/transactions/detail-p0-expanded.webp"
+                   alt="The same Best Buy transaction with details expanded, adding the posted date, transaction type, description, and a transaction identification number, above a Report a problem link and a disclaimer that details may be preliminary and that the periodic statement is the official record."
+                   width="862" height="1776" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>Expanded, for troubleshooting.</b> The identifiers a customer needs when a charge does not look right, collapsed by default so the common case stays short.</figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/transactions/detail-p0-amazon.webp"
+                   alt="A transaction detail screen for a 368 dollar 73 cent Amazon Marketplace charge on July 19, 2022, listing the method as online mail or phone, an order number shown as a link, the merchant type, and 18,436 rewards points earned at 5 percent."
+                   width="862" height="1776" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>An Amazon charge, on Amazon.</b> The order number is a link back to the order behind the charge, which is the version of this screen only Amazon could build.</figcaption>
+          </figure>
+        </div>
+
+        <div class="shots shots--pair">
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/transactions/statement-summary.webp"
+                   alt="A statement summary sheet over the dimmed transactions list, headed May 24, 2022 statement, listing last statement balance, payments, credits, purchases, cash advances, balance transfers, fees charged, interest charged of 21 dollars 55 cents, and next statement balance, with a Statement PDF button beside a Done button."
+                   width="862" height="1776" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>Statement summary, in place.</b> Opened over the list instead of on its own page, so a customer checking one month does not lose where they were.</figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/transactions/report-a-problem.webp"
+                   alt="A Report a problem sheet over a dimmed transaction detail, with three numbered steps: open this transaction on Chase dot com or the Chase mobile app, tap Report a problem, and follow the prompts on the screen, above a Done button."
+                   width="862" height="1776" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>Disputes, handed off honestly.</b> Disputes stayed at Chase in the first release, so the sheet names the three steps rather than dropping the customer onto a Chase home page.</figcaption>
+          </figure>
+        </div>
+
+        <!-- P1, September 2024. -->
+        <div class="shots shots--pair">
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/transactions/list-p1-activity.webp"
+                   alt="The Transactions screen at the second release, with a Filter and Sort control, merchant logos beside each row, an order number shown inline under a 191 dollar 92 cent Amazon.com charge, and an IKEA row showing a 268 dollar 73 cent return in green."
+                   width="862" height="1776" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>The list, September 2024.</b> Merchant logos, returns labelled as returns, order numbers inline, and filtering. The rows customers scan most now carry the things they scan for.</figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/transactions/filter-and-sort.webp"
+                   alt="The Filter and sort panel, with a time period selector noting up to 24 months of data available, a transaction type selector, a categories selector, an amount range with From and To fields, and a sort control set to newest first."
+                   width="862" height="1776" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>Filter and sort.</b> Time period, type, category, and amount. The 24 month limit is stated in the panel rather than discovered when a filter comes back empty.</figcaption>
+          </figure>
+        </div>
+
+        <div class="shots shots--pair">
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/transactions/detail-p1-merchant.webp"
+                   alt="A transaction detail screen at the second release for a 103 dollar 19 cent Best Buy charge, with the merchant logo, a map of the store location, the street address as a link that opens in Google Maps with a phone number, the merchant type, and the name the charge appears under on the statement."
+                   width="862" height="1776" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>Detail, second release.</b> The merchant's logo, a map of where the charge happened, and the name it appears under on the statement. Three ways to place a charge you do not remember.</figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/transactions/detail-p1-amazon.webp"
+                   alt="A transaction detail screen for a 368 dollar 73 cent Amazon.com charge with the Amazon logo, the method as online mail or phone, the order number as a link, the name it appears under on the statement, 2,078 rewards points earned at 6 percent, and a Report a problem button."
+                   width="862" height="1776" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>The same screen for an Amazon charge.</b> Order number, statement name, and the rate that earned the points, so the reward is attached to the purchase that produced it.</figcaption>
+          </figure>
+        </div>
+
+        <!-- The accessibility pair, the reason the annotations were a deliverable. -->
+        <div class="shots">
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="../assets/img/transactions/accessibility-annotations.webp"
+                   alt="An annotated desktop transactions page. Purple callouts mark the breadcrumb as a navigation landmark with aria-current set to page, Transactions as the level 1 heading, Filter and sort as a button with aria-expanded set to false, an aria-label on the search field, Pending and Activity since last statement as level 2 headings, the pending amount as aria-hidden true, visually hidden text reading you have x pending transactions totaling y dollars tied to the heading by aria-describedby, the transaction rows as unordered lists, and the order number as a link that opens in a new window."
+                   width="1800" height="1530" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>Accessibility annotations.</b> Reading order, heading levels, roles, names, and states, handed to engineering with the mocks. The pending amount is taken out of the reading order because the same number is already in the heading's description.</figcaption>
+          </figure>
+        </div>
+
+        <div class="shots">
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="../assets/img/transactions/list-voiceover.webp"
+                   alt="The shipped transactions page with the VoiceOver caption panel open across the bottom, reading: heading level 2, Pending transactions. You have 2 pending transactions totalling 77 dollars 91 cents."
+                   width="1236" height="1768" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>The annotation, in production.</b> VoiceOver on the live page, reading the heading and the description it was given. An annotation is only worth writing if it survives to production, so this is what I check.</figcaption>
+          </figure>
+        </div>
+
+        <p class="case-note">
+          <span aria-hidden="true">📝</span>
+          <span>This page shows only parts of the project. In-depth and sensitive details, and the
+          end-to-end UX, can be covered in person or during the interview process.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= NEXT ======================= -->
+  <nav class="next-case" aria-label="Next case study">
+    <div class="container">
+      <a class="next-case__link" href="keybank.html">
+        <span>
+          <span class="label">Next case study</span>
+          <span class="display-2 next-case__title">KeyBank account opening</span>
+        </span>
+        <span class="next-case__glyph arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </nav>
+</main>
+
+<!-- ======================= CONTACT (shared, do not edit) ======================= -->
+<footer class="cta on-dark" id="contact">
+  <div class="aurora" aria-hidden="true" style="opacity: 0.5">
+    <span class="aurora__blob aurora__blob--2"></span>
+    <span class="aurora__blob aurora__blob--3"></span>
+  </div>
+
+  <div class="container cta__inner">
+    <p class="label label--accent">Contact</p>
+    <h2 class="display-1 cta__title reveal" style="margin-top: var(--s-4)">
+      Interested in working <span class="grad-text">together?</span>
+    </h2>
+    <p class="lead reveal">
+      These pages are a trailer. The rest, including the parts that didn't ship, is better in
+      conversation.
+    </p>
+
+    <div class="cta__contact reveal">
+      <a class="cta__line cta__line--email" href="mailto:rishabh.ux@gmail.com">
+        rishabh.ux@gmail.com <span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="cta__line cta__line--phone" href="tel:+18123619841">+1 (812) 361 9841</a>
+    </div>
+
+    <div class="cta__actions reveal">
+      <a class="btn btn--lg" href="https://docs.google.com/document/d/1EHUuTUFj9zlCdyJktXC0rGSdesHq1b7P/edit" target="_blank" rel="noopener">Résumé <span aria-hidden="true">↗</span></a>
+      <a class="btn btn--lg" href="https://www.linkedin.com/in/rishabh-singh-34b13a82/" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a>
+    </div>
+
+    <div class="cta__base">
+      <p>© <span data-year>2026</span> Rishabh Singh. Designed and built by me.</p>
+      <p>New York, NY</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>

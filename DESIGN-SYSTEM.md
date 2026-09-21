@@ -1,0 +1,1613 @@
+# Portfolio design system
+
+The rules any agent (or human) must follow when adding to this site. Read this
+before touching CSS or adding a page.
+
+Direction: **sand bands.** Sand paper canvas, **one forest accent**, oversized
+tight display type, real scroll motion, short copy, work presented as five large
+rounded bands, and exactly one dark section for contrast. Think an Apple product
+page, not a document.
+
+Iterations of the home page are archived under `iterations/`. `01-spectrum/` gave
+each project its own color pair and was replaced because five color pairs read as
+no scheme at all. `02-cobalt/` fixed that with one blue on a near-black canvas.
+`03-ember/` moved to a light warm canvas with a brick accent. `05-drafting-table/`
+kept this palette but rebuilt the layout around a visible drafting grid, a sticky
+work index, and a scroll-threaded panel column; it was tried and set aside in
+favor of the bands. The current direction is iteration 4: sand and forest bands.
+
+## 1. Stack and constraints
+
+- Plain HTML, CSS, and a small amount of vanilla JS. **No build step, no framework, no npm.**
+- Every page is a standalone `.html` file that links the same three stylesheets.
+- JS is progressive enhancement only. Every page must be fully readable with JS off.
+- No inline `<style>` blocks. One-off layout nudges may use a `style="..."` attribute
+  with token values (`style="margin-top: var(--s-4)"`), nothing more. Never set
+  `--accent` inline (section 4).
+- Never hard-code a color, font size, or spacing value. Add or reuse a token.
+
+Preview locally, on a port you have not used before in this session (browsers
+cache aggressively and will happily serve you stale CSS):
+
+```
+cd /Users/rriss/prtfl
+python3 -m http.server 4411
+# open http://127.0.0.1:4411
+```
+
+## 2. Files
+
+```
+index.html                     home page
+about.html                     about page. Built on the case study skeleton, not the home page hero. See section 12, "The about page".
+work/_TEMPLATE.html            the case study template. Copy it, never edit a case study from scratch. See section 12.
+work/basket-building.html      case study 01
+work/card-dashboard.html       case study 02
+work/pay-bill.html             case study 03
+work/transactions.html         case study 04
+work/keybank.html              case study 05
+assets/css/tokens.css          all design tokens, single source of truth
+assets/css/base.css            reset, type primitives, layout helpers, motion primitives
+assets/css/components.css      every reusable block
+assets/js/site.js              word split, reveals, count-up, progress bar, pointer effects
+assets/img/                    images; placeholder-*.svg are stand-ins, now unused by any live page
+assets/img/placeholder-shot.svg  the neutral "SCREEN TO BE ADDED" panel, for a .shot slot with no export yet
+assets/img/<case-slug>/        real screen exports for one case study, WebP. See section 7, "Screen exports".
+assets/css/palettes/*.css      the palette bake-off. Token overrides only. Sand is adopted; these are now dead weight.
+preview.html                   dev harness to compare palettes. Not part of the site. Dead weight.
+iterations/01-spectrum/        archived home page, dark, one color pair per project. Reference only.
+iterations/02-cobalt/          archived home page, dark, one blue accent. Reference only.
+iterations/03-ember/           archived home page, warm paper, brick accent. Reference only.
+iterations/05-drafting-table/  archived home page, sand and forest, drafting grid and threaded work column. Reference only.
+iterations/06-case-hero-candidates/  the four case study hero treatments. A (.case-hero--split) was adopted; the other three are archived CSS. Reference only.
+iterations/07-case-body-candidates/  the four case study body treatments. A (Ledger, no modifier class) was adopted; the other three are archived CSS. Also records the reading measure change. Reference only.
+iterations/08-pay-bill-source-assets/  unmodified Pay Bill screen originals pulled from the old portfolio, plus the mapping of source file to published asset. Reference only.
+iterations/09-transactions-source-assets/  the same, for Transactions. Reference only.
+iterations/10-keybank-source-assets/  the same, for KeyBank. Its README also records why DO.png was left unconverted. Reference only.
+iterations/11-bundle-swap-source-assets/  the same, for Basket Building, but captured from the user's local interview prototype rather than downloaded. Its README carries the capture recipe (the prototype hides its own document until slide 6 is forced active) and the list of unpublishable sections skipped. Named for Bundle Swap because that is what the page was called when it was written. Reference only.
+iterations/12-basket-building-rename/  the case study page as it read while it was titled "Amazon Bundle Swap", kept because renaming it to basket-building.html rewrote the framing. Reference only.
+iterations/13-prototype-cx-proposals/  the hand-built one-treatment demo the current prototype replaced. Its README is the record of how prototypes/basket-building/ was extracted from the interview deck: what was left out and why, the internal names renamed, and how the embed's height ends up right. Read it before regenerating that prototype. Its verify-fit.py, verify-fallback.py and tabheights.py are the three sweeps: the first two check the embed at 20 widths x 5 treatments, the third checks that all four Build your own bundle tabs are the same height, which the other two cannot see because they only measure the tab a panel opens on. byob-asins/ and bundle-thumbnails/ hold the Figma-sourced images the deck did not have, each with its own README.
+iterations/14-basket-building-hero-phone/  why the Basket Building hero stopped cropping its phone, and the re-encode that gave the five captured phones the transparent bezel corners a screenshot cannot have. reproc.py is the encoder and is what you edit if those five ever need rebuilding; before/ is the eight assets it replaced. Read it before touching assets/img/basket-building/. It also records the widening that followed: --page-max 62vw/1520px to 78vw/1800px, --case-hero-phone-h 52vh to 64vh, the panelled phone cap 21rem to 24rem, with the 13-viewport measurement and the fold cost. Read it before changing --page-max.
+iterations/15-case-hero-tightening/  why the two hero columns sit close together: the gap that became a hole when --page-max opened, the 1.9fr media track a height-sized phone needs, the .case-meta rail moving into the text column, and the hero lean that had never rendered. Three CSS traps with the measurements that caught them: :has() donates specificity, a spanning grid item stretches the rows it spans, display: contents blockifies what it promotes. Reference only, and read it before changing .case-hero--split's grid. Worked on Basket Building alone; iteration 16 is the rollout.
+iterations/16-hero-composition-rollout/  the same composition applied to the other four case study heroes, which is what makes the five read as one layout: the in-column rail everywhere, the three remaining panelled phones switched to --bare, and why KeyBank keeps .chrome-frame and the 1.22fr track. Carries the A/B that justified it, rail position in-column against the old full-width band on all five pages at four widths, and the one cost accepted at the time (KeyBank's rail below an 800px fold because its deck ran five to six lines), which iteration 17 then removed along with the deck.
+iterations/17-heroes-without-decks/  why no case study hero has a deck or a caption any more: the deck was the third telling of a sentence the home band and section 01 both carry, and the caption was describing a screen section 05 captions properly. Records the three preconditions for removing them (the deck's numbers must already be in the body, the figure becomes a div, the hero image must be shipped work), the Pay Bill hero image swap that the third one forced, and the hero heights before and after. Read it before adding a deck back.
+iterations/18-outcome-band-width/  why .stat-band is capped at --measure-case so its edges line up with the paragraph above it, with the before and after widths that show why spanning the full column looked wrong (1208px of band under 694px of prose at 2560). Also why two callouts is a fine band and Basket Building's is now two: the band closes the outcomes section, so a research input does not belong in it. Also the account of the one time the handoff's NEVER list was overtaken by events: the 11% swap rate and +0.11 units per purchase were held off the page for a turn, then published once the user confirmed they had been measured, which leaves handoff lines 29 and 210 to correct.
+iterations/19-prototype-strategy-labels/  the basket building prototype's two strategy option labels and its h1, and why the h1 is now dynamic rather than the fixed string that was asked for: it names a strategy, so it has to follow the dropdown or it reads "strategy 1" over strategy 2's screens. Also the trap that cost two verification runs, which is that section 05's iframe is loading="lazy" with a real src far below the fold, so a script has to force it eager and scroll it into view before the frame exists to query.
+iterations/20-basket-building-prototype-only/  the seven stills removed from below the basket building prototype, with their alt text and captions, and why five of them were the same screens the prototype already reaches by working its two selects. Read it before adding a .shots run back to that page, and read it if you need the worked example for .shots-head, because that page was the only one and no live page has it now. (It is no longer the only .shots--trio reference: Card Dashboard's Experience section is a live one.) Also notes the one real cost (the two Groundwork boards are not in the prototype) and the .case-note that still says the results are not in.
+iterations/21-byob-search-screens/  the paragraph saying experiment strategy 2 is being built now, and the two Build Your Own Bundle desktop screens under it, pulled from the live rishabhsingh.design page. proc.py beside the README is the encoder of record: 2416px wide because that is exactly 2x the 1208px column at 2560, and do not read 1080 as the column width, that is the prototype's control row. Also why these two are the exception to iteration 20's no-stills rule (the prototype is mobile only), and why they take a plain .shot__frame rather than --device.
+iterations/22-home-card-phone-geometry/  card 01's home page thumbnail rebuilt on card 02's phone geometry, 445 wide with 44px gaps and 88px padding, because .project__media renders every card at the same box so a size mismatch can only be inside the composite. reproc.py beside the README is the encoder of record for basket-building/home-card.webp only, and it inherits every alpha and bezel step from iteration 14. Also records why the height is allowed to differ (the two phone mocks are different aspect ratios and width is the dimension that makes the edges line up).
+iterations/23-project-card-green-ring/  the home page project cards given a 2px --accent border on all four sides, replacing a 1px --stroke hairline plus a --grad-accent bar across the top only. removed.css has the three old rules. Records why the ring is flat --accent rather than the gradient (border-image does not follow border-radius, and the mask-composite alternative needs a -webkit- fallback for two stops that are both dark green) and why hover now deepens to --accent-2 instead of brightening.
+iterations/24-card-dashboard-goals-trim/  the second paragraph and the whole four item .case-list removed from Card Dashboard section 02, leaving the goal and its measure alone. removed.html has both, correctly indented, and records that the block was rewritten twice the same day before it was cut: restore the "None of the four things below was in scope" version and never the "Four things were in scope" one, which the user has already corrected. Also why nothing is lost (section 03 already lists the ingress/placement and accessibility annotations work).
+iterations/25-card-dashboard-team-role/  Card Dashboard section 03 replaced with the user's own team roster and a prose responsibilities sentence, retiring the UX working group paragraph and its five item .case-list. removed.html has both plus the old hero .case-meta Team value, which had to change in the same edit or the page stated the team two ways. Records why the rail keeps the short form, why 4&nbsp;Engineers carries a non-breaking space, and the two claims that came out of the copy and where each still lives on the page.
+iterations/26-card-dashboard-servicing-linked-only/  a one sentence factual correction in Card Dashboard section 04: servicing kept the top of the page for linked customers only, because on-Amazon servicing is gated on account linking, not "in both cases". No markup change. Also flags the framework figcaption's "hold fixed placement in both", which makes a similar claim about the header, quick action pills and balance and was left alone because it describes what is drawn on that board.
+iterations/27-card-dashboard-chase-linking/  Card Dashboard section 04 second paragraph: the unserved segment would not link their Chase account, not their "bank account", and they managed the card at Chase's app/website. Adds the gating rule that linking the Amazon and Chase accounts was required for on-Amazon servicing, which is what makes "most of the page was dead weight" follow rather than assert. Records why "bank account" was wrong here and right on Pay Bill, where it survives nine times.
+iterations/44-about-accessibility-claim/  the second and last paragraph of the about page's Accessibility section removed at the user's direction, "for now", so the section stops at what he does rather than turning outward to assert that the case studies treat accessibility as a constraint and that this site was checked against the same bar. Both assertions were true and the README records that, since nothing on the page now says so, along with the reason the section is stronger without them: a page cannot verify itself for a reader. removed.html has the paragraph verbatim at its original indentation and about.html keeps a comment at the spot. No measurement moved, because the page's longest line was never in that paragraph.
+iterations/43-about-legacy-copy/  the about page's biography replaced with the legacy rishabhsingh.design/about page's own copy, near enough verbatim, because the version iteration 42 wrote in this site's voice read as over the top. Accessibility and AI and design ops were left exactly as they were, by instruction. Getting here, How I work and Away from work are now one legacy paragraph each, the hero deck is the front half of the legacy opening paragraph split at its natural seam, and Where I've worked is gone, roster and Inventor Award and all, because the legacy page has no such section; `about-verbose.html` holds the whole previous page so the roster is one paste from coming back. Records the two mechanical changes made on the way over (the en dash in "(2015-2017)" and the degree name hyphenated to match the hero rail), the three things the legacy copy does that section 3 forbids and which are deliberately kept, and the one sentence worth cutting but kept because it is his: "Let's connect" now lands third in a row of three closings. Also records how the copy was recovered after WebFetch paraphrased it and mod_security blocked a browser-agent fetch: plain `curl` of `/about` with no user agent returns the page, and `/wp-json/wp/v2/pages/8` returns empty because the site is built with the Semplice page builder.
+iterations/42-about-page/  `about.html`, the last unbuilt page on the site and a 404 linked from the nav of all six others until now. Records where the content came from (the legacy rishabhsingh.design/about page for the biography, the handoff's identity-facts block for the AI work and the employer roster) and the two content boundaries held: the enablement pivot origin story is interview-only so the tools are named but not their history, and the design agent's speedup is described qualitatively because the figure is not on the canonical numbers list. Holds the reasoning for the four deliberate departures from the case study skeleton it is built on, in particular why the hero portrait is capped at 20rem and given the bare phone's 1.9fr/1fr track rather than filling its column: the only headshot asset is 512px square, so a filled 1fr track renders it at 1:1 and makes it the one soft image on the site. Also holds the counting-script bug that made the page look like a 1.4.8 failure at 93 characters when it was at 76, and the lesson: calibrate a counting script against a page whose count is already known before trusting it on a new one.
+iterations/41-project-summary-card-width/  the home page card summary was the only thing in a project card that did not fill the card's body column, 65px short at 1512 and 296 at 2560, and the @media override meant to fix that for the stacked card was running the line to 86 characters at 640 and 91 at 900, past 1.4.8's 80. Replaced two competing caps and `--measure-short` with one ceiling, `--measure-card: 48ch`. Holds the before and after widths and longest lines at seven viewports, the 10px-step calibration showing the ceiling is 510 to 519px, and the trap worth reading before adding any measure: do NOT apply the CHARACTERS x 0.73 rule to a maximum-line target, because that factor was counted on typical lines and gives 58ch and 96 characters here. Also that a `ch` measure is only calibrated for the element it was counted on, that Pay Bill's summary now sits at exactly 80 so every copy edit to a `.project__summary` must be re-counted, and why the residual shortfall at 1920 and 2560 is the accessibility floor rather than timidity.
+iterations/40-experience-section-name-site-wide/  section 05 is called "Experience" on all five case studies and in the template, not "Screens", closing the inconsistency iteration 32 opened. Three strings per page (the banner comment, `aria-labelledby`, and the `id` plus the heading text), and the record of why the `id` had to move with the visible text rather than being left behind. Also holds the two things a substitution would have missed: the one piece of published body copy that named the section, in Transactions section 04, and five comments across four files. Records the section 12 table row and the section 8 reveal-observer warning that both named it, the proof that the longer word is still 1 line in the narrow sticky aside at all five widths (the 256px aside at 1280 is the tight case), and why "Screens" was narrower than the section's own contents on three of five pages.
+iterations/39-pay-bill-wireframes-first-person/  "Early wireframes did double duty" rewritten as "I worked the payment experience out in wireframes early, before there were requirements to design against", because the wireframes were the subject of all four clauses and the designer was in none of them. The user's diagnosis was that it discounts the thinking and the effort. Records what "before there were requirements to design against" earns, why no claim about the two companies having to agree was added back (iteration 38 had just removed it), why invented specifics about the wireframes were rejected, and the general rule it produced, now a section 3 bullet: never make an artifact the subject of the sentence.
+iterations/38-team-role-second-sentence-removed/  section 03 lost its second sentence on the two pages that had one: Pay Bill's "Because two companies had to agree on every screen..." and Transactions' paraphrase of the same claim. All five case studies are now roster sentence, colon, .case-list, which three already were. Records why the Transactions variant was read as in scope, that nothing factual was lost because both pages still carry the Amazon-and-Chase fact as a .case-list bullet, the before and after line counts (Pay Bill went 7 rendered lines to 3 at 390), and the template placeholder "{{WHO WAS ON THE TEAM, AND WHAT MADE THE ROLE UNUSUAL}}" that was the actual source of the pattern and would have put it back on the next page. Also flags "Software Developer Manager" on Card Dashboard.
+iterations/37-pay-bill-team-numbers/  Pay Bill's team became a Product Manager, me, and 15 engineers, from an SDM plus six. Two changes, not one: the count more than doubled and the Software Development Manager left the roster entirely, so SDM now appears nowhere on the site. removed.html holds both replaced values, because the page states its team twice (hero rail and section 03) and iteration 25 is the record of what happens when only one is changed. Notes why the numeral replaced "six", why the rail carries 15&nbsp;engineers, why the Role field was left as "UX lead, end to end", and that the handoff outside this repo may now be stale on this.
+iterations/36-home-card-tags-credit-card-servicing/  the home page cards for Pay Bill and Transactions said "Fintech" while the pages they link to open on a "Credit card servicing" badge, as does the Card Dashboard card. Two words in index.html, recorded in the README since there is no file to archive. Notes that "Fintech" is now used nowhere on the site, and the one cost: .project__meta has no flex-wrap, so at 390 the longer pill wraps its text over two lines and the row grows 31px to 43, which is what the Card Dashboard card has always done there.
+iterations/35-case-note-full-width/  the closing `.case-note` text lost its `--measure-case` cap, so the two sentences fill the dashed panel instead of stopping at 694px inside an 837 or 1208px box. Holds the removed declaration with its original comment, the measured line counts and longest lines on all five case studies at five widths (2 lines and 104 characters at 1512, 1 line and 155 at 2560, nothing moved at 390 or 640), the 1.4.8 argument that makes it the same trade as iteration 29's caption rule, the copy budget it depends on (the note must stay two sentences), and the reason the cap looked like a bug rather than a measure.
+iterations/34-wide-asset-baked-shadows/  the muddy rim and the chewed corners. All three of Card Dashboard's wide exports had a drop shadow and a small corner radius baked into the file, so `.shot__frame`'s 1px stroke and 28px clip were a second edge over the artwork's own. reproc.py is the encoder of record for all three: it crops to the tight opaque bbox (4px and 8px rims removed, asymmetric because a shadow has a y offset), fills the corner arcs from the nearest opaque pixel so the frame's radius is the only rounding, and saves RGB rather than RGBA. Records the before and after edge profiles, why the phone exports must keep their alpha while these must lose it, why there is no resize back to 1800, that the input was already lossy because no original capture for these exists in the repo, that iteration 31's "the frame's bigger arc swallows the corners" reasoning was specific to that file, and the three assets on other pages with the same defect left unfixed.
+iterations/33-three-phones-one-line/  the Me tab, the wallet page and the dashboard moved onto one line in `.shots--trio`, in journey order, replacing iteration 32's solo dashboard and paired ingresses. Holds that markup, which is now the only worked example of `.shots--solo`. Records the cost (263px phones at 1512 instead of 396, checked by looking rather than measuring: balances, rewards figures and button labels stay legible, body copy inside a screenshot would not), the proof they are on one line (same `top`, left offsets 0/287/574 in the asked-for order), why `--solo` was kept unused on the `--trio` precedent, and the warning not to reorder the row in CSS, since the visual order and the source order carry the same argument.
+iterations/32-experience-section-order/  Card Dashboard's section 05 renamed from "Screens" to "Experience" and reordered so the experience leads, then how it is reached, then the thinking behind it. Holds the derivation of `.shots--solo` and the `--shots-gap` token that makes it possible, the measurements proving a solo phone matches a `--pair` cell at five widths, why the hero export is deliberately repeated as the section's first figure (the Pay Bill precedent), the caption written for it because the user supplied none, and the naming inconsistency it opened, which `iterations/40-experience-section-name-site-wide/` closed the same day by renaming the other four case studies and the template to match.
+iterations/31-ingress-board-to-background/  the 6-step ingress filmstrip moved from the top of Card Dashboard section 05 to the end of section 01, where the paragraph it is evidence for lives, and was re-encoded from a new source the user supplied. reproc.py is the encoder of record: it crops the screenshot's soft dark glow off (found by scanning for the first opaque near-white pixel, not by assuming an inset) and deliberately leaves the board's own ~60px corners alone, because `.shot__frame`'s larger `--r-xl` arc swallows them. Also why the old asset was worse (the heading "6-step ingress to outdated ECM" was baked into it as pixels), and the note that at 390 the board is 110px tall and nothing inside the seven phones is legible.
+iterations/30-device-frame-removed/  `.shot__frame--device` stopped drawing a frame: no tinted platform, no stroke, no shadow, no radius, no padding, so a phone export sits directly on the page and is about 12% wider. Holds the one removed declaration with its original comment, why the padding could not stay once the frame went, the check that all 22 phone exports have alpha 0 at every corner and what a violation would look like, the measurements at 390/1280/1512/2560, why the 2px caption-to-`<img>` delta on non-device shots is `.shot__frame`'s border and not a break of iteration 29's rule, and the note that `.shot__frame`'s accent tint is now invisible everywhere.
+iterations/29-caption-width-site-wide/  the caption width rule went site-wide: .shot figcaption, .case-hero__cap and .proto-block > figcaption lost their max-width, and the .shots-group override that used to do this for Basket Building alone was deleted. Holds the four removed declarations with their original comments, the before and after measurements (64 of 135 captions were short, now 0), what did not move (every caption at 390 and every two-up cell at 1512), the copy budget the rule forces and the five captions currently over it, and why a direction given once about one figure should have been read as a direction about the pattern.
+iterations/28-card-dashboard-ops-dsi-stat/  Card Dashboard section 04 third stat: 28% of contacts became $158 OPS DSI per account linked, at the user's firm direction. Holds the removed 28% stat ready to restore, the note that the handoff calls $158 "the stake, not the outcome; analysis never run" and lists it under NEVER publish and interview-only, the reason a $ prefix animates correctly through countUp, and the two 28% body-copy occurrences that were deliberately left on the site.
+prototypes/<slug>/index.html   self-contained HTML prototypes, embedded in a case study by .proto-embed[data-src]. One per project, at most. Exempt from the no-<style> rule. If generated, the generator sits beside it (build-from-source.py) and is what you edit.
+```
+
+Load order in `<head>` is always: `tokens.css` → `base.css` → `components.css`.
+
+## 3. Voice (applies to all copy on the site)
+
+These come from the portfolio content handoff and are not stylistic suggestions.
+
+- **Never use em dashes.** Use periods, commas, or parentheses. This includes titles:
+  write "Improving Basket Building", not "Improving Basket Building — AI Builder".
+- Plain, sequential, first person. "After X, I did Y."
+- **Never make an artifact the subject of the sentence.** Not "early wireframes did
+  double duty", "the prototype showed", "the research revealed". Write "I worked the
+  payment experience out in wireframes", "I prototyped it and watched participants
+  try it". This is the specific way the first person rule gets broken without using
+  any of the constructions banned below, which is why it needs its own line: it
+  sounds modest and reads as absence, and it hands the credit for the thinking to
+  the deliverable. The user's own words for it, on 2026-09-20: "It discounts me
+  having to think and create wireframes and put effort into it." Full reasoning and
+  the fix in `iterations/39-pay-bill-wireframes-first-person/`.
+- No rhetorical fragments, no antithesis constructions, no punchy parallel sentences.
+- No editorializing before evidence. State the fact, let the reader conclude.
+- Contractions are fine. Slightly conversational is fine.
+- Never publish an unmeasured or modeled number as an outcome.
+- A page is a trailer, not the meal. Short sections, one hook per page.
+- **Hyphenate a compound modifier, and only when it is one.** "high-fidelity mock
+  ups" and "end-to-end user flows", because the pair modifies the noun after it.
+  Not "Both states, high fidelity", where the phrase stands on its own after a
+  comma and modifies nothing. All five case studies said "High fidelity mock ups"
+  until 2026-09-20 and four of them were corrected in one pass, along with an alt
+  text reading "Four high fidelity phone screens"; the one figcaption that was
+  already right was left alone. A new page inherits the phrase from whichever page
+  it was copied from, so this is worth a look when adding one.
+- **"mock ups", two words**, on all five pages. Not "mockups" and not "mock-ups".
+  Not defensible as grammar, just consistent, and it is the form the user writes.
+- **A caption is two sentences: a bold label, then one sentence on what to notice.**
+  This is a hard budget, not a preference, because a caption is now exactly as wide
+  as the image above it (section 11, the caption width rule) and a one-up screen is
+  about 160 characters a line at 1512 and 230 at 2560. Two sentences wrap to one or
+  two lines, which is the whole reason the width rule is safe. Four sentences is two
+  very long lines and is the only way it reads badly. Five captions are over budget
+  today and section 11 names them; the fix is always to trim the caption, never to
+  narrow it.
+
+Length budgets on the home page, so the work and not the copy carries the page:
+
+| Slot | Budget |
+|---|---|
+| Hero lead | one sentence |
+| Project summary | two sentences, 45 words at the very most |
+| Stats per project | two, never three |
+| Stat label | under 6 words |
+| Contact lead | two short sentences |
+
+## 4. Color
+
+Two layers: a fixed sand paper surface set, and **one accent**. Color is an
+identity here, not a variable. Every section, panel, stat, and glow on the site
+draws on the same forest family, which is what makes the scheme readable.
+
+### Surfaces and text
+
+| Role | Token | Value |
+|---|---|---|
+| Page background | `--bg` | `#EDE4D6` |
+| Card, panel | `--bg-raised` | `#FBF7F0` |
+| Nested panel, hover | `--bg-raised-2` | `#E4D9C7` |
+| Glass fill | `--bg-glass` / `--bg-glass-strong` | `#FBF7F0` at 66% / 88% |
+| Primary text | `--text` | `#191409` (13.9:1) |
+| Secondary text | `--text-dim` | `#514834` (7.0:1) |
+| Tertiary, labels | `--text-faint` | `#5E5540` (5.3:1) |
+| Hairline | `--stroke` / `--stroke-strong` | ink 12% / 24% |
+
+Nothing on the page is pure grey and nothing is pure black. Both the paper and
+the ink are warm, which is what keeps a light palette from reading as a document.
+
+### The dark beat
+
+Put `class="on-dark"` on a `<section>` or `<footer>` and every token above flips
+to the warm near-black set (`--bg-dark` `#14110C`, `--bg-dark-raised` `#1F1A13`,
+text `#EDE4D6`). On the home page this is the contact footer and nothing else.
+
+**`.on-dark` does not lighten `--accent` or `--accent-2`.** A button is its own
+surface: its label is still white, so lightening the fill breaks the label. Only
+the two gradient-*text* tokens lift, because they sit directly on ink. The fill
+instead gains a visible edge (`.on-dark .btn--primary` borders in
+`--accent-lift`), which is what carries the 3:1 control boundary.
+
+**Use it at most once per page.** Two dark bands turn the contrast beat into a
+stripe pattern and the light direction stops reading.
+
+### The accent. One hue, four steps.
+
+| Token | Value | Contrast | Use |
+|---|---|---|---|
+| `--forest` | `#146A47` | 6.7:1 under white text | the accent |
+| `--forest-deep` | `#0E4E34` | deepest | second stop of every fill gradient |
+| `--forest-lift` | `#2E8C62` | 3.3:1 on `--bg` | last stop of display gradient text |
+| `--forest-bright` | `#6CCBA0` | 1.9:1, decorative only | aurora blobs, rings, small glyphs |
+
+Components never reference those four directly. They use the semantic layer:
+
+`--accent` · `--accent-2` · `--accent-lift` · `--accent-3` · `--accent-ink`
+(`#FFFFFF`, text on an accent fill) · `--grad-accent` (fills) ·
+`--grad-accent-soft` (tints) · `--grad-text` (display gradient text) ·
+`--grad-accent-text` (small gradient text) · `--glow`
+
+Why fills and gradient text are different tokens: a fill carries `--accent-ink`
+on top, so `--accent` has to stay dark enough for 4.5:1 with white. Gradient text
+sits on the page, so its stops are judged against `--bg` instead. One token
+cannot satisfy both, and collapsing them is how the footer button label ended up
+at 3.2:1 before this was split out.
+
+### Swapping the palette
+
+Sand and forest was picked out of a six-palette bake-off and is now folded into
+`tokens.css` for real: the artwork, the favicon, and `<meta name="theme-color">`
+are all recolored, so nothing depends on the preview harness any more. The
+leftovers (`assets/css/palettes/` and `preview.html`) are safe to delete.
+
+If a future palette needs comparing, the harness pattern still works: a palette
+file is a pure token override (surfaces, text, strokes, shadow tint, the four
+accent steps) and may never contain a component rule; `preview.html` loads
+`index.html` in an iframe and swaps that one stylesheet, so every option is
+judged on identical layout, copy, and motion.
+
+Any new palette must clear these, verified by `/tmp/contrast.py`:
+
+| Check | Floor |
+|---|---|
+| `--text`, `--text-dim`, `--text-faint` on `--bg` | 4.5:1 |
+| `--accent-ink` on `--accent` and on `--accent-2` | 4.5:1 |
+| `--accent` and `--accent-2` as small text on `--bg` | 4.5:1 |
+| `--accent-lift` on `--bg` (display gradient text) | 3:1 |
+| `--accent` on `--bg` (control boundary) | 3:1 |
+| Both `--grad-accent-text` stops on `--bg-dark` | 4.5:1 |
+| `--accent-lift` on `--bg-dark` (the dark button's border) | 3:1 |
+
+**Rules:**
+
+1. **Do not add a second hue.** No per-project accent, no per-section accent.
+   A new project page inherits the site accent and sets nothing.
+2. `--positive #0B7B3C` is the only non-accent color on the site. It is reserved
+   for a genuinely positive signal inside artwork (a savings figure, an "after"
+   bar), never for decoration or for a section's identity.
+3. Depth comes from the four steps of the one hue plus opacity, not from more
+   colors. The aurora blobs are forest and forest-bright.
+4. Accent surfaces stay quiet: `color-mix()` at 7 to 12% over a raised surface.
+   The accent goes full strength only on the primary button, the project index
+   chip, the nav dot, the band's top hairline, the contact underlines, and the
+   stat numbers.
+5. **Every stop of `--grad-text` must clear 3:1 on the page background**, because
+   gradient text is real content at display size. `--forest-bright` is 1.9:1 and
+   must never appear in `--grad-text` on the light palette. It is allowed inside
+   `.on-dark`, where it sits on ink.
+
+If a future direction needs a different color, change `--forest`, `--forest-deep`,
+`--forest-lift`, and `--forest-bright` in `tokens.css`, plus the two gradient-text
+steps in the `.on-dark` block, then recolor `assets/img/*.svg` and `theme-color`.
+Nothing else should need to change.
+
+`--text-faint` is for labels at 13px and above only, never for body copy.
+Gradient text is decorative emphasis on top of an already-passing color, never
+the only way a word is legible.
+
+Elevation is warm too. `--shadow-sm` / `--shadow-md` / `--shadow-lg` are all
+tinted `rgba(60, 46, 28, …)`. Never introduce a grey or black drop shadow; on
+paper it reads as dirt.
+
+## 5. Typography
+
+Two families, loaded from Google Fonts in each page's `<head>`:
+
+- **Inter** (`--font-sans`): everything, weights 400 / 500 / 600 / 700 / 800.
+- **JetBrains Mono** (`--font-mono`): labels, indices, years, only via `.label`.
+
+Classes, not raw font sizes:
+
+| Class | Use |
+|---|---|
+| `.mega` | The hero statement. One per site, not per page. |
+| `.display-1` | Page titles and the contact statement. |
+| `.display-2` | Project and case study section titles. |
+| `.display-3` | Subheads, section headers. |
+| `.lead` | Intro paragraph under a display heading. |
+| `.label` | Mono uppercase eyebrow, category, index, year. `.label--accent` gradient-fills it. |
+| body default | 17px Inter, line height 1.6. |
+| `.small`, `.micro` | 15px, 13px. Captions and footnotes. |
+| `.grad-text` | Gradient-clipped emphasis span inside a display heading. |
+
+Rules:
+- Display type is tightly tracked (`--track-mega` -0.045em, `--track-display` -0.03em). That tracking is the signature; do not loosen it.
+- **Leading tightens as type grows, but never below 1.0.** Tracking is the
+  signature, leading is not the place to be clever. Inter's ascent is `.969em`,
+  its descent `.242em` and its cap height `.727em`, so a descender reaches
+  `.242em` below its baseline while the next line's capitals start at
+  `(line-height - .727)em` below it. `--lh-mega` was `.94`, which put the capitals
+  `.213em` down against a descender at `.242em`: the lines overlapped by `.029em`,
+  and the `p` of "complex" sat inside the `L` of "Lately". It is now `1.05`, which
+  leaves `.081em` of air, about 8px at the 96px hero size, and still reads as tight
+  display leading. Display type wants 1.0 to 1.2; body copy is at `--lh-relaxed`
+  1.6. `--lh-tight`, which drives `.display-1`, sits at the same `1.05` for the same
+  reason: at `1.04` it was not colliding, but `.071em` of air against the hero's
+  `.081em` read as two different heroes. One floor for all display type.
+- `.grad-text` is the emphasis device, once per heading, at most twice per page.
+- Prose blocks get `.prose` or `max-width: var(--measure)` (54ch, about 74
+  characters).
+- Inside a case study, prose instead takes `--measure-case` (55ch) at
+  `--t-body-case` (20px) and `--lh-relaxed`, which is 694px holding 75
+  characters. A case study is the only long-form reading on the site, so it is the
+  only place that overrides both. Do not raise `--measure` itself; the home page
+  depends on it. See section 12.
+- **A `ch` is not a character. Multiply by 0.73.** `ch` is the advance of `0`,
+  and in Inter `0` is `.6em` while the average character in running English text
+  is `.437em`, so a `ch` is about 1.37 characters. Every measure here was first
+  set as though `1ch` were one character, and the pages ran 84 to 103 characters a
+  line while a `ch`-based audit reported them as passing. The conversion does not
+  depend on font size, because both sides scale with the em: **characters x 0.73 =
+  ch**, so 75 characters is 55ch, 70 is 51ch, 66 is 48ch. Size a new measure that
+  way and verify it by counting the characters in a rendered line, never by
+  dividing widths and never in `ch` alone.
+- **A column can be fixed from either end.** Characters a line is column width
+  divided by character advance, so an overlong line can be fixed by narrowing the
+  column or by raising the type size. On a case study, raise the type: narrowing
+  would give back the width the page is supposed to use. `--t-body-case` went 18px
+  to 20px for exactly this reason, and the prose column stayed the same width
+  while the line dropped from 86 characters to 75.
+- Numbers use `.num` (tabular figures) so stats align.
+- All type scales fluidly with `clamp()`. Do not add media-query font sizes.
+
+## 6. Layout and spacing
+
+- `.container` wraps content on every page. `--page-max` is
+  `clamp(1280px, 78vw, 1800px)`: 1280px is the laptop composition and it holds
+  until about 1641px, where the column opens and then stops at 1800px. It was
+  `62vw / 1520px` until September 2026, and that first pass was too timid: 62vw
+  does not overtake the 1280px floor until a 2065px viewport, so a 1728 or 1920
+  monitor, which is what most external displays actually run at, composed in
+  exactly the laptop's 1280px with a third of the screen dead. 78vw moves the
+  crossover down to 1641px. The 1800px stop is what keeps a 4K panel from becoming
+  a poster; it is not a readability limit, because every paragraph is capped in
+  `ch`.
+- **Large monitors and ultrawides.** Nothing in the design may follow `vw` alone.
+  A 21:9 or 32:9 panel is 3440 to 5120px wide, so a column that tracks the
+  viewport puts 200 characters on a line against the 45 to 75 comfortable range
+  and WCAG 1.4.8's 80 cap. A hard centered ceiling is the right answer; the only
+  mistake is freezing that ceiling at laptop width, which turns a 32 inch display
+  into a 1280px ribbon with 1280px of dead sand on each side. Growing the ceiling
+  is safe here because every reading measure is in `ch` (`--measure`,
+  `--measure-card`, `--measure-case`, `.hero__lead`, `.case-hero__deck`;
+  captions and `.case-note` are the exceptions and have no measure at all), so a wider
+  container widens the
+  composition and the grid tracks and never lengthens a paragraph: a line is the
+  same length at a 1280px, 1498px and 1800px container, because the cap is in `ch`.
+  **Correction, measured 2026-09-20.** The claim that used to sit here, that the
+  longest line anywhere is 80 characters, was wrong, and it was wrong in an
+  instructive way. It generalised from a caption measurement. `figcaption` at 56ch
+  really does count 77 at 1512, and `.case-note` at `--measure-case` counts 81. But
+  `.prose p` in a case section, at the same `--measure-case`, counts **86 on
+  `work/pay-bill.html` and 90 on `work/card-dashboard.html`**, and the home page
+  counts 84. So `--measure-case: 55ch` does not hold a paragraph to 80.
+
+  The reason is the 0.73 conversion itself. `characters x 0.73 = ch` converts an
+  *average* line: 55ch is 75 characters of average-advance text. A maximum line is
+  not an average line. Justification is ragged-right, so the browser fits whatever
+  fits, and a line that happens to be mostly narrow glyphs (`i`, `l`, `t`, `r`, `f`,
+  spaces) runs 15 to 20 percent past the average before it breaks. The 0.73 rule is
+  correct for sizing a measure and useless for predicting the worst line. To hold a
+  *maximum* of 80 the measure has to come down to about **49ch**, from 55ch and the
+  ratio 80/90.
+
+  That narrowing is not made here. It would reflow every paragraph on all five case
+  studies, it costs about 11% of the reading column on pages whose standing
+  direction is to use the available width, and it is the user's call, not a
+  correction to fold into a copy edit. What is recorded is the true number, so that
+  nobody re-derives an 80 from a `ch` value again. WCAG 1.4.8 is AAA and
+  user-resizable text already satisfies the underlying need at any measure.
+
+  **Captions and the closing `.case-note` are outside all of this, on purpose. See
+  the caption width rule below.** Every `figcaption` under an image is uncapped, so a
+  caption's line length is set by the image, not by a measure, and it runs well past
+  80. The `.case-note` text is uncapped for the same reason, added 2026-09-20: it is
+  short enough that a long line costs nothing, and a capped text inside an uncapped
+  dashed panel read as a broken box. Both are the user's standing direction and
+  neither is a defect to fix. What holds them safe is a copy budget, not CSS: a
+  caption is two sentences and the note is two sentences. Break that and the
+  exception stops being an exception.
+- **Where the extra width goes on a case study.** Not the prose, which is pinned
+  at `--measure-case`. `.case-section__grid`'s first track is
+  `clamp(16rem, 18vw, 26rem)`, so the rail takes the growth until it hits 26rem at
+  about a 2160px viewport; past that the remainder falls to the right of the prose
+  as white space. That is the trade for keeping a paragraph under 80 characters,
+  and it is not wasted: `.shots` grids and the prototype embed span the full body
+  column, so on a large monitor the screens are what get bigger. The stat band is
+  not on that list. It is a reading block, so it takes the reading width.
+- `.section` supplies vertical rhythm (`--section-y`, 4.5rem to 10rem fluid).
+- `.band` is a full-bleed rounded section that carries its own background, the
+  way a product page stacks chapters.
+- Spacing uses `--s-1` to `--s-10` (4px to 144px). No arbitrary px values.
+- Radii are generous: `--r-sm` 6, `--r-md` 12, `--r-lg` 20, `--r-xl` 28 (media),
+  `--r-2xl` 40 (cards and bands), `--r-full` pills.
+- `html` carries `scroll-padding-top: 6rem` so in-page anchors land clear of the
+  floating nav pill. Raise it if the nav ever gets taller.
+
+Breakpoints are in `rem` and only where a layout actually breaks:
+`46rem` (nav collapses to one link), `62rem` (project bands stack, media first).
+
+## 7. Components
+
+Current inventory in `components.css`, in file order:
+
+`.progress` (+ `__fill`) · `.btn` (`--primary`, `--lg`) / `.arrow` · `.nav`
+(+ `.is-stuck` glass, `__inner`, `__brand`, `__dot`, `__links`, `__link`) ·
+`.aurora` (+ `__blob--1/2/3`) · `.hero` (+ `__inner`, `__eyebrow`, `__portrait`,
+`__wave`, `__title`, `__lead`, `__cue`, `__cue-line`) · `.marquee`
+(+ `__track`, `__item`) · `.section-head` (+ `__title`) · `.projects` / `.project`
+(+ `__grid`, `__body`, `__meta`, `__index`, `__tag`, `__year`, `__title`, `__link`,
+`__summary`, `__stats`, `__cta`, `__media`, `__chip`) · `.stat` (+ `__value`,
+`__label`) · `.cta` (+ `__inner`, `__title`, `__contact`, `__line` (`--email`,
+`--phone`), `__actions`, `__base`) · `.link-underline`
+
+Case study blocks, at the bottom of the file: `.case-hero` (+ `__inner`, `__cat`,
+`__title`, `__grid`, `__media`) with the one adopted modifier
+`.case-hero--split` · `.chrome-frame` (+ `__bar`, `__dot`, `__url`, `__body`) ·
+`.case-hero__device` (+ `--bare`) ·
+`.case-hero__deck` and `.case-hero__cap`, both still defined and both now unused
+by every page, kept for the reasons in section 12 ·
+`.case-back` (+ `__glyph`) · `.case-meta` ·
+`.case-section` (+ `__grid`, `__aside`, `__num`, `__title`, `__body`) ·
+`.pull-quote` · `.case-list` · `.stat-band` ·
+`.shots` (+ `--pair`, `--trio`, and `--solo`, which sizes ONE portrait phone to
+exactly the width one `--pair` cell gets, `calc((100% - var(--shots-gap)) / 2)`,
+centred, so a lone phone and a pair of phones in the same section render at the
+same scale; one-up below 40rem) / `.shot` (+ `__frame`, and `__frame--device`,
+which draws no frame at all: it resets everything `__frame` draws, so a phone
+sits on the page on its own bezel, see section 7) ·
+`.shots-head` (+ `__name`, `--first`) · `.shots-group` · `.case-note` ·
+`.next-case` (+ `__link`, `__title`, `__glyph`)
+
+**How tall the home hero is.** `min-height: min(100svh, max(56rem, 64svh))`. A
+`100svh` hero is a phone and laptop convention: on a 2010px tall viewport it is an
+almost empty canvas with three lines of type in it, and it pushes every piece of
+proof below the fold, which is the most expensive place to waste. Capping it means
+the skills ticker peeks in, which uses the attention above the fold and signals
+that the page continues. The cap has to be a proportion though. A flat `56rem`
+reads as deliberate at 1330px tall (67% of the viewport) and as a broken page at
+2010px tall (45%), so `56rem` is the floor and `64svh` takes over above about
+1400px. `100svh` still wins on short viewports, where the floor would overshoot.
+Do not chase the viewport past that, and do not make this a `vh` value: `svh`
+keeps the mobile toolbar from cropping the hero.
+
+**Why the decks override `--t-lead`.** `.hero__lead` and `.case-hero__deck` are the
+only two places that do. The deck under the hero statement is the one line asked to hold the
+headline's width, and it cannot: the `h1` fills the column at 22 characters a line
+only because it is set at 96px, so running the deck edge to edge at 24px would put
+100 characters on a line. The type grows instead of the measure. At `--t-deck` and
+55ch the deck is 904px wide and still holds 75 characters, where 24px at 52ch was
+749px, which takes it from 64% of the headline's width to 79% at laptop size. If a
+block has to look wider, reach for the size before the measure. The size itself is
+`--t-deck`, shared with `.case-hero__deck`; see below.
+
+**The case hero deck takes the same step, and the column pays for it.** The home
+page hero fix was carried onto the case study heroes. Two parts. The leading:
+`--lh-tight` went from 1.04 to 1.05 so `.display-1` clears its own ink by the same
+.081em as `--lh-mega`, and the two heroes stop leading differently at a glance. And
+the deck size, which is the part you can actually see: `--t-deck` is now a shared
+token, used by both `.hero__lead` and `.case-hero__deck`, so the deck under a
+display headline is 20px to 28px in both places instead of 24px on one and 28px on
+the other. A 24px paragraph under a 68px headline reads as a caption.
+
+Raising the size costs characters per line, and the split hero's text column could
+not absorb it: at the old `1fr / 1.15fr` the text got 516px, and 28px type in 516px
+is 40 characters, under the comfortable floor. So the ratio moved to
+`1.22fr / 1fr`. The text column is now 610px at 1512 and 721px at 2560, the deck
+runs 44 to 56 counted characters, and the media gives up about 18% of its width.
+That is the trade, made deliberately: a portrait phone frame and a browser frame
+both survive it, and a hero whose deck is unreadable is worse than a hero whose
+screenshot is smaller. The caps are `50ch` split, `42ch` unsplit and `40ch` stacked,
+all sized from counted characters, all of them guards rather than the binding
+constraint at desktop widths. Stacked was `28ch`, about 38 characters, which had
+made the hero deck the narrowest reading column on the site.
+
+One warning from doing this twice: the first attempt changed only the leading and
+the column, both by small amounts, and the result was invisible on the page even
+though every measurement had moved. If a change is meant to be seen, check that it
+is visible at the size it will be viewed, not only that the numbers improved.
+
+**A case hero is the same size as the home hero, by both measures.** Two heroes that
+sit one click apart should not be two different scales, and they were.
+
+The headline. `.case-hero__title` carries `.mega` in the markup, not `.display-1`,
+so a case study title runs 44px to 96px on exactly the token the home page `h1`
+uses, at `--w-black`, instead of the 68px `--t-display-1` cap. A 96px home headline
+against a 68px project headline is a 41% gap and reads as two sites.
+`--t-display-1` still drives section statements, which belong a step below a page
+title. If you add a case study, do not switch this class back.
+
+The height. `.case-hero` borrows `.hero`'s `min-height: min(100svh, max(56rem,
+64svh))` plus flex centering. Before, the case hero was pure padding and content, so
+it stopped growing once the type capped: 97% of the viewport at 1512x900 but only
+41% at 3840x2160, while the home hero held 64% at both. Agreeing on a laptop and
+disagreeing by half a screen on a large monitor is the worst version of this. Both
+now sit at 64% at 2560 and at 3840.
+
+| at 2560x1440 | before | now |
+|---|---|---|
+| Home `h1` / case `h1` | 96px / 68px | 96px / 96px |
+| Case hero, share of viewport | 62% | 64% (same as home) |
+| Case hero at 3840x2160 | 41% | 64% (same as home) |
+
+**Which hero frame.** `.chrome-frame` for a web surface, because the fake address
+bar can carry the real URL. KeyBank is the only page that uses it, and it should
+stay that way for as long as it is the only landscape desktop screen in the set.
+`.case-hero__device--bare` for an app, because browser chrome around a phone
+screen is a lie, and because a whole phone is the composition all four phone
+heroes now share. Whichever you pick, the hero image must be shipped work: there is
+no hero caption on any page any more, so there is nothing underneath it to carry a
+caveat. A concept belongs in section 05, captioned. See the no-deck passage below.
+
+**`.case-hero__device--bare`: the phone is whole, and it is sized by height.**
+This is the treatment on all four phone heroes. It switches off the background,
+border, shadow, radius, overflow and aspect ratio, and sizes the phone by
+**height** (`--case-hero-phone-h`) rather than width. Height, because a portrait
+phone is 2.13 times as tall as it is wide, so a column-width phone came out 553px
+tall and pushed the hero past a 16 inch viewport. `--case-hero-phone-h` is
+`clamp(26rem, 64vh, 60rem)`: the phone stays in proportion to the screen it is
+read on, the floor stops it collapsing on a short laptop, the cap stops a tall
+window turning it into a poster. Below `62rem` it goes back to width, because a
+stacked hero on a short landscape phone would otherwise size the image off a 400px
+viewport height. Elevation is `--drop-shadow-lg`, a `filter`, not a `box-shadow`:
+a box shadow traces the element box and would draw the square corners the asset
+does not have. That only works because every hero phone asset has genuinely
+transparent corners, all four checked pixel by pixel; if you add a fifth, check
+its corner pixels are `(0, 0, 0, 0)` before you trust the silhouette.
+
+**The panelled `.case-hero__device` is the fallback, and no page uses it.** It
+crops by aspect ratio (`3/2`, squarer at `40rem` and below) with the phone at
+`min(52%, 24rem)` of its width, so the phone bleeds off the bottom at roughly the
+size it gets in section 05 rather than shrinking to fit the column. The `24rem` is
+only a guard and has to stay above whatever 52% can reach, which at a 1800px
+container is 373px; when it was `21rem` the guard took over first and the phone sat
+marooned in a widening platform on a large monitor. Keep the rule: it is still the
+right answer for a screen that has to be shown larger than a whole phone would
+allow, where the crop itself is the argument. Reach for it deliberately, not by
+forgetting `--bare`, and if you do, pick the crop by what has to stay readable.
+
+It was `52vh` first, chosen as the largest value that kept the `.case-meta` rail
+above the fold everywhere the panelled version fitted. That produced a 231px phone
+on a 16 inch MacBook Pro and 264px on a 1920 monitor, and the user rejected it as
+too small. `64vh` takes the trade in the other direction, deliberately: 284px and
+325px at those two widths, 433px at 2560. That cost the rail its place above the
+fold, and moving the rail into the text column bought it back without shrinking the
+phone, so the trade no longer has to be made. See the rail passage below.
+
+**The two columns belong to one composition, so they sit close.** The gap is
+`clamp(var(--s-5), 2.2vw, var(--s-7))`: 24px stacked, 33px at 1512, 48px at 2560.
+It was `clamp(var(--s-6), 4vw, var(--s-9))`, which was 96px at 2560 and fine while
+the container stopped at 1520px. Once `--page-max` opened to 1800px that gutter
+was wider than the air inside either column and read as a hole with a headline on
+one side and a phone on the other. A gutter should be smaller than the elements it
+separates; when it is larger, the eye stops reading across it.
+
+**A bare phone gets a narrower media track than a wide screen does.** KeyBank's
+landscape screen fills its column, so the default `minmax(0, 1.22fr) minmax(0, 1fr)`
+is honest there and it keeps it. A `--bare`
+phone is sized by height, so it does not grow with its track: at `1fr` it came out
+433px inside a 717px track at 2560, which is 142px of dead air on each side, and
+the phone read as drifting away from the headline rather than sitting beside it.
+`.case-hero--split .case-hero__grid:has(.case-hero__device--bare)` moves the ratio
+to `1.9fr / 1fr`, which sizes the track to the phone plus a hairline of air at
+every width (53px each side at 1512, 66px at 2560), and hands the surplus to the
+text column: 1074px at 2560 against 875px before. **Repeat that `:has()` selector
+inside the `62rem` block when you undo the two columns.** `:has()` donates its
+argument's specificity, so `.case-hero__grid:has(...)` outranks a bare
+`.case-hero__grid { grid-template-columns: 1fr }` in a media query and the hero
+stays two columns on a phone. The first version of this shipped a 51px-wide phone
+at 320px for exactly that reason.
+
+There is no hero lean. `.case-hero--split .case-hero__media` used to carry
+`rotate(-1.4deg)` and straighten on hover, and it never once rendered: the element
+also carries `.reveal-pop`, and `.js-motion .reveal-pop.is-in { transform: none }`
+is three classes against that rule's two, so the lean was overwritten the moment
+the hero scrolled into view. It was deleted rather than given the specificity to
+win, because a tilted phone is not the treatment this site uses anywhere else. The
+hover is `scale(1.01)`. If you find yourself adding a transform to an element that
+also reveals, check what the reveal class does to `transform` first.
+
+**No case study hero has a deck or a hero caption.** It is eyebrow, headline, rail,
+and the screen. Basket Building dropped both first, in September 2026; the user then
+asked for the same on the other four. The reasoning is the same on every page and
+worth keeping, because it is the reason not to put a deck back: **the home page band
+already says it, and section 01 then says it properly at length.** A reader who
+clicked a band has just read that sentence, so a deck was the third telling before
+they had learned anything new. The hero caption went for the same reason, that the
+screen it described is the same screen section 05 shows and captions properly. The
+hero's job is to name the project and show it.
+
+The grid is `align-items: center`, so a text column of eyebrow, headline and rail
+centres against the image without any help. Three consequences, all of which have to
+hold before you remove a deck or a caption from a new page:
+
+- **The numbers the deck was carrying have to already live in the body**, next to
+  the work that produced them, or the page quietly loses them. Check the stat band
+  first. All four decks removed here were repeating a stat callout: 23% against a
+  20% goal, 3.3M to 7.7M, 1 and 2 star down 10%, under 5 minutes against a goal
+  of 15.
+- **A `<figure>` with no `<figcaption>` promises a caption it does not have**, so
+  the hero media becomes a `<div>`. The class hooks are all class-based and the
+  reset only zeroes a margin a `div` does not have, so nothing moves. The same
+  applies anywhere else: `.proto-block` is a `<figure>` and its `.proto-flag`
+  label is a `<figcaption>` for exactly this reason.
+- **The hero image has to be shipped work, because nothing is left to caveat it.**
+  This is the one that bites. Pay Bill's hero was the slider concept, which was cut
+  before launch and never shipped, and the caption underneath was the only thing
+  saying so; removing it would have left the page claiming an unshipped design as
+  the product. The hero now shows the shipped Select amount screen, and the slider
+  keeps its own captioned frame in section 05 beside it, which is where a
+  shipped-against-concept comparison belonged anyway. If the best-looking screen on
+  a page is a concept, that is where it goes, not in the hero.
+
+**The `.case-meta` rail lives inside the hero's text column, on all five pages.**
+It started on Basket Building, which has no deck: an eyebrow, one headline and
+nothing else made that column a small island in a tall empty field with a
+full-height phone off to the right, and the rail underneath both columns was 250px
+further down. Moving it up into the column gave it the mass it was missing, filled
+the width the headline does not use, and brought Role / Team / Timeline back above
+the fold, which the taller `64vh` phone had pushed past it. The user then asked for
+that composition on every case study, correctly: five heroes one click apart should
+read as one layout, and the reason the rail belongs next to the title was never
+specific to a page with no deck. A rail is credits, and credits belong with the
+title, not in a band at the bottom of the frame.
+
+It measured better on all five. Where the top of the rail sits, in the column
+against the old full-width band:
+
+| page | 1280x800 | 1512x945 | 1920x1080 | 2560x1440 |
+|---|---|---|---|---|
+| Pay Bill | 702 vs 926 | 757 vs 1019 | 792 vs 1087 | 858 vs 1317 |
+| Card Dashboard | 701 vs 907 | 750 vs 1000 | 764 vs 1068 | 879 vs 1298 |
+| Transactions | 710 vs 907 | 769 vs 1000 | 786 vs 1068 | 898 vs 1298 |
+| KeyBank | 882 vs 902 | 946 vs 966 | 803 vs 901 | 773 vs 1005 |
+| Basket Building | 568 vs 820 | 617 vs 913 | 644 vs 999 | 772 vs 1230 |
+
+Four pages that put the rail below an 800px fold now clear it, and nothing
+regressed. KeyBank gains the least because its deck runs five to six lines, so its
+text column, not its media, sets the hero's height: 1069px at 1280x800 and 1132px
+at 1512x945, which leaves the rail below the fold there either way. That is a
+consequence of a long deck and not of this layout, and shortening that deck is the
+fix if it ever matters enough.
+
+The switch is keyed off where the `<dl>` is in the markup, so moving it is the
+whole change and there is no flag to keep in sync. The full-width rule above it in
+`components.css` now survives only as the fallback for a hero written without it.
+`.case-hero--split .case-hero__grid .case-meta` restyles it as a 2x2 block with a
+hairline above each cell, `column-gap: var(--s-6)`, one column below `40rem`. Two
+columns and not `auto-fit`, because `auto-fit` gives three across at a mid width
+and leaves one cell alone on a second row, and because 2x2 is the shape that fills
+the vertical space the headline leaves. Each cell carries its own top hairline
+rather than the container carrying one rule with dividers between cells, because a
+rule drawn across a wrapping grid only lines up on the first row.
+
+Two things about that arrangement were paid for:
+
+- **The rail is a child of the text column, not a third grid item in row two.**
+  The row-two version was tried first. The phone then has to span both rows, a
+  spanning item distributes its height across the rows it covers, so both auto rows
+  grew and the headline and the rail ended up shoved to opposite ends of a 922px
+  phone with 260px of nothing between them. `align-content: center` cannot fix
+  that, because the rows really did grow. A title and its credits are one block;
+  keep them in one box.
+- **Stacked, the rail has to follow the phone, and `display: contents` is how.**
+  Source order in the column is title then credits then screen, which on a phone
+  would open the page on a table of metadata. The `62rem` block dissolves the
+  wrapper with `display: contents`, promoting the eyebrow, the headline and the
+  rail to grid items, then puts the rail last with `order: 1`. Two knock-ons to
+  keep: the title's own `margin-top` now stacks on the grid's row gap and doubles
+  the space under the eyebrow, so it is zeroed there; and a grid item is
+  blockified, so `.case-hero__cat`'s `inline-flex` stops shrink wrapping and the
+  pill runs the full column (347px around two words at 390px) until it is given
+  `justify-self: start`. Check both if you use this trick anywhere else.
+
+The prototype slot, used in section 05 of a case study that has one:
+`.proto-block` · `.proto-flag` (+ `__pip`) · `.proto-embed` (+ `--pending`,
+`--wide`, `.is-live`, `__cover`, `__play`, `__label`, `__sub`) · `.proto-open`
+
+The home page marquee has one variant, `.marquee--skills`, used for the skills
+ticker under the hero.
+
+### Screen exports
+
+Real screens live in `assets/img/<case-slug>/`, one folder per case study, as
+WebP. Pay Bill is the worked example; copy its conventions.
+
+- **Phone screens go in `.shots--pair`, never in the one-up `.shots`.** A portrait
+  phone at the full case column renders about 1700px tall. Two up it is ~410px
+  wide, which is also why the export is **840px wide**: exactly 2x, nothing
+  wasted. Only wide or landscape assets belong in the one-up slot.
+- **A set of three phones goes in `.shots--trio`, not `.shots--pair`.** The case
+  body column is about 756px at 1920 and 856px at 1440, so `--pair`'s 19rem
+  minimum fits exactly two and strands the third alone in a half-empty row, which
+  breaks the side-by-side comparison the set exists to make. `--trio` is a fixed
+  three-column track that goes straight to one up at 40rem, never through two.
+  The phones land around 203px at 1920 and 236px at 1440, small enough that the
+  caption has to carry the detail and the image only has to carry the difference.
+  A `--trio` row next to a `--pair` row renders at visibly different phone sizes.
+  That is intended where the pair is denser and needs the room, but it does need a
+  `.shots-head` between them so the size change reads as a new set and not as an
+  accident. **Card Dashboard's Experience section is the live example**: the Me
+  tab, the wallet page and the dashboard on one line, in journey order, so the row
+  reads as the path. The phones land 276px at 1280, 263px at 1512 and 387px at
+  2560, which is legible for a balance, a rewards figure and a button label but
+  not for body copy inside a screenshot. Basket Building used to be the example
+  and is now the prototype alone; that markup is still in
+  `iterations/20-basket-building-prototype-only/removed-shots.html`.
+- **ONE phone on its own goes in `.shots--solo`, not in `.shots` and not in
+  `.shots--pair`.** The one-up slot renders an 846x1744 export 1724px tall.
+  `.shots--pair` looks like it would work and does not: it is
+  `repeat(auto-fit, minmax(min(100%, 19rem), 1fr))`, auto-fit collapses the empty
+  track, and the lone child stretches to the whole column. `--solo` sizes its one
+  track to exactly what a `--pair` cell gets,
+  `calc((100% - var(--shots-gap)) / 2)`, which is why `--shots-gap` is a token in
+  `tokens.css` rather than a literal in `.shots`: the solo phone has to subtract
+  the same gap the pair does or the two drift. Measured identical to a `--pair`
+  cell at every width: 347 @390, 582 @640, 419 @1280, 396 @1512, 580 @2560. It is
+  **centred**, because a 396px phone against the left edge of an 837px column
+  reads as a `.shots--pair` whose second image failed to load; `.proto-block`
+  centres a lone device for the same reason. **No live page uses `--solo`.** Card
+  Dashboard's Experience section was the one user for a few hours on 2026-09-20 and
+  then went to `--trio`, because the same three phones were wanted on one line. It
+  is kept for the same reason `--trio` was kept when Basket Building stopped using
+  it: the next case study with one portrait screen to show alone needs it, and the
+  derivation is the expensive part. The markup that used it is in
+  `iterations/33-three-phones-one-line/removed-solo-and-pair.html`.
+- **More than one run of screens in a section needs `.shots-head` on each run.**
+  It is an `<h3>` under the section's `<h2>`: a hairline, a mono `.label` for the
+  set's status ("Experiment 01 · Live"), and a `.shots-head__name` for what the set
+  is. Add `--first` to the run that opens the section, which drops the rule and the
+  extra air because the `<h2>` already introduced it. Without these, five phones and
+  two boards down one column read as one undifferentiated pile; a caption cannot do
+  the job because a caption describes its own figure, not the group. Keep them
+  quiet. They must not outrank the section title, so no display type. This too has
+  no live example left, for the same reason `--trio` does not.
+- **Where there is a prototype, a still has to show something the prototype
+  cannot.** Basket Building is the worked case. Its prototype carries all five
+  mobile treatments, so the five phone stills that used to sit under it were the
+  same screens twice and came out. What stayed, and what was later added, are the
+  two Build Your Own Bundle **desktop** screens, which the prototype does not
+  contain at all. The test is not "is this a nice screen", it is "can the reviewer
+  reach this by operating the prototype". If they can, the still is redundant. See
+  `iterations/20-basket-building-prototype-only` for the removal and
+  `iterations/21-byob-search-screens` for the exception.
+- **A paragraph plus the screens it introduces goes in `.shots-group`.** Not a bare
+  `.prose` followed by a bare `.shots`. Reset gives a `<p>` no margin, so a
+  paragraph placed after `.proto-block` or `.stat-band` sits flush against that
+  panel's border and reads as the panel overflowing, while the `.shots` it
+  introduces opens at `--s-6` below it: more air inside the group than above it,
+  which is backwards and stops the two reading as one thing. `.shots-group` sets
+  `--s-8` above and `--s-5` between, the same pair `.shots-head` uses to open a new
+  set. No hairline, because it lands directly under a panel edge. Worked example:
+  Basket Building section 05.
+- **Crop the export to the device silhouette, not to the element's bounding
+  box.** A capture clip taken straight from `getBoundingClientRect()` lands on a
+  fractional pixel, so it picks up one or two pixels of whatever was behind the
+  mock down the left and top edges. Against the sand page that survives as a
+  pale hairline along two sides of the phone, which is the same class of defect as
+  the "weird corners". Find the tight bounding box of the dark bezel in the source
+  capture and crop to that. Test: no pixel in the outermost row or column of the
+  export should be lighter than ~120 mean luminance.
+- **Wide artwork must not carry its own edge, and must not carry its own corner
+  radius. `.shot__frame` is the edge.** A capture exported with a drop shadow,
+  glow or rounded corners baked in puts a second edge underneath the real one.
+  The shadow is the worse half: its RGB is dark grey, so over `--bg` (#EDE4D6) it
+  composites to a desaturated olive band, a muddy rim rather than a shadow. The
+  radius is the subtler half: an asset rounded to 8 CSS px inside a frame that
+  clips at `--r-xl` (28px) puts two different curves at one corner, and where the
+  artwork has real content near its edge, a header bar or a hard dark edge, the
+  frame's wider arc visibly chews it. Crop to the tight bounding box of fully
+  opaque pixels, found by scanning and not by assuming an inset, then fill what
+  transparency is left, which is only the corner arcs, from the nearest opaque
+  pixel on the row. **Save wide artwork as RGB, with no alpha channel at all.**
+  There is nothing for one to describe once the artwork is a rectangle, and a
+  stray 251-to-254 alpha from WebP's own quantisation is what turns into a haze
+  the next time the file is rescaled. This has now been the defect three times in
+  one week, on device frames, the ingress board and the three wide Card Dashboard
+  exports. `iterations/34-wide-asset-baked-shadows/reproc.py` is the encoder;
+  point it at any new offender. **The RGB rule stops at wide artwork**, for the
+  reason in the next bullet.
+- **A device export's transparent corners are load bearing, not cosmetic.** Since
+  2026-09-20 `.shot__frame--device` draws nothing at all, so the page's own `--bg`
+  shows through wherever the WebP is transparent. An export whose corners are
+  opaque will show four notches sticking out past its own rounded bezel, in
+  whatever colour was behind it when it was captured. Check alpha 0 at all four
+  corners before publishing one; all 22 live phone exports pass. Never bake a
+  background colour into an export.
+- **A screenshot of a phone has no alpha, so give it some.** Downloaded device
+  mocks arrive with transparent corners; a Playwright capture of a rounded phone
+  frame does not, and inside each of the bezel's four corners it keeps a wedge of
+  whatever the page behind it was. On a near-white page that is four white nicks
+  on the phone, which is the "weird corners" defect arriving by a second route:
+  the five Basket Building phones shipped with it in September 2026 and it took a
+  third report to find. Punch a rounded rectangle of the bezel's own radius into
+  a new alpha channel. Two things to get right, both written up in
+  `iterations/14-basket-building-hero-phone/reproc.py`. Get the radius from the
+  source CSS times the device scale factor, then **verify it against the image**
+  rather than trusting it: walk down the first rows of the crop for the first
+  pixel under 120 luminance and check the numbers against the circle. And paint
+  the discarded wedge the bezel's own colour before applying the alpha, because
+  LANCZOS mixes RGB across an alpha edge and a near-white wedge bleeds a pale
+  hairline back along the curve that lossy WebP then keeps. Zero RGB under
+  alpha 0 afterwards as always. Test: composite the corner over `--bg` at 3x
+  nearest-neighbour and look at it.
+- **A device shot needs `.shot__frame--device` on the frame, and the modifier now
+  means "draw no frame".** It resets padding, border, radius, background and shadow
+  to nothing, so the phone's own bezel is the frame and the phone sits directly on
+  the page. Changed on 2026-09-20 at the user's request, because the tinted panel
+  read as a dark container behind the phone rather than as a surface it rested on;
+  `iterations/30-device-frame-removed/` has the measurements. Until then the
+  modifier added `padding: clamp(var(--s-4), 6%, var(--s-7))`, to keep the frame's
+  `--r-xl` corner and 1px stroke off the phone bezel's own corner radius, because
+  two nearly concentric arcs that close together read as a smudged corner. Do not
+  re-add the padding to solve that problem: with no frame drawn there is no second
+  radius to collide with. Flat wide assets (annotation sheets, desktop screens)
+  keep the plain `.shot__frame` and still get its border, radius and tint.
+- **Check the device frame's edge for antenna lines.** Figma's iPhone components
+  bake six light grey antenna separators into the titanium band. They vanish on a
+  white artboard and show as pale ticks near each corner against the sand page
+  behind a device shot. Repaint them out before converting, interpolating the band
+  colour along
+  the edge so the gradient and the antialiased silhouette survive. Test: no
+  opaque pixel within 20px of the silhouette should exceed ~110 luminance.
+- Wide assets export at 1600px. WebP quality 90 for UI, 82 for photographs.
+  This took the Pay Bill set from 5.4MB to 1.0MB.
+- A home page card is `aspect-ratio: 4/3` with `object-fit: cover`, so a portrait
+  phone cannot go in one directly. Composite to 1600x1200 on a transparent canvas
+  instead (`assets/img/pay-bill/home-card.webp` is two phones side by side). Show
+  the whole device: a phone cropped by the card edge reads as a rendering error at
+  thumbnail size, where there is no caption to explain a deliberate bleed. Height
+  is the binding constraint, so two 1:2 phones land around 536x1104 with roughly
+  48px of top and bottom clearance and much wider side margins. That asymmetry is
+  unavoidable on a 4:3 canvas; the tint fills the sides.
+- Set `width`/`height` to the real pixel size of the export, not the old
+  placeholder's, or the reserved space is wrong and the page shifts on load.
+- Keep the source originals in `iterations/<n>-<slug>-source-assets/` with a
+  table mapping source file to published asset. This repo has no version control.
+
+### The hero eyebrow, as a thermometer
+
+`.hero__eyebrow` is the glass pill and `.hero__portrait` is the bulb at its left
+end. The bulb is deliberately taller than the pill so the photo stays big enough
+to read as a face, and it is absolutely positioned rather than laid out inline,
+because a flex child that tall would stretch the pill to match it. Its size is the
+one knob: `--bulb` on `.hero__eyebrow`, currently `6rem`. The pill's left padding
+is derived from it (`calc(var(--bulb) + var(--s-4))`), so changing `--bulb` keeps
+the text clear of the photo with no other edits. The ring is a `conic-gradient`
+in the accent family, drawn as a 3px `padding` box behind the image.
+
+### The contact lines
+
+The email address and phone number are the point of the contact footer, so they are
+not buttons. `.cta__contact` stacks two `.cta__line` links at display size:
+`--email` at `--t-display-2`, `--phone` one step down at `--t-display-3`. Each
+carries a 2px gradient underline that thickens to 6px on hover. Résumé and LinkedIn
+stay as secondary `.btn`s underneath, because they lead off the page and the two
+ways to actually reach a person should outrank them.
+
+That underline uses `--grad-accent-text`, not `--grad-accent`. The footer is the
+dark beat, and the fill gradient is dark green on near-black, which is effectively
+invisible. Same reason `.link-underline` uses it.
+
+Naming is BEM-ish: `.block`, `.block__element`, `.block--variant`. Add new
+components at the bottom of `components.css` with a comment header. Do not
+restyle an existing component for a one-off; add a variant.
+
+## 8. Motion
+
+Motion is part of the design here, not decoration, but every piece of it is
+opt-in per element and every piece of it turns off under `prefers-reduced-motion`.
+
+Durations: `--dur-fast` 140ms, `--dur-base` 300ms, `--dur-slow` 700ms,
+`--dur-xslow` 1200ms. Easings: `--ease-out` (workhorse), `--ease-spring`
+(playful overshoot, buttons and arrows), `--ease-in-out` (ambient loops).
+
+| Hook | Effect | Driven by |
+|---|---|---|
+| `class="reveal"` | 28px rise plus fade on scroll in | `site.js` IntersectionObserver |
+| `class="reveal-pop"` | 40px rise plus 0.965 scale, for media and cards | same |
+| `class="reveal-stagger"` | children cascade, 80ms apart | `site.js` sets `--i` per child |
+| `data-split` on a heading | word-by-word rise from a clipped mask | `site.js` wraps words, sets `--wi` |
+| `data-count` on `.stat__value` | number counts up once, 60% visible | `site.js`, 1.1s ease-out |
+| `class="parallax-slow"` | scroll-linked drift where `animation-timeline: view()` is supported | CSS only |
+| `.aurora` | drifting blurred color blobs, plus pointer parallax on fine pointers | CSS + `site.js` |
+| `.marquee` | infinite credential ticker, pauses on hover | CSS only |
+| `.progress__fill` | page-read bar across the top, `scaleX` | `site.js` on scroll |
+| `.nav.is-stuck` | nav pill gains glass and shadow past 16px of scroll | `site.js` toggles the class |
+| `.project__media` tilt | ≤5deg pointer tilt on fine pointers | `site.js` |
+
+Hard rules:
+- `site.js` adds `.js-motion` to `<html>` **before** any reveal CSS applies. Never
+  write a rule that hides content without the `.js-motion` prefix, or the page
+  disappears when JS fails.
+- Every scroll-driven value needs a static fallback. Never let a scroll effect be
+  the only thing that makes content visible or reachable.
+- `data-count` animates only the first number in the string and always restores
+  the authored text at the end, so a bad animation can never publish a wrong number.
+- Pointer tilt and pointer parallax are gated on `(hover: hover) and (pointer: fine)`.
+- Keep tilt angles at or below 5deg. Text must never visibly skew.
+- **`.word` needs `--word-bleed`, and the slide has to clear it.** The mask for
+  `data-split` is `overflow: hidden` on `.word`, which makes the clip box exactly
+  one line-height tall. Display type is set tighter than its own ink (`.94` on
+  `.mega`), so about `.135em` of descender falls outside that box and `p`, `y`,
+  `g`, `q`, `j` get sheared flat. `--word-bleed` pads the clip box out past the
+  ink and an equal negative margin takes the growth back out of layout, so the
+  margin box is still one line-height and nothing moves: verified identical `h1`
+  top and height, split versus unsplit, at 1440, 1024, 768, and 390. If you raise
+  `--word-bleed`, raise `.word > span`'s `translateY` start with it, or the top of
+  each word peeks above its line before the slide begins. `overflow: hidden` also
+  costs the inline-block its real baseline (CSS 2.1 substitutes the bottom margin
+  edge), which is why `.word` is aligned with `vertical-align: bottom`; do not
+  switch it back to `baseline`.
+- **The reveal observer's `threshold` must stay `0`.** A ratio threshold is
+  mathematically unsatisfiable for any element taller than
+  `viewportHeight / threshold`, and it fails silently: the element simply never
+  gets `.is-in` and sits at opacity 0 forever. It shipped once at `0.12`, which
+  meant any `.reveal` over about 7,160px went invisible at a 860px viewport, and
+  that is ordinary for a case study's section 05 (Transactions' is 7,254px). The
+  whole Experience section of that page was blank and the page still passed a
+  broken-image and heading audit. The `-12%` bottom `rootMargin` is the only gate
+  needed; it already delays the trigger to 88% of the viewport. If you ever add a
+  threshold back, cap it so `viewportHeight / threshold` exceeds the tallest
+  `.reveal` on the longest page.
+- The `prefers-reduced-motion` block at the end of `base.css` is the backstop.
+  Any new effect gets a line in it.
+
+## 9. Accessibility (non-negotiable, this is a portfolio for an Accessibility Bar Raiser)
+
+- One `<h1>` per page. Headings descend in order, no skipped levels.
+- Every image needs a real `alt` describing what a reviewer would see, or `alt=""`
+  if purely decorative. Placeholder SVGs carry `role="img"` and an `aria-label`.
+- Interactive text is a real `<a>` or `<button>`. A band's link text is the project
+  title; the whole band is made clickable with the stretched `.project__link::after`,
+  never with a click handler on a `<div>`.
+- Focus is visible everywhere (`:focus-visible`, 2px `--accent` outline, 4px offset).
+  The stretched band link draws its focus ring on its `::after`. Never remove an
+  outline without replacing it.
+- Skip link first in `<body>`.
+- The contact email and phone are real `mailto:` and `tel:` links at display size.
+  Size is not a substitute for them being links; keep both.
+- The marquee is `aria-hidden` because it repeats itself; the same credentials are
+  present once in a `.visually-hidden` list for screen readers.
+- Decorative glyphs (arrows, the wave, the scroll cue, aurora blobs, the progress
+  bar) get `aria-hidden="true"`.
+- Touch targets at least 44px tall for buttons and nav links on small screens.
+
+## 10. Images
+
+- `.project__media` is a fixed 4:3 well with `--r-xl` corners and `object-fit: cover`.
+  Export at 1600x1200 or larger, 2x preferred. The existing placeholders are
+  1600x1100 and crop fine.
+- Always set `width`, `height`, `loading="lazy"`, `decoding="async"` on band images.
+- Screenshots go in `assets/img/`, named `<slug>-<what-it-is>.png`.
+- `placeholder-*.svg` files are stand-ins drawn in the forest family only, on an
+  `#E6DCC9` canvas that is deliberately a step deeper than `--bg-raised` so the
+  media well separates. Replacing them is a straight `src` swap.
+- Real screenshots of dark-on-light product UI sit naturally on this canvas. Give
+  a screenshot with a white background a `--stroke` border so its edge is visible
+  against `--bg-raised`.
+- Recoloring artwork after a palette change is a per-hex substitution across
+  `assets/img/*.svg`. The current set uses `#191409` ink, `#146A47`, `#0E4E34`,
+  `#6CCBA0`, `#FFFFFF`, `#E6DCC9` canvas, `#7A6E55` captions, and `#0B7B3C` for a
+  genuinely positive signal. The favicon square is `#14110C`.
+
+## 11. Things that are still TODO on the home page
+
+Marked with `<!-- TODO -->` in `index.html`:
+
+1. ~~Résumé URL.~~ Done: the Google Doc, in the nav and the contact footer of every
+   page. The doc itself must be shared "Anyone with the link, Viewer" or the link
+   is a login wall. ~~LinkedIn URL is still open.~~ Done, September 2026, supplied by
+   the user: `https://www.linkedin.com/in/rishabh-singh-34b13a82/`, on all eight files,
+   the seven live pages and `work/_TEMPLATE.html`. The `<!-- TODO -->` comment above
+   each button is gone with it, so nothing in the footer is a placeholder any more.
+   A link check will report **999** for it, which is LinkedIn refusing non-browser
+   clients, not a broken URL; verify it in a browser instead.
+2. ~~Real headshot.~~ Done: `assets/img/headshot.jpg`, 512x512, cropped tight on
+   the face. It renders as the 6rem thermometer bulb on the hero eyebrow pill
+   (see section 7), so any replacement must be a square crop, at least 400x400,
+   with the face centered and no important detail in the corners.
+3. ~~Real case study screenshots replacing `placeholder-*.svg`.~~ Done, September
+   2026. **No live page references a `placeholder-*.svg` any more.** Basket Building was
+   the last one: `assets/img/basket-building/` now holds eight WebP captured from the
+   user's own interview prototype at `/Users/rriss/BundleSwap/prototype.html`, and
+   they cover the home band, the case hero, and all of section 05. Every
+   `placeholder-*.svg` is now unreferenced by a live page and could go, but the
+   archived home pages under `iterations/01` through `06` still point at them, so
+   moving them breaks those snapshots. See
+   `iterations/11-bundle-swap-source-assets/README.md` for the capture recipe,
+   which is unusual: that prototype boots in a presentation mode that hides the
+   document, so the five design panels are only reachable with `#pres-6` forced
+   active.
+4. An `og:image` export at 1200x630.
+5. ~~`work/*.html` case study pages.~~ Done: all five are built
+   (`basket-building.html`, `card-dashboard.html`, `pay-bill.html`,
+   `transactions.html`, `keybank.html`), and every band link on the home page
+   resolves. The `.next-case` chain follows the home page band order and closes the
+   loop: Basket Building to Card Dashboard to Pay Bill to Transactions to KeyBank to
+   Basket Building.
+
+   Two converted Transactions assets are deliberately unused on the page:
+   `assets/img/transactions/rewards-earned.webp` (a rewards variant of the list) and
+   the archived `TL-S-1.png` (a different statement month). Thirteen of the sixteen
+   files in that folder are on the page; the other is the home band composite.
+6. ~~`about.html`. The M.S. HCI degree belongs there; it is nowhere on the site yet.~~
+   Built in September 2026. The degree is in the hero's `.case-meta` rail and in the
+   Getting here section. See "The about page" at the end of this section,
+   `iterations/42-about-page/` for how it was built, and
+   `iterations/43-about-legacy-copy/` for the copy rewrite that followed, which
+   replaced three of its five sections with the legacy page's own words and removed
+   the employer roster. Two things on it are still open: the 2014 and 2015 to 2017
+   degree dates are the legacy page's and nobody has checked them against a
+   transcript, and `assets/img/headshot.jpg` is the only portrait asset, 512px square,
+   which is what caps the hero photo at 20rem. There is nothing larger: see item 3 of
+   `iterations/42-about-page/README.md` before searching for a bigger file again.
+7. ~~Content conflict: the AI Builder date.~~ Resolved by the user in September 2026:
+   the project was initiated in **April 2026**. The `.case-meta` rail reads "April 2026
+   to now" and section 02 says "initiated in April 2026". The résumé still says July
+   2025 and the handoff notes still say 2026 generally, so both should be corrected to
+   match rather than the page being changed back.
+8. Housekeeping, once the palette is confirmed settled: delete `preview.html` and
+   `assets/css/palettes/`.
+9. ~~Two decisions on `work/basket-building.html`.~~ Resolved by the user in September
+   2026. The work is **launched**: the page says Bundle Swap launched with its three
+   treatments, the footnote says the first experiment is live with results not in yet,
+   and the home band chip reads "Live experiment" rather than "In build". The handoff's
+   OPEN ITEM on launched-versus-pre-launch can be closed. The page has no hero deck and
+   no hero caption as of September 2026; the home band summary carries the positioning
+   instead. This is no longer specific to Basket Building: the user asked for it on all
+   five heroes days later, so no case study has either. See section 12, and
+   `iterations/17-heroes-without-decks/`.
+
+   One number on that page is **not** on the handoff's canonical list: **64%** of
+   customers look for complementary items themselves. The user supplied it directly
+   with the September 2026 content rewrite, sourced from the 11 Basket Building
+   studies. It lives in section 03 prose, where the research is described. It was
+   also a stat callout until `iterations/18-outcome-band-width` took it out of the
+   outcomes band as an input rather than an outcome. Add it to the canonical list
+   in the handoff so it stays consistent.
+
+   **Two more numbers on that page are published against the handoff's NEVER list,
+   and the list is the thing that is wrong.** The section 04 band carries an
+   **11% Bundle Swap rate** and **+0.11 units per purchase on treated purchases**.
+   Handoff line 29 calls both hypothetical modeling and line 210 files them as
+   interview-only. The user confirmed on 20 September 2026 that Bundle Swap has read
+   out and both are measured, and directed them onto the page. Correct handoff lines
+   29 and 210 and add both to the canonical list; they are also now fair game for
+   the résumé, which line 29 forbade. **Do not remove them from the page on the
+   strength of the stale list**, which is why the page comment says this too.
+   `iterations/18-outcome-band-width` has the full account, including why `+0.11`
+   carries no percent sign.
+
+   The org goal metric is now **numbered**, at the user's explicit direction in
+   September 2026: "I want to include the number 4.07 to 4.33 here. That is important
+   and the only goal worth emphasizing." Section 02 reads "The org is measured on units
+   per purchase, and the goal was to move it from 4.07 to 4.33."
+
+   This knowingly overrides the handoff, which puts the org goal figure on its
+   NEVER-publish list (UPPu 4.10 to 4.31, trending 4.07 Yellow). It was left unnumbered
+   until then for that reason. The user owns that content and made the call directly, so
+   the page follows the user and not the handoff. Do not silently revert it. Two things
+   to do with it: update the handoff's NEVER-publish list so the two documents stop
+   disagreeing, and note that the page's pair (4.07 to 4.33) is the user's own phrasing
+   and does not match the handoff's pair (4.10 to 4.31), so one of the two is out of
+   date and only the user can say which.
+10. Two content conflicts on `work/card-dashboard.html`. Both were once resolved in
+    favour of the handoff; **both were resolved the other way by the user on
+    2026-09-20**, and the handoff is the document now out of date.
+    - **Team.** The live page at rishabhsingh.design says "Product Manager, UX
+      Designer (me), Software Developer Manager, 4 Engineers". The handoff's
+      approved-final copy says a UX working group: a UX Manager, me, and later two
+      more designers, partnering with Product and Engineering. **Settled: the user
+      supplied the live page's roster as the copy for section 03**, so the page now
+      uses that and the hero meta rail was updated to match. See
+      `iterations/25-card-dashboard-team-role/`.
+    - **The third outcome.** The live page publishes "$158 OPS DSI per account
+      linked". That figure is on the handoff's NEVER-publish list *and* its
+      interview-only list, explicitly because it is not attributable to this redesign
+      and no analysis has been run: line 209 calls it "the stake, not the outcome".
+      **Settled the other way: the user directed it onto the page, firmly, replacing
+      28% of contacts traced to discoverability in the outcomes `.stat-band`.** The
+      concern was stated once and the direction stands. It now sits between two
+      measured results in the same stat treatment. See
+      `iterations/28-card-dashboard-ops-dsi-stat/`, which holds the 28% stat ready to
+      restore if it ever has to come off.
+
+    Also: `dynamic-layout-framework.webp` has legible annotation panels that name
+    internal research ("ECM 2.0 & C3 UX research") and quote participant findings.
+    It is already public on the live site, so it ships here, but it is the one asset
+    on the page with internal names baked into the pixels.
+11. One name missing on `work/pay-bill.html`. The Pay Bill slider was cut, won the
+    Amazon Inventor Award, and its implementation plus a modified version of the
+    design later shipped in a different project. Two places say that, and both
+    say "another project" because nobody has said which one: the second paragraph
+    of section 04 and the section 05 slider figcaption. Do not guess the project.
+    It is not in the handoff. There used to be a third, the hero caption, which
+    went when the hero captions did; that is also why the hero image is now the
+    shipped Select amount screen rather than the slider.
+12. `work/keybank.html` notes, for whoever edits it next:
+    - The live page spells the client "Keybank". Every page here spells it
+      **KeyBank**, which is the company's own capitalisation and what the home band
+      already used. Body copy quotes the live page otherwise close to verbatim, with
+      the handoff's one mandated correction applied ("cretaing" to "creating").
+    - It is the one case study whose hero uses `.chrome-frame` rather than
+      `.case-hero__device`. The device frame is built for a portrait phone
+      (`aspect-ratio: 3/2` with the image at 52% width) and would render a landscape
+      desktop screen unreadably small. The `__url` pill reads "KeyBank account
+      opening", not a URL: the in-branch tool has no public address and inventing one
+      would be a fabrication.
+    - The hero and section 05 both show `confirmation.webp`. That is deliberate and
+      both captions say so, because it is the only screen that carries the outcome.
+    - "Under 5 min" in the `.stat-band` is the one callout with no `data-count`, per
+      rule 6 in section 12: the count-up animates the first number in a string, so a
+      wordy value reads as a glitch.
+    - Role in `.case-meta` is "UX Designer, account opening end to end". The live page
+      says "UX Designer (me)" inside the team line; the meta rail splits role from
+      team, so the role cell states scope instead of repeating the team.
+
+## 12. Case study pages
+
+Every file in `work/` is a copy of `work/_TEMPLATE.html` with the copy and images
+swapped. The structure is the deliverable: it is what makes five case studies read
+as one publication rather than five microsites.
+
+### The skeleton, in order
+
+```
+.case-hero--split back link, category pill, h1, then the .case-meta dl, all
+                  in the text column. No deck. | the one hero image beside it,
+                  in .case-hero__device--bare for a phone (four pages) or
+                  .chrome-frame for a web surface (KeyBank). No caption, so it
+                  is a div, and the screen must be shipped work.
+.case-section 01  Background          real pull quote, then prose
+.case-section 02  Project goals       prose, then a .case-list of scope items
+.case-section 03  Team and role       the roster, then the colon, then a .case-list of
+                                      responsibilities. One sentence of prose, not two: no
+                                      sentence about what made the role unusual or what the
+                                      job was really about. See iteration 38.
+.case-section 04  Design and outcomes prose, then the .stat-band
+.case-section 05  Experience          optional .proto-block, then one or more
+                                      .shots runs (.shots-head above each if
+                                      there is more than one), then .case-note.
+                                      Prose may sit between the prototype and a
+                                      .shots run, as it does on Basket Building,
+                                      where it says what the screens below are.
+                                      Where there is a prototype, keep only the
+                                      stills it cannot show.
+.next-case        one link to the next case study
+footer.cta.on-dark  the shared contact footer, copied verbatim from index.html
+```
+
+### Why the section layout is what it is
+
+This body treatment is called Ledger and it carries no modifier class, because it
+is the default. Three alternatives (a banded chapter header, a timeline spine, and
+a full-bleed spotlight) were built and rejected; `iterations/07-case-body-candidates/`
+has the archived CSS and the reasons.
+
+`.case-section__grid` is `minmax(0, clamp(16rem, 18vw, 26rem)) minmax(0, 1fr)`: a left column holding
+the index number and the section title, and the reading column on the right. The left column is `position: sticky; top: 7rem`, so while you read a long
+section the title stays beside you and the page tells you where you are without a
+table of contents. Below `62rem` the grid collapses to one column and the aside
+goes `static`, because a sticky heading in a single column just eats the viewport.
+
+`.case-section__body` is deliberately NOT clamped to a measure. The reading blocks
+inside it clamp themselves (`.prose`, `.pull-quote`, `.case-list` and `.stat-band`
+all carry `max-width: var(--measure-case)`), which leaves images and
+`.proto-block` free to use the full column. Clamping the body instead collapsed
+`.shots--pair` to one shot per row.
+
+That self-clamping has one consequence worth knowing before you widen anything:
+the column width does not affect the text. Early on the column was 909px and the
+prose was 622px, a 32% empty right side that read as a missing column rather than
+a margin. The fix was not a longer line, it was bigger type at a slightly wider
+measure plus a wider rail, so the dead space shrank while the line got *shorter*:
+
+| | first pass | now |
+|---|---|---|
+| Body type | 17px / 1.45 | 20px / 1.6 |
+| Measure | 58ch, 622px | 55ch, 694px |
+| Characters per line, typical | 84 | 75 |
+| Characters per line, longest (2026-09-20) | | 86 pay-bill, 90 card-dashboard |
+| Rail | 13rem | `clamp(16rem, 18vw, 26rem)` |
+| Empty right side at 1512 | 32% | 17% |
+
+The middle step of that table was 18px at 62ch, which looked right and measured
+86 characters. It is the clearest case for counting instead of trusting `ch`: the
+column was already the right width, only the type was too small for it.
+
+The second row was added when the longest lines were actually measured rather than
+derived. The 75 in the `now` column is a typical line and it is real, but it is not
+the worst one, and the row it sat in used to be labelled "counted", which made 55ch
+look like it enforced 75. Read section 9's correction before you quote either
+number: holding a *maximum* of 80 needs about 49ch, and that narrowing has not been
+made.
+
+Every piece of *prose* in a case study is measure capped. The paragraphs on
+`work/pay-bill.html` run to 86 characters.
+
+`.case-note` is not prose and is **not capped.** It is a boxed aside at
+`--t-small`, and the dashed box spans the full body column so it reads as a bar
+closing the section. Its text was capped at `--measure-case` for a while, which
+counted 81 characters and looked like a bug: the panel is 837px at 1512 and 1208 at
+2560, the text stopped at 694, and the box carried an empty right third with the two
+sentences wrapped into three short lines inside it. Uncapped the text fills the
+panel, 757px at 1512 and 1065 at 2560, and the note runs 2 lines then 1. Do not put
+the cap back; see `iterations/35-case-note-full-width/` and the caption width rule
+below, which is the same trade for the same reason.
+
+### The caption width rule
+
+**A caption is exactly as wide as the image above it.** No `max-width` on
+`.shot figcaption`, on `.case-hero__cap`, or on `.proto-block > figcaption`, so the
+caption fills the same figure box the image fills and the two share a right edge.
+This is the user's standing direction, given on 2026-09-20 and applied across the
+board. The reason is plain: a caption that stops half way across the screen it
+describes reads as a misalignment, as something broken rather than as a caption
+belonging to that image.
+
+It began scoped. Basket Building's `.shots-group` got it first, because a 56ch
+caption under an 835px capture stopped less than half way across; that override is
+now deleted, since the base rule covers it and nothing on that page moved when it
+went.
+
+What it replaced: both figcaption kinds were capped at 56ch, about 77 characters,
+sized so that a caption obeyed the 80 limit. Counted longest caption on
+`work/pay-bill.html` under that cap was 79 at every width from 768 to 5120, 77 when
+re-measured on 2026-09-20. That is the number that section 9's wrong site-wide 80
+generalised from.
+
+**What it costs, measured on 2026-09-20 at 390, 1512 and 2560.** Caption width now
+equals media width to the pixel in all 45 `.shot figcaption` on the five case
+studies, at all three widths, 135 measurements with no mismatch. Nothing moved at 390: the body column is 347px, which
+is narrower than the old 56ch cap, so every caption there was already matching. In
+a `.shots--pair` or `--trio` cell nothing moved at 1512 either, for the same reason;
+the cell is 396px. What moved is one-up `.shots` at 1512 and up, and `--pair` at
+2560:
+
+| Context | Caption width | Longest line |
+|---|---|---|
+| Any caption @ 390 | 347px, unchanged | 54 to 73 |
+| `.shots--pair` cell @ 1512 | 396px, unchanged | 58 to 68 |
+| `.shots--pair` cell @ 2560 | 459 → 580px | 86 to 99 |
+| One-up `.shots` @ 1512 | 459 → 837px | 131 to 158 |
+| One-up `.shots` @ 2560 | 459 → 1208px | 145 to 237 |
+
+So a wide caption is a long line, and 237 characters is far past the 45-to-75
+comfortable range and WCAG 1.4.8's 80. What makes it survivable rather than reckless
+is line *count*, not line length: the cap exists because a reader loses the left edge
+returning to it across many lines, and a two-sentence caption wraps to one or two
+lines, where there is almost nothing to lose. 1.4.8 is AAA, and it is satisfied by
+user-resizable text at any measure.
+
+**Which turns the rule into a copy budget.** The longest caption on each page, by
+character count and sentence count:
+
+| Page | Longest caption | Sentences |
+|---|---|---|
+| `work/pay-bill.html` | 288, "The slider concept." | 4 |
+| `work/keybank.html` | 248, "Branch information." | 3 |
+| `work/transactions.html` | 239, "Accessibility annotations." | 3 |
+| `work/basket-building.html` | 218, "The offer, before anything is in the cart." | 2 |
+| `work/card-dashboard.html` | 171, "The dynamic layout framework." | 3 |
+
+Two sentences is the budget in section 3, and the captions above it are the ones to
+trim if any of this reads badly. **Trim the caption, do not narrow it and do not
+shrink the image.** Narrowing it puts back the misalignment the rule exists to
+remove.
+
+`.stat-band` is a fixed two-column grid, not `auto-fit`. Even at the widened
+column, four callouts at a sane minimum width come to a few pixels more than the
+column, so `auto-fit` drops to three and orphans the fourth on its own row.
+Two by two stays balanced at two, three, or four callouts. It drops to one column
+under `30rem`.
+
+It is capped at `--measure-case`, so **both of its edges line up with the
+paragraph directly above it.** It used to span the full body column, which is
+1208px against 694px of prose at 2560: a wide panel hanging off the right of a
+narrow paragraph, with its second column of callouts starting past where the text
+ended. It read as an unrelated element floating under the section rather than the
+close of it. Do not widen it back. The things that span the column are the ones
+that gain from pixels, `.shots` and `.proto-block`.
+
+**Two callouts is a fine band.** Four is not a target, and the strongest band on
+the site is the shortest. The band belongs to section 04, so a callout has to be a
+*result*, not an input and not a process note. A research finding that set up the
+work is section 01 or 03 material and is already in those paragraphs, so promoting
+it into the outcomes band is the band taking credit for an input. Basket Building
+ran `64%`, `4 in 10`, `Week 1`, `1 playbook` and now runs two measured outcomes;
+see `iterations/18-outcome-band-width`.
+
+**Whatever the band claims has to be in the prose too**, in the paragraph directly
+above it, per the standing rule that numbers live in body copy. A band is a
+restatement, never the only place a figure appears. The check is to delete the band
+mentally and ask whether the section still reports its own outcome.
+
+### The prototype slot
+
+Section 05 can open with a `.proto-block`: a phone-framed `<iframe>` that runs a
+self-contained HTML prototype from `prototypes/<slug>/index.html`, including one
+built with AI. It is the one thing on a case study a reviewer can operate, so it
+goes before the stills.
+
+Default to loading it on arrival: a real `src` plus `loading="lazy"`, which keeps
+it off the critical path, runs it with JS off, and spares the reviewer a click to
+reach the one interactive thing on the page. `site.js` section 8b still supports
+the other shape, the real URL parked in `data-src` and set only when a cover
+button is pressed, for a prototype heavy enough that arriving in it unannounced
+would be worse than asking. The iframe needs a real `title` either way. Only
+Improving Basket Building has one today; the other case studies delete the whole
+`<figure>`. Do not ship `.proto-embed--pending` on a live page, an empty player
+reads worse than no player.
+
+Give it **two selects, not a row of tabs**, when there is more than one thing to
+choose. Five tabs wrapped to a different shape at nearly every width, which drove
+the iframe's height around and read as five unrelated things; a category and then
+a variant within it is usually what the choice actually is, and two selects are
+one height at every width. Each needs a visible `<label>`, a `44px` min-height,
+and a border that clears 3:1 against its own background under WCAG 1.4.11
+(`#D5D9D9` on white is 1.4:1 and fails, `#888C8C` is 3.55:1). Swapping the panel
+is silent, so announce it in a visually hidden `role="status"`, never with
+`aria-live` on the panel itself, which would read a whole screen of content out
+on every change. Drop `role="tabpanel"` and `tabindex="0"` from the panels with
+the tabs: without a tablist they are a lie and an extra stop for a keyboard user.
+
+There are two shapes, and the choice is about what the prototype draws for itself:
+
+- **`.proto-embed`** is the default. A 22rem, 9/17, black-bezelled frame, for an
+  iframe whose content *is* a phone screen and nothing else.
+- **`.proto-embed--wide`** is for a prototype that draws its own device frame or
+  needs width for controls. Full column and **no surface of its own at all**: no
+  bezel, no border, no fill, because a card around a phone inside `.proto-block`'s
+  own panel is three nested boxes. The prototype sets `html, body { background:
+  transparent }` so the block's panel runs under it; an iframe paints its own
+  document's background, so both sides have to agree. The dormant cover, if the
+  prototype uses one, is the one thing that keeps an edge, or a tall empty region
+  with a play button in it reads as a broken image.
+
+  Its height is **measured, not declared**. Section 8a of `site.js` reads the live
+  prototype's own document height and sets it inline, refitting in both directions
+  whenever the prototype swaps what it shows or a resize reflows it. Shrinking is
+  safe only because the prototype's controls sit at the *top* of the frame, so a
+  refit moves its bottom edge and the caption below, never the control the visitor
+  just used. `--proto-h` plus `--proto-h-1` … `--proto-h-5`, tiered by `@container`
+  on `.proto-block`, are only the fallback: what a visitor sees while
+  the iframe is still loading, with JS off, or over `file://`, where Chrome makes
+  the iframe an opaque origin and the measure is not allowed. They must stay worst cases, so read
+  the note above them in `tokens.css` and re-measure at every width if the
+  prototype's own copy changes. Two reasons a simpler rule will not do: the content
+  height is not monotonic in the embed width, and the embed width is not monotonic
+  in the viewport's.
+
+  Tier one token per `zoom` step of the prototype's own device frame, and key the
+  `@container` thresholds to those same breakpoints rather than to round numbers. An
+  `inline-size` container is measured on its **content box**, so the width a
+  `@container` query sees is the embed's width, which is the iframe's viewport width,
+  which is exactly what the prototype's own media queries key on: the two can mirror
+  each other one for one. A tier whose ceiling sits *above* a zoom step hands a
+  zoomed-up frame a height measured for a smaller one and the iframe scrolls inside
+  itself, so subtract a couple of px from each threshold, never add.
+
+  A prototype that scales a fixed width device frame must do it with `zoom`, not
+  `transform: scale`, or its layout box stays full size: enlarged it overflows
+  sideways, shrunk it leaves a hole under itself. Scale in **both** directions. A
+  393px phone at 1x in an 862px embed uses barely half the width it was given, which
+  is the same "use the space" note the rest of the site follows, so zoom it up as
+  well as down. The cap is set by asset density, not taste: raster assets encoded at
+  *N*x their 1x boxes deliver only *N* / zoom device pixels at the largest zoom, so
+  keep that quotient at 2x or better and record the coupling in both build scripts.
+
+A file under `prototypes/` is a self-contained artifact, not a site page, so it is
+the one place exempt from the no-`<style>` and token rules. If it is generated from
+a source deck, commit the generator beside it and say so in the file's head
+comment, or the next agent will hand-edit 200KB of output and lose it.
+
+A prototype extracted from a deck inherits the deck's shortcuts, and six kinds are
+worth looking for before it ships. **Text truncated by `overflow: hidden` inside a
+fixed-height card cuts at an arbitrary pixel**, usually through the middle of a line
+of letters. `-webkit-line-clamp: <n>` is the fix: it snaps the box to a whole number
+of lines and adds an ellipsis. It needs `display: -webkit-box` and
+`-webkit-box-orient: vertical`, the `-webkit-` prefix specifically, and a flex
+sibling of `flex: 0 1 auto` rather than `flex: 1`, or the box is stretched back to
+full height and the clamp buys nothing. And **a deck reuses one image for several
+items** to save the author time. On a screen whose whole argument is that the
+customer is choosing between those items, identical thumbnails read as a bug. Give
+each one its own asset, put non-deck sources in a `SRC_OVERRIDE`-style table in the
+asset script rather than in the source tree, and archive the original under
+`iterations/` with the recipe. And **a box that once had a background keeps its
+padding after the background goes**, which indents one block of a card while its
+neighbours stay flush and is invisible in the markup because there is nothing left to
+see. Check every block of a card against one left and one right edge. While you are
+there, align an icon to a line of text by making its box **exactly one line box**
+(`height` = the line-height, viewBox unchanged, so `preserveAspectRatio` centres the
+glyph for you) rather than nudging it with a `margin-top`, which only ever lands by
+coincidence and drifts the moment the line-height changes.
+
+The fourth is the costliest: **a control that only restyles itself**. A deck's tabs,
+toggles and pickers routinely move a `.selected` class and nothing else, because the
+author was going to talk over the slide. If the thing the treatment exists to
+demonstrate is what that control changes, the prototype is silently failing to
+demonstrate its own argument, and it looks finished while doing it. Make the control do
+the work, and expect three consequences.
+
+First, **a control that changes content needs ARIA that a decorative one did not**. Four
+unlabelled buttons that restyle themselves are fine; four that swap six products are a
+tablist, which means `role="tablist"` / `tab` / `tabpanel`, `aria-selected`,
+`aria-controls` and `aria-labelledby`, roving `tabindex` (0 on the selected tab, -1 on
+the rest) and Arrow / Home / End keys. A panel needs no `tabindex` of its own if it
+already holds focusable controls. Give the ring room to clear whatever border the
+selected state grows, or arrowing along a row looks like nothing is happening. And where
+repeating the same six cards left six identically named "Add to cart" buttons in one
+panel, name them per product.
+
+Second, **`[hidden]` will not hide a panel whose author CSS sets `display`**. The UA
+sheet's `[hidden] { display: none }` loses to any author declaration no matter how weak
+the selector, so a `display: flex` row needs an explicit `[hidden] { display: none }` of
+its own or every panel stacks up at once.
+
+Third, **state the control used to be able to ignore now needs a decision**. A running
+total written against "every card in this region" was correct while only one set of cards
+existed; once the control swaps the set, it counts hidden cards too. Whether that is a bug
+or the feature depends entirely on the offer's own rules, so read them before writing
+code. A discount for two items *for one mission* means changing the control must clear the
+selection. A discount for any two items means it must not, and then the counter can
+legitimately read 2/2 while nothing on screen is ticked, which needs a total that is
+visible from every tab so the number is never unexplained. Getting this backwards is
+cheap to do and invisible in testing, because both versions look correct as long as you
+only ever exercise one tab.
+
+The fifth is a picture rather than a control: **a screenshot of chrome cannot hold state**.
+A deck will paste in an image of a tab bar, a nav rail or a status bar, and that image is a
+photograph of one moment, badge and selected state included. If anything the prototype
+demonstrates should change that chrome, the image has to become markup, and the badge
+painted into it is the tell. Measure the replacement off the file it replaces rather than
+eyeballing it, because a device frame's height usually feeds a fallback height ladder
+somewhere: read the source's dimensions and its rendered box to get the scale factor, take
+the colours from a histogram, check whether evenly spaced cells reproduce the measured
+centres closely enough to use flex, and land on the same total height so nothing downstream
+moves. Then let only the parts that do something be controls. Four glyphs with
+`aria-hidden="true"` beat four buttons that go nowhere, and a live count wants
+`role="status"` with a visually hidden noun beside it, since the glyph it annotates is
+hidden and the noun is therefore the whole accessible name. Make the noun agree with the
+number.
+
+Counters that live in that chrome bring three traps. **Scope every read and write to the
+panel**, via `closest()`, when several treatments sit in the DOM at once, or a reviewer
+sees the cart they built in a different scenario. **A reset that restores one subtree's
+`innerHTML` cannot reach a counter outside it**, so zero it by hand; moving the counter
+inside the restored subtree instead is worse, because the restore would set it to whatever
+it said at page load, which is right only by luck. And **check whether the handler you are
+incrementing from can fire twice for one thing**: a deck's swap handlers often re-point a
+trigger's `onclick` back at itself, so write a floor (`Math.max(1, current)`) rather than a
+`+1` where the underlying object is being replaced rather than added to. Patch inherited
+deck JS through a helper that raises unless the string it expects appears exactly N times;
+a silent no-op ships a dead counter and a clean build log.
+
+The sixth is the fourth's twin at the end of the flow: **a commit that only relabels its
+own button**. A deck's submit turns green and says "Added", because the author was about
+to change slides. Nothing tells the customer what is now in their cart, and the state
+behind the button is still the state of choosing. If the prototype has an outcome worth
+demonstrating, build it, and take the loading and confirmation idiom the deck already
+uses somewhere else rather than inventing a second one: a reviewer clicking through two
+strategies in one sitting reads two spinners as two systems. Reuse the summary markup for
+the confirmation's figures too, so its type and spacing cannot drift from the panel it
+replaces, and recompute every number from the same attributes the live summary reads.
+A reference screenshot's figures belong to whatever selection was on screen that day; if
+yours happen to match it, that is a good sign, not the goal. Same for its repeated
+placeholder imagery: clone the `src` of what the customer actually chose out of the live
+DOM, never name an asset in a JS string, because a build's `src` rewriting and its asset
+collection usually run on markup only and a hard-coded path will work right up until one
+of them changes.
+
+Four things break when a commit replaces its own container. **The element that was clicked
+is detached**, so read the panel, the header and the selection *before* the swap and write
+the counter against what you captured; a `closest()` afterwards walks up to nothing and
+fails silently. **Focus falls to the top of the document**, so give the new block
+`tabindex="-1"`, focus it with `{ preventScroll: true }`, and lead it with a visually
+hidden line naming the outcome, rather than leaving the first thumbnail's product name to
+stand for what happened. Do not also give it `aria-live`: inside a block about to be
+focused, a live region announces on insertion and then again on arrival. **Handlers written
+for a world where the old controls survive become unreachable**, and deleting them is part
+of the change; code that contradicts the model is worse than no code. And **the scroller
+keeps its position while the content shrinks**: a submit at the bottom of a panel taller
+than the frame means the panel's top is far above the visible area when it is pressed, so a
+short confirmation renders off-screen and the customer watches an empty box resolve into
+whatever is below. Scroll it back yourself, by walking `offsetTop` up to the scroller
+rather than differencing `getBoundingClientRect()` against `scrollTop`, since rects are
+zoom-scaled and `scrollTop` is not, and do it again after anything you un-hide above the
+new content. That last fault will not appear in any assertion you would think to write.
+It appears in a screenshot.
+
+Two asset notes that go with this. Boxes in the asset script may be **derived** from the
+CSS instead of measured, when the constraint is a simple `max-width` / `max-height` with
+`object-fit: contain`: for a source of aspect `a`, the box is
+`(min(maxW, maxH * a), min(maxH, maxW / a))`, rounded up. That is one line of arithmetic
+instead of one measurement per image and it survives a reorder, but it is an exception,
+so say so in the script where the docstring promises measured numbers. And **removing a
+use can make a box too small**, not just too large: an image constrained by two
+different call sites is encoded for the larger, so deleting the larger one leaves the box
+under-sized for whatever is left. Re-measure every remaining use, with every panel and
+sheet open, after any change that removes one.
+
+### Rules for a new case study
+
+1. Copy `work/_TEMPLATE.html`. Do not change the section order, the heading
+   levels, or the class names.
+2. Background opens with a **real** quote from a customer or a research
+   participant. Never invent one. If there is no real quote, delete the `<figure>`.
+3. Exactly one `<h1>`, the case title. Every section title is an `<h2>`. The only
+   `<h3>` allowed is `.shots-head`, naming one run of screens inside section 05.
+4. No em dashes anywhere, including the `<title>`. See section 3.
+5. Never publish a modeled, projected, or unmeasured number as an outcome. Only
+   figures from the content handoff's canonical list.
+6. Two to four stat callouts. `data-count` only on a plain figure ("23%", "2.3M");
+   a wordy callout ("Week 1", "1 playbook") stays static, because the count-up
+   animates the first number in the string and reads as a glitch otherwise.
+7. Every image needs real alt text. A placeholder keeps "Screen to be added:" at
+   the front of its alt, so a missing export shows up in an accessibility audit
+   instead of hiding behind a plausible description.
+8. Two footnote variants, both in the template. Use the pre-launch one only for
+   work that has not shipped.
+9. Set `--accent` nowhere. A case study inherits the site accent.
+10. No `<style>` block and no new stylesheet. If a case study needs something the
+    components above do not cover, add a component here first.
+11. **A caption is as wide as the image above it, and two sentences long.** The
+    width is automatic, so the only thing to get right is the length: a bold label
+    and one sentence. Never add a `max-width`, an inline width, or a wrapper to
+    narrow a caption. See the caption width rule in section 11 and the caption
+    budget in section 3.
+
+After copying: point the previous case study's `.next-case` at the new page, and
+confirm the matching band on `index.html` links to it.
+
+### The about page
+
+`about.html` is not a case study and it is not the home page, but it is built out of
+the case study skeleton rather than out of the home page hero, because it is the
+same kind of object: a document with a reading column and a sticky rail of section
+titles. Reusing that skeleton is also what kept the page from needing a stylesheet
+of its own. It added exactly three rules to `components.css` and no tokens.
+
+What it does the same as a case study: `.case-hero--split`, the `.case-meta` rail
+inside the hero's text column, `.case-section` + `.case-section__grid` with a sticky
+`.case-section__aside`, `.prose` at `--measure-case`, `.case-list` for the tool
+roster, and the shared nav, `.progress`, skip link and `.cta` footer copied verbatim.
+
+**Its copy is the legacy rishabhsingh.design/about page's own copy, near enough
+verbatim, in three of its five sections.** A first version rewrote that biography in
+this site's voice and added an employer roster, an award and a paragraph about the
+case studies; it read as over the top and was replaced. The two sections that are not
+from the legacy page are Accessibility and AI and design ops, which are original and
+which were deliberately left untouched in the rewrite. Full before and after in
+`iterations/43-about-legacy-copy/`. The practical consequence for anyone editing this
+page: **the voice rules in section 3 do not describe three of its five sections.**
+"Hello! I'm Rishabh", "I excel at", "my favorite aspect", the exclamation mark at the
+end of Away from work, the straight quotes around "whys" are all his own words off the
+old site and are meant to be there. Do not quietly edit them into the house voice. The
+one thing that was changed on the way over is the en dash in "(2015-2017)", which
+became "(2015 to 2017)" because no en or em dash appears anywhere on this site.
+
+What it does differently, and why:
+
+- **No `.case-section__num`.** On a case study the numbers mark a narrative running
+  in one direction, from background to outcome, so 01 through 05 mean something. On
+  the about page the order is a reading order and nothing more, and numbering it
+  would promise an argument the page is not making. The sticky aside carries the
+  title alone. `.case-section__title`'s own `margin-top: var(--s-3)` is harmless
+  without a number above it and helps it sit optically level with the first line of
+  body copy.
+- **No `.case-back` rail.** "All work" belongs above a case study. The exit is a
+  relabelled `.next-case` at the foot of the page, pointing at `index.html#work`
+  with the label "Selected work" and its `aria-label` set to match, because a page
+  that ends on a paragraph about sneakers still needs a door.
+- **`.about-portrait` in the hero media slot.** The one hero media on the site that
+  is a photograph rather than a screen. It borrows `.shot__frame` for the frame,
+  because `.chrome-frame` would claim the image is a running application and
+  `.case-hero__device` is sized for a phone bezel. It is capped at 20rem rather
+  than filling its track: `assets/img/headshot.jpg` is 512px square and it is the
+  only portrait asset there is, so a 509px 1fr track would render it at 1:1 and
+  make it the one soft image on the site. With the cap it renders at 1.6x, in the
+  same range as the 1600px screen captures in their ~840px column. The grid ratio
+  shifts to 1.9fr/1fr, the same track the bare phone hero takes, so the capped
+  photo is not marooned in the middle of a wide column. Raise the cap and the ratio
+  together if a larger headshot is ever exported.
+- **No inline links in the prose.** `.link-underline` sits at
+  `background-size: 0% 2px` until hover and takes `--text` for its color, so inside
+  a paragraph it is indistinguishable from the text around it. That is a 1.4.1
+  failure waiting to happen, and its two existing uses are standalone links, not
+  inline ones. The page names Pay Bill and the case studies in plain text instead.
+
+Line lengths counted at 390, 640, 900, 1280, 1512 and 2560: prose tops out at 76
+characters, the `.case-list` items at 74, the hero deck at 60, `.case-meta` values
+at 51. All inside 1.4.8's 80. Headings run h1 then five h2 then the footer's h2, no
+skips, and all five `aria-labelledby` references resolve.
+
+The third new rule is `.case-section__body .case-list + .prose`, which gives a
+paragraph that resumes after a list somewhere to sit: `.prose p + p` only reaches
+siblings inside one `.prose`, and a `.case-list` breaks the chain. The about page does
+this once, in AI and design ops, and so did `work/basket-building.html`, twice, which
+had been carrying
+`style="margin-top: var(--s-6)"` inline at both of its list-to-prose joins. A value
+repeated inline on two elements is a component rule that has not been written yet, so
+writing it let both inline styles be deleted. The rule takes the same `--s-6`, which
+is one step larger than `.case-list`'s own lead-in, because resuming prose after a
+list is a bigger break than introducing one.

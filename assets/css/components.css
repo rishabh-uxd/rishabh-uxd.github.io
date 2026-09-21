@@ -1,0 +1,1745 @@
+/* ==========================================================================
+   COMPONENTS  v4
+   One component per commented section. Add new ones at the bottom.
+   Every section draws on the same accent. Do not introduce a second hue.
+   Built for the warm paper palette: light surfaces, warm shadows, ink text.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Scroll progress bar
+   -------------------------------------------------------------------------- */
+.progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 3px;
+  z-index: var(--z-progress);
+  background: transparent;
+  pointer-events: none;
+}
+
+.progress__fill {
+  height: 100%;
+  width: 100%;
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  background: var(--grad-accent);
+}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+.btn {
+  --btn-bg: var(--bg-raised);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 2.875rem;
+  padding: 0.75rem var(--s-5);
+  border-radius: var(--r-full);
+  background: var(--btn-bg);
+  border: 1px solid var(--stroke);
+  color: var(--text);
+  font-size: var(--t-small);
+  font-weight: var(--w-medium);
+  line-height: 1;
+  cursor: pointer;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--dur-base) var(--ease-spring),
+              background var(--dur-base) var(--ease-out),
+              border-color var(--dur-base) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out);
+}
+
+.btn:hover { transform: translateY(-2px); border-color: var(--stroke-strong); box-shadow: var(--shadow-md); }
+.btn:active { transform: translateY(0) scale(0.985); }
+
+.btn--primary {
+  background: var(--grad-accent);
+  border-color: transparent;
+  color: var(--accent-ink);
+  font-weight: var(--w-semibold);
+}
+
+.btn--primary:hover { box-shadow: var(--glow); }
+
+/* On the dark beat the accent fill is too close in value to the background to
+   clear the 3:1 boundary WCAG 1.4.11 wants for a control, so the button gets a
+   visible edge instead. --accent-lift clears 3:1 on ink in every palette. */
+.on-dark .btn--primary { border-color: var(--accent-lift); }
+
+/* Sheen that sweeps across on hover. */
+.btn--primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 20%, rgba(255,255,255,0.40) 50%, transparent 80%);
+  transform: translateX(-130%);
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.btn--primary:hover::after { transform: translateX(130%); }
+
+.btn--lg { min-height: 3.5rem; padding: 1rem var(--s-6); font-size: var(--t-body); }
+
+.arrow { display: inline-block; transition: transform var(--dur-base) var(--ease-spring); }
+a:hover .arrow, .btn:hover .arrow { transform: translateX(5px); }
+
+/* --------------------------------------------------------------------------
+   Nav. Floating glass pill.
+   -------------------------------------------------------------------------- */
+.nav {
+  position: fixed;
+  top: var(--s-4);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--z-nav);
+  width: min(100% - 2 * var(--s-4), var(--page-max));
+  transition: top var(--dur-base) var(--ease-out);
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: 0.5rem 0.5rem 0.5rem var(--s-5);
+  border-radius: var(--r-full);
+  border: 1px solid transparent;
+  background: transparent;
+  transition: background var(--dur-base) var(--ease-out),
+              border-color var(--dur-base) var(--ease-out),
+              backdrop-filter var(--dur-base) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out);
+}
+
+/* Glass only kicks in once you scroll, so the hero stays clean. */
+.nav.is-stuck .nav__inner {
+  background: var(--bg-glass-strong);
+  border-color: var(--stroke);
+  backdrop-filter: blur(18px) saturate(140%);
+  box-shadow: var(--shadow-md);
+}
+
+.nav__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: 1rem;
+  font-weight: var(--w-semibold);
+  letter-spacing: -0.02em;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.nav__dot {
+  width: 10px; height: 10px;
+  border-radius: var(--r-full);
+  background: var(--grad-accent);
+  box-shadow: 0 0 16px color-mix(in oklab, var(--accent) 70%, transparent);
+  animation: pulse 3.2s var(--ease-in-out) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.35); opacity: 0.75; }
+}
+
+.nav__links { display: flex; align-items: center; gap: var(--s-1); }
+
+.nav__link {
+  padding: 0.625rem var(--s-4);
+  border-radius: var(--r-full);
+  font-size: var(--t-small);
+  color: var(--text-dim);
+  transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
+}
+
+.nav__link:hover { color: var(--text); background: var(--bg-raised-2); }
+
+@media (max-width: 46rem) {
+  .nav__inner { padding: 0.375rem 0.375rem 0.375rem var(--s-4); }
+  .nav__brand { font-size: 0.875rem; }
+  .nav__link { padding: 0.5rem var(--s-2); font-size: var(--t-micro); }
+  /* Work and Contact are both one scroll away, so the pill keeps one link. */
+  .nav__links .nav__link:not([href="about.html"]) { display: none; }
+  .nav .btn { min-height: 2.25rem; padding: 0.5rem var(--s-4); font-size: var(--t-micro); }
+}
+
+/* --------------------------------------------------------------------------
+   Aurora background. Drifting blurred color blobs.
+   Decorative, sits behind content, never intercepts pointer events.
+   -------------------------------------------------------------------------- */
+.aurora {
+  position: absolute;
+  inset: -20% -10% auto -10%;
+  height: 130%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(80px) saturate(120%);
+  opacity: 0.55;
+}
+
+.aurora__blob {
+  position: absolute;
+  width: 48vw;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  /* Multiply, because on paper a blob has to tint the page, not light it. */
+  mix-blend-mode: multiply;
+  will-change: transform;
+  animation: drift 26s var(--ease-in-out) infinite alternate;
+}
+
+/* Three steps of the same hue, never a second color. */
+.aurora__blob--1 { left: -6vw;  top: 2vh;  background: radial-gradient(circle at 40% 40%, var(--accent-3), transparent 64%); }
+.aurora__blob--2 { right: -8vw; top: -6vh; background: radial-gradient(circle at 50% 50%, var(--accent), transparent 64%); animation-duration: 32s; animation-delay: -6s; opacity: 0.7; }
+.aurora__blob--3 { left: 30vw;  top: 40vh; background: radial-gradient(circle at 50% 50%, var(--accent-3), transparent 68%); animation-duration: 38s; animation-delay: -14s; opacity: 0.6; }
+
+/* On the dark beat the blobs have to add light instead of ink. */
+.on-dark .aurora__blob { mix-blend-mode: screen; }
+
+@keyframes drift {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(6vw, -5vh, 0) scale(1.18); }
+}
+
+/* Grain + vignette over the aurora so gradients never look flat or banded. */
+.aurora::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(130% 80% at 50% 0%, transparent 18%, var(--bg) 92%);
+}
+
+/* --------------------------------------------------------------------------
+   Hero
+   -------------------------------------------------------------------------- */
+/* The hero fills the viewport up to a point and then stops. A 100svh hero is a
+   laptop and phone convention: on a 2010px tall viewport it would be an almost
+   empty canvas with three lines of type floating in it, and it would push every
+   piece of proof below the fold. Capping it means the ticker peeks in, which
+   both uses the attention above the fold and signals that there is more.
+
+   The cap has to be a proportion, not a pixel height. A flat 56rem reads as
+   deliberate at 1330px tall (67%) and as a broken page at 2010px tall (45%), so
+   56rem is the floor and 64svh takes over on anything taller than 1400px.
+   100svh still wins on short viewports, where the floor would overshoot. */
+.hero {
+  position: relative;
+  min-height: min(100svh, max(56rem, 64svh));
+  display: flex;
+  align-items: center;
+  padding-block: clamp(7rem, 5rem + 8vw, 10rem) var(--s-8);
+  overflow: clip;
+}
+
+.hero__inner { position: relative; z-index: 1; }
+
+/* Thermometer: the portrait is the bulb at the left end and the pill is the
+   tube. The bulb is taller than the pill on purpose, so the photo stays big
+   enough to read as a face. It is positioned rather than laid out inline,
+   because a flex child that tall would stretch the pill to match it. */
+.hero__eyebrow {
+  --bulb: 6rem;
+  /* The pill's own height, used to work out how far the bulb overhangs it. */
+  --tube: 2.375rem;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  padding: 0.5rem var(--s-5) 0.5rem calc(var(--bulb) + var(--s-4));
+  border-radius: var(--r-full);
+  background: var(--bg-glass);
+  border: 1px solid var(--stroke);
+  backdrop-filter: blur(12px);
+  /* The bulb hangs below the pill, so the gap to the h1 has to clear the
+     overhang as well. Derived from --bulb, so resizing the bulb is one edit. */
+  margin-bottom: calc(var(--s-6) + (var(--bulb) - var(--tube)) / 2);
+}
+
+/* Narrow screens: the pill plus a 6rem bulb would run past the gutter. */
+@media (max-width: 34rem) {
+  .hero__eyebrow { --bulb: 4.5rem; }
+}
+
+.hero__wave {
+  font-size: 1rem;
+  transform-origin: 70% 70%;
+  animation: wave 2.4s var(--ease-in-out) 1.2s 3;
+}
+
+@keyframes wave {
+  0%, 60%, 100% { transform: rotate(0deg); }
+  10%, 30% { transform: rotate(16deg); }
+  20%, 40% { transform: rotate(-10deg); }
+}
+
+.hero__title { max-width: 22ch; margin-bottom: var(--s-6); }
+
+/* The lead cannot match the headline's rendered width character for character,
+   and it should not try to. The h1 fills the column at 22 characters a line only
+   because it is set at 96px; running the same width at the old 24px would have
+   put 100 characters on a line, past the 80 WCAG 1.4.8 allows and well past the
+   45 to 75 that reads comfortably.
+
+   So the type grows instead of the measure. At 27px and 55ch the lead is 904px
+   wide and still holds 75 characters, where 24px at 52ch was 749px. That is 79%
+   of the headline's width at laptop size instead of 64%, in larger and more
+   legible type, with the line length inside the limit. The size lives in
+   --t-deck, shared with .case-hero__deck, so the home page hero and the project
+   heroes cannot drift apart. */
+.hero__lead {
+  max-width: 55ch;
+  font-size: var(--t-deck);
+}
+
+/* The bulb. Its left edge lines up with the pill's, so the photo caps the tube
+   and overhangs it top and bottom. */
+.hero__portrait {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  translate: 0 -50%;
+  width: var(--bulb);
+  aspect-ratio: 1;
+  border-radius: var(--r-full);
+  padding: 3px;
+  background: conic-gradient(from 210deg, var(--accent), var(--accent-3), var(--accent-2), var(--accent));
+  box-shadow: var(--shadow-md);
+}
+
+.hero__portrait img {
+  display: block;
+  width: 100%; height: 100%;
+  border-radius: inherit;
+  object-fit: cover;
+  background: var(--bg-raised);
+}
+
+/* Scroll cue */
+.hero__cue {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-top: var(--s-8);
+  color: var(--text-faint);
+}
+
+.hero__cue-line {
+  width: 1px; height: 34px;
+  background: linear-gradient(to bottom, var(--stroke-strong), transparent);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero__cue-line::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 1px; height: 12px;
+  background: var(--accent);
+  animation: cue 2.4s var(--ease-in-out) infinite;
+}
+
+@keyframes cue {
+  0% { transform: translateY(-14px); opacity: 0; }
+  40% { opacity: 1; }
+  100% { transform: translateY(34px); opacity: 0; }
+}
+
+/* --------------------------------------------------------------------------
+   Marquee. Credential ticker between hero and work.
+   -------------------------------------------------------------------------- */
+.marquee {
+  position: relative;
+  display: flex;
+  gap: var(--s-6);
+  padding-block: var(--s-5);
+  border-top: 1px solid var(--stroke);
+  border-bottom: 1px solid var(--stroke);
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+
+.marquee__track {
+  display: flex;
+  gap: var(--s-6);
+  flex: none;
+  padding-right: var(--s-6);
+  animation: marquee 34s linear infinite;
+}
+
+.marquee:hover .marquee__track { animation-play-state: paused; }
+
+.marquee__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  white-space: nowrap;
+  color: var(--text-dim);
+  font-size: var(--t-small);
+}
+
+.marquee__item::before {
+  content: "";
+  width: 6px; height: 6px;
+  border-radius: var(--r-full);
+  background: var(--grad-accent);
+  flex: none;
+}
+
+@keyframes marquee { to { transform: translateX(-100%); } }
+
+/* Ten skills instead of four credentials, so the track travels further and the
+   duration has to grow with it to keep the same reading speed. */
+.marquee--skills .marquee__track { animation-duration: 72s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track { animation: none; }
+  .marquee { mask-image: none; flex-wrap: wrap; }
+}
+
+/* --------------------------------------------------------------------------
+   Section header
+   -------------------------------------------------------------------------- */
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--s-5);
+  padding-bottom: var(--s-5);
+  border-bottom: 1px solid var(--stroke);
+}
+
+.section-head__title { max-width: 26ch; }
+
+/* --------------------------------------------------------------------------
+   Project band
+   One per case study. No per-band color: every band draws on the site accent,
+   so the scheme reads as one system rather than five.
+   -------------------------------------------------------------------------- */
+.projects {
+  display: grid;
+  gap: clamp(var(--s-7), 4vw, var(--s-9));
+  margin-top: var(--s-8);
+}
+
+/* The accent ring goes all the way round, at the user's direction. It used to be
+   a 1px --stroke hairline with a 2px --grad-accent bar across the top only, which
+   read as a card that had lost three of its four green edges rather than as a
+   deliberate top rule.
+
+   Solid --accent, not border-image with --grad-accent. A gradient border is only
+   reachable through border-image, and border-image does not follow border-radius,
+   so the gradient would paint a square ring and the --r-2xl corners would go with
+   it. The mask-composite ring trick does respect the radius but needs a -webkit-
+   fallback to work in Safari, which is a lot of machinery for a gradient whose two
+   stops are both dark green: at 2px the difference between --grad-accent and flat
+   --accent is not visible. See iterations/23-project-card-green-ring/. */
+.project {
+  position: relative;
+  border-radius: var(--r-2xl);
+  border: 2px solid var(--accent);
+  background:
+    radial-gradient(120% 120% at 100% 0%, color-mix(in oklab, var(--accent) 9%, transparent), transparent 60%),
+    var(--bg-raised);
+  overflow: clip;
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--dur-base) var(--ease-out),
+              box-shadow var(--dur-slow) var(--ease-out);
+}
+
+/* Hover deepens the ring rather than lighting it up. The old rule moved the border
+   from --stroke to --accent at 35%, which was a brightening; against a ring that is
+   already full --accent that would read as the card going pale on hover. --accent-2
+   is the gradient's own second stop, so this is the one colour the ring was already
+   made of. */
+.project:hover {
+  border-color: var(--accent-2);
+  box-shadow: var(--shadow-lg);
+}
+
+.project__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(var(--s-5), 3vw, var(--s-8));
+  padding: clamp(var(--s-5), 3vw, var(--s-8));
+  align-items: center;
+}
+
+.project:nth-child(even) .project__media { order: -1; }
+
+.project__body { min-width: 0; }
+
+.project__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-bottom: var(--s-5);
+}
+
+.project__index {
+  font-family: var(--font-mono);
+  font-size: var(--t-label);
+  font-weight: var(--w-medium);
+  letter-spacing: var(--track-label);
+  padding: 0.375rem 0.625rem;
+  border-radius: var(--r-sm);
+  background: var(--grad-accent);
+  color: var(--accent-ink);
+}
+
+.project__tag {
+  padding: 0.375rem var(--s-3);
+  border-radius: var(--r-full);
+  border: 1px solid color-mix(in oklab, var(--accent) 40%, transparent);
+  background: color-mix(in oklab, var(--accent) 12%, transparent);
+  color: var(--text);
+}
+
+.project__year { margin-left: auto; }
+
+.project__title { margin-bottom: var(--s-4); max-width: 20ch; }
+
+.project__title a {
+  color: inherit;
+  background-image: var(--grad-accent);
+  background-size: 0% 2px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size var(--dur-slow) var(--ease-out);
+}
+
+.project:hover .project__title a { background-size: 100% 2px; }
+
+/* --measure-card is a CEILING, so this fills the card's body column at every
+   width where the column is narrower than 504px and only stops short above that.
+   It needs no stacked override: the old --measure-short plus an @media bump to
+   --measure left the paragraph 65px short of the column at 1512 and ran it to 91
+   characters at 900. Read the --measure-card note in tokens.css before changing
+   the number, in particular the part about not applying the 0.73 factor to a
+   maximum-line target. See iterations/41-project-summary-card-width/. */
+.project__summary { color: var(--text-dim); max-width: var(--measure-card); }
+
+/* Stat row. Numbers count up when the band scrolls into view. */
+.project__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr));
+  gap: var(--s-4) var(--s-5);
+  margin-top: var(--s-6);
+  padding-top: var(--s-6);
+  border-top: 1px solid var(--stroke);
+}
+
+.stat__value {
+  display: block;
+  font-size: var(--t-stat);
+  text-wrap: balance;
+  font-weight: var(--w-black);
+  letter-spacing: var(--track-mega);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  background: var(--grad-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.stat__label {
+  display: block;
+  margin-top: var(--s-2);
+  max-width: 20ch;
+  color: var(--text-faint);
+  font-size: var(--t-micro);
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+
+.project__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-top: var(--s-6);
+  font-size: var(--t-small);
+  font-weight: var(--w-semibold);
+  color: var(--text);
+}
+
+/* Media well. Colored glow behind, subtle tilt on pointer move. */
+.project__media {
+  position: relative;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  background: color-mix(in oklab, var(--accent) 7%, var(--bg-raised-2));
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--stroke);
+  transform-style: preserve-3d;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.project__media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-xslow) var(--ease-out);
+}
+
+.project:hover .project__media img { transform: scale(1.03); }
+
+.project__chip {
+  position: absolute;
+  left: var(--s-4); top: var(--s-4);
+  padding: 0.375rem var(--s-3);
+  border-radius: var(--r-full);
+  background: var(--bg-glass-strong);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--stroke-strong);
+  color: var(--text);
+}
+
+/* Whole-card link target, kept semantic: the link text is the project title. */
+.project__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--r-2xl);
+}
+
+.project__link:focus-visible { outline: none; }
+.project__link:focus-visible::after { outline: 2px solid var(--accent); outline-offset: 6px; }
+
+@media (max-width: 62rem) {
+  .project__grid { grid-template-columns: 1fr; }
+  .project:nth-child(even) .project__media { order: 0; }
+  .project__media { order: -1; }
+  /* NO .project__summary override here. There was one, raising the cap to
+     --measure on the reasoning that a stacked card is the full column so
+     --measure-short was too narrow. It was: but --measure is 579px on this
+     element and the line ran to 86 characters at 640 and 91 at 900, which is a
+     1.4.8 failure the cap existed to prevent. --measure-card is a ceiling that
+     already yields to a narrower column, so the stacked card needs nothing. */
+}
+
+/* --------------------------------------------------------------------------
+   CTA footer
+   -------------------------------------------------------------------------- */
+.cta {
+  position: relative;
+  background: var(--bg);
+  overflow: clip;
+  padding-block: clamp(5rem, 3rem + 9vw, 9rem) var(--s-7);
+  border-top: 1px solid var(--stroke);
+}
+
+.cta__inner { position: relative; z-index: 1; }
+
+.cta__title { max-width: 20ch; margin-bottom: var(--s-6); }
+
+.cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+  margin-top: var(--s-7);
+}
+
+/* Oversized contact lines. The email and phone number are the point of this
+   section, so they are set at display size with a gradient underline that
+   thickens on hover, instead of being shrunk into buttons. Inside .on-dark,
+   --text resolves to --text-on-dark, so these read as light type on ink. */
+.cta__contact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--s-4);
+  margin-top: var(--s-7);
+}
+
+.cta__line {
+  display: inline-block;
+  font-weight: var(--w-bold);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--track-display);
+  color: var(--text);
+  /* --grad-accent-text, not --grad-accent: the dark-green fill gradient is
+     nearly invisible on the dark beat. See tokens.css. */
+  background-image: var(--grad-accent-text);
+  background-repeat: no-repeat;
+  background-size: 100% 2px;
+  background-position: 0 100%;
+  padding-bottom: 0.15em;
+  transition: background-size var(--dur-slow) var(--ease-out);
+}
+
+.cta__line:hover { background-size: 100% 6px; }
+
+.cta__line--email { font-size: var(--t-display-2); }
+.cta__line--phone { font-size: var(--t-display-3); }
+
+.cta__base {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--s-3);
+  margin-top: var(--s-10);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--stroke);
+  color: var(--text-faint);
+  font-size: var(--t-micro);
+}
+
+/* Inline link with a gradient underline that draws in on hover. Unused on the
+   home page now that the contact lines are oversized, kept for case study prose. */
+.link-underline {
+  color: var(--text);
+  /* --grad-accent-text, not --grad-accent, so the underline survives .on-dark. */
+  background-image: var(--grad-accent-text);
+  background-size: 0% 2px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  padding-bottom: 2px;
+  transition: background-size var(--dur-base) var(--ease-out);
+}
+
+.link-underline:hover { background-size: 100% 2px; }
+
+/* --------------------------------------------------------------------------
+   CASE STUDY PAGE
+   Every file in work/ uses this same skeleton, in this order:
+     .case-hero  →  .case-section × 4  →  .shots  →  .case-note  →  .next-case
+   The structure is the template. A new case study changes copy and images,
+   never this CSS. See DESIGN-SYSTEM.md section 12.
+   -------------------------------------------------------------------------- */
+/* The same height rule as .hero, deliberately. A case hero built only out of
+   padding and content stops growing once its type caps out, so at 1512 it filled
+   97% of the viewport and at 3840x2160 only 41%, while the home page hero held 64%
+   at both. Two heroes that agree on a laptop and disagree by half a screen on a
+   large monitor read as two different sites. Borrowing min(100svh, max(56rem,
+   64svh)) makes them agree at every size; see the note above .hero for why the cap
+   has to be a proportion. */
+.case-hero {
+  position: relative;
+  min-height: min(100svh, max(56rem, 64svh));
+  display: flex;
+  align-items: center;
+  overflow: clip;
+  padding-block: clamp(6.5rem, 5rem + 7vw, 9rem) var(--s-7);
+}
+
+.case-hero__inner { position: relative; z-index: 1; width: 100%; }
+
+/* Back to the work index. A literal glyph, not .arrow, because .arrow's hover
+   transform would overwrite a rotation. */
+/* Block-level with a fitted width: the category pill below is inline-flex, so an
+   inline-flex back link would share its line box. */
+/* The only navigation link above the title, so it carries a 44px touch target.
+   The padding is pulled back out with a matching negative inline margin so the
+   text still sits flush with the container edge. */
+.case-back {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: var(--s-2);
+  min-height: 44px;
+  margin-bottom: var(--s-5);
+  margin-inline-start: calc(-1 * var(--s-3));
+  padding-inline: var(--s-3);
+  font-size: var(--t-small);
+  color: var(--text-dim);
+}
+
+.case-back:hover { color: var(--text); }
+.case-back__glyph { transition: transform var(--dur-base) var(--ease-spring); }
+.case-back:hover .case-back__glyph { transform: translateX(-4px); }
+
+.case-hero__cat {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 0.375rem var(--s-3);
+  border-radius: var(--r-full);
+  border: 1px solid color-mix(in oklab, var(--accent) 40%, transparent);
+  background: color-mix(in oklab, var(--accent) 12%, transparent);
+  color: var(--text);
+}
+
+/* The title carries .mega in the markup, the same class as the home page h1, so a
+   case study headline is 44px to 96px exactly like the home page one instead of the
+   68px --t-display-1 gave it. --t-display-1 still drives section statements, which
+   should stay a step below a page title. The ch caps here and in the split and
+   stacked overrides are all inert at --t-mega sizes: the text column is always the
+   narrower constraint. They stay as guards for a longer title than the ones the
+   site has now. */
+.case-hero__title { max-width: 24ch; margin-top: var(--s-5); }
+/* --t-deck, the same step the home page hero lead takes, because this is the same
+   job: the one paragraph under a display headline. 42ch is about 58 characters at
+   that size. The .lead class this element also carries would otherwise hold it at
+   --t-lead's 24px. */
+.case-hero__deck {
+  max-width: 42ch;
+  margin-top: var(--s-5);
+  font-size: var(--t-deck);
+  color: var(--text-dim);
+}
+
+/* Role, team, timeline, recognition. A <dl>, because these are pairs. */
+.case-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: var(--s-5);
+  margin-top: var(--s-8);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--stroke);
+}
+
+/* margin-inline-start kills the browser's 40px <dd> indent, which would knock
+   every value out of line with its label. */
+.case-meta dd {
+  margin: var(--s-2) 0 0;
+  font-size: var(--t-small);
+  color: var(--text);
+}
+
+/* Section: a sticky heading column on the left, the reading column on the right.
+   Below 62rem it collapses to one column and the heading stops sticking. */
+.case-section { border-top: 1px solid var(--stroke); padding-block: clamp(3rem, 2rem + 4vw, 5.5rem); }
+
+/* 16rem, not 13rem. The rail is where the page can afford to be generous: it
+   keeps every section title to one or two lines, and the 3rem it takes comes off
+   the empty right side of the reading column rather than out of the prose.
+
+   The rail also absorbs the extra width from --page-max on a large monitor, up to
+   its 26rem cap, which 18vw reaches at about a 2160px viewport. Prose cannot
+   absorb it: the body column is over 1300px wide at the 1800px container, and
+   filling that at any comfortable size would put well over 100 characters on a
+   line, past the 80 WCAG 1.4.8 allows. So the prose stays at --measure-case and
+   past 2160px the remainder falls as white space to its right. That is paid for
+   by the two things in this column that gain from pixels: the .shots grids and
+   the prototype embed both span it, so on a wide screen the screens grow. The
+   stat band does NOT span it any more, see .stat-band. */
+.case-section__grid {
+  display: grid;
+  grid-template-columns: minmax(0, clamp(16rem, 18vw, 26rem)) minmax(0, 1fr);
+  gap: clamp(var(--s-5), 4vw, var(--s-8));
+}
+
+.case-section__aside { position: sticky; top: 7rem; align-self: start; }
+.case-section__num { display: block; color: var(--text-faint); }
+.case-section__title { margin-top: var(--s-3); }
+
+/* The column is NOT clamped to the measure. Reading blocks clamp themselves, so
+   that images can use the full column instead of being boxed to the measure
+   (which collapsed .shots--pair to one shot per row). The stat band clamps
+   itself too, for the reason in .stat-band.
+
+   Long-form type lives only here, so the case body sets its own size and leading
+   rather than inheriting the 17px/1.45 the rest of the site uses. Larger type at
+   --measure-case fills more of the column at the same line length. */
+.case-section__body {
+  min-width: 0;
+  font-size: var(--t-body-case);
+  line-height: var(--lh-relaxed);
+}
+
+/* .prose carries the global --measure. In a case study it takes the case measure
+   instead, and paragraph spacing opens up to match the looser leading. */
+.case-section__body .prose { max-width: var(--measure-case); }
+.case-section__body .prose p + p { margin-top: var(--s-5); }
+
+/* One phrase in a paragraph, lifted. The same treatment .case-list strong and
+   .shot figcaption b already use, so emphasis reads identically everywhere: the
+   semibold token rather than the browser's 700, and the full-strength text colour
+   against the dimmed body. Left to the browser default this would have been the
+   only 700 weight on the site. Use it sparingly. A paragraph with two bold
+   phrases in it has none.
+
+   A whole sentence can take it, not just a phrase: basket-building section 04
+   bolds "That process became part of the playbook my org adopted as the pilot's
+   primary deliverable." at the user's direction. Still one per paragraph. What
+   makes that work is that it is the claim the paragraph exists to make, and the
+   two sentences either side of it are unbolded. */
+.case-section__body .prose strong { color: var(--text); font-weight: var(--w-semibold); }
+
+/* A section that goes prose, list, prose. .case-list carries its own margin-top,
+   so the list is spaced correctly coming out of a paragraph, but a paragraph
+   following a list had nothing between it and the last bullet: .prose p + p only
+   reaches siblings inside one .prose, and the list breaks the chain. One step
+   larger than the list's own lead-in, because resuming prose after a list is a
+   bigger break than introducing one. --s-6 rather than some new value because
+   basket-building.html had already arrived at it: both of its list-to-prose joins
+   carried style="margin-top: var(--s-6)" inline, which is exactly what a repeated
+   inline style is, a component rule that had not been written yet. Writing it here
+   let both of those be deleted. about.html does the same thing twice more. */
+.case-section__body .case-list + .prose { margin-top: var(--s-6); }
+
+@media (max-width: 62rem) {
+  .case-section__grid { grid-template-columns: 1fr; }
+  .case-section__aside { position: static; }
+}
+
+/* Pull quote. Every case study opens its background section with a real one. */
+.pull-quote {
+  max-width: var(--measure-case);
+  padding-left: var(--s-5);
+  border-left: 3px solid var(--accent);
+  margin-bottom: var(--s-6);
+}
+
+.pull-quote blockquote p {
+  font-size: var(--t-display-3);
+  font-weight: var(--w-bold);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--track-display);
+  color: var(--text);
+}
+
+.pull-quote figcaption { margin-top: var(--s-4); font-size: var(--t-small); color: var(--text-faint); }
+
+/* Bulleted list inside a case section. Accent dots, never a browser marker. */
+.case-list { display: grid; gap: var(--s-4); margin-top: var(--s-5); max-width: var(--measure-case); list-style: none; }
+
+.case-list li { position: relative; padding-left: var(--s-5); color: var(--text-dim); }
+
+.case-list li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0.62em;
+  width: 7px; height: 7px;
+  border-radius: var(--r-full);
+  background: var(--grad-accent);
+}
+
+.case-list strong { color: var(--text); font-weight: var(--w-semibold); }
+
+/* Outcome callouts. Reuses .stat from the home page bands, so data-count works. */
+/* Two columns, not auto-fit. Even at the widened case column, four callouts at a
+   sane minimum width come to a few pixels more than the column, so auto-fit
+   drops to three and orphans the fourth on its own row. Two by two stays
+   balanced whether a case study has two callouts or four.
+
+   Capped at --measure-case, the same cap .prose, .pull-quote and .case-list
+   carry, so the band's two edges line up with the paragraph directly above it.
+   It used to span the whole body column, which is nearly twice the measure on a
+   large monitor: a wide panel hanging off the right of a narrow paragraph, with
+   its second column of callouts starting past where the text ended. It read as a
+   separate, unrelated element rather than the close of the section. The band is a
+   reading block, not an image, so it takes the reading width. The things that
+   still span the full column are the ones that gain from pixels, .shots and
+   .proto-block. */
+.stat-band {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: var(--measure-case);
+  gap: var(--s-6);
+  margin-top: var(--s-7);
+  padding: clamp(var(--s-5), 3vw, var(--s-6));
+  border-radius: var(--r-xl);
+  border: 1px solid var(--stroke);
+  background:
+    radial-gradient(120% 120% at 100% 0%, color-mix(in oklab, var(--accent) 9%, transparent), transparent 60%),
+    var(--bg-raised);
+}
+
+/* One callout per row once the column is phone width. */
+@media (max-width: 30rem) {
+  .stat-band { grid-template-columns: 1fr; }
+}
+
+/* An h3 that names a run of screens, for a case study whose section 05 holds more
+   than one set. Without it a reader scrolling three phones, then two more, has no
+   way to know whether they are looking at one set of five or two sets, and the
+   captions cannot carry that: a caption describes its own screen, not the group.
+   Quiet by design. A hairline and a mono label, no display type, because these sit
+   between figures and must not outrank the section's own h2. */
+.shots-head {
+  margin-top: var(--s-8);
+  padding-top: var(--s-4);
+  border-top: 1px solid var(--stroke);
+  max-width: var(--measure-case);
+  display: grid;
+  gap: var(--s-2);
+}
+
+.shots-head__name {
+  font-size: var(--t-body-case);
+  font-weight: var(--w-semibold);
+  line-height: 1.3;
+  color: var(--text);
+}
+
+/* The first run in a section does not need the rule and the extra air; it is
+   already introduced by the h2 and whatever prose precedes it. */
+.shots-head--first { margin-top: var(--s-6); padding-top: 0; border-top: 0; }
+
+/* Screens. One column by default, --pair for two up, --trio for three, --solo for
+   one portrait phone. Captions do the work here, so they are real text and not
+   overlays. */
+.shots { display: grid; gap: var(--shots-gap); margin-top: var(--s-6); }
+
+/* A run that its own heading introduces sits closer to it than to loose prose. */
+.shots-head + .shots { margin-top: var(--s-5); }
+
+/* A paragraph and the run of screens it introduces, held together as one group.
+   Basket Building's section 05 needs it: .proto-block is a bordered panel, a <p>
+   has no margin from the reset, and .shots opens at --s-6, so the paragraph sat
+   flush against the panel's bottom edge while the screens it introduced sat 2rem
+   below it. The text read as the panel overflowing rather than as the start of
+   something new. What makes a group read as a group is that the gap above it is
+   larger than any gap inside it, so this is --s-8 outside and --s-5 in, the same
+   pair .shots-head uses when it opens a new set. No hairline: this sits directly
+   under .proto-block's own edge and a second line an inch below it is noise. */
+.shots-group { margin-top: var(--s-8); }
+.shots-group .prose + .shots { margin-top: var(--s-5); }
+
+/* The .shots-group caption override that used to live here is gone: it set
+   max-width: none on these captions only, and .shot figcaption now carries that
+   site-wide. Nothing about Basket Building's captions changed when it was deleted.
+   The reasoning that was recorded here is on .shot figcaption above. */
+
+.shots--pair { grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); }
+
+/* --trio is for a set of three that has to read as one set. The case body column
+   is about 756px at 1920 and 856px at 1440, so --pair's 19rem minimum only ever
+   fits two of them and orphans the third in a half-empty row. A fixed three
+   column track keeps the set together, and it goes straight to one up rather
+   than through two, because two of three orphans the third all over again. The
+   break is 40rem: at 40rem the column is about 600px and each shot still gets
+   around 190px, which is the narrowest a phone export reads at.
+
+   Three across in a 756px column is tight, so the gap holds at the bottom of
+   the .shots clamp instead of opening to 3vw. That is about 45px of column width
+   handed back to the three shots, which is the difference between a phone you
+   can read the shape of and one you cannot. */
+.shots--trio { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-5); }
+@media (max-width: 40rem) {
+  .shots--trio { grid-template-columns: 1fr; }
+}
+
+/* --solo is one portrait phone on its own, added 2026-09-20 when Card Dashboard's
+   Experience section was asked to open on the dashboard itself.
+
+   A portrait phone cannot go in the default one-up .shots: the exports are
+   846x1744, so at the 837px column of a 1512 screen a single phone renders 1724px
+   tall, which is the trap already written up in every case study's section 05
+   comment. Nor can it go in .shots--pair alone: --pair is auto-fit, so with one
+   child the empty tracks collapse and the phone stretches to the full column, the
+   same 1724px.
+
+   So the track is sized to exactly what one cell of --pair gets,
+   (column - gap) / 2, which makes a lone phone and a pair of phones in the same
+   section render at identical scale. That matters here: the dashboard, the Me tab
+   and the wallet page are all the same 846x1744 export, and a hero shot that came
+   out larger than the two screens it is being compared against would read as
+   emphasis rather than as the same thing at the same size.
+
+   Centred, not left aligned. A 396px phone against the left edge of an 837px
+   column with nothing beside it reads as a .shots--pair whose second image failed
+   to load; the same phone centred reads as a deliberate single shot, which is how
+   .proto-block already handles a lone device. The caption centres with it and
+   stays exactly as wide as the image, so iteration 29's rule holds.
+
+   One up below 40rem, the same break --trio uses: at 390 the column is 347px and
+   halving it would leave a 161px phone, narrower than anything on the site reads
+   at. --pair is already full width there for the same reason, so the two agree.
+
+   NO LIVE PAGE USES --solo. Card Dashboard was the one user for a few hours on
+   2026-09-20, and then the same three phones were asked for on one line, which is
+   .shots--trio, so the solo dashboard and the paired ingresses became one trio row.
+   Kept rather than deleted for the same reason --trio was kept when its last user
+   went: it is the correct answer to a real problem that will come back the next
+   time a case study has one portrait screen to show on its own, and the derivation
+   above is the expensive part. iterations/33-three-phones-one-line/ has the markup
+   that used it. */
+.shots--solo {
+  grid-template-columns: minmax(0, calc((100% - var(--shots-gap)) / 2));
+  justify-content: center;
+}
+@media (max-width: 40rem) {
+  .shots--solo { grid-template-columns: 1fr; }
+}
+
+.shot__frame {
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  border: 1px solid var(--stroke);
+  background: color-mix(in oklab, var(--accent) 7%, var(--bg-raised-2));
+  box-shadow: var(--shadow-sm);
+}
+
+/* A device mock has no frame at all. The phone's own bezel is the frame, so this
+   undoes everything .shot__frame draws: no tinted platform, no stroke, no shadow,
+   no radius, no padding. Removed on 2026-09-20 at the user's request, because the
+   tint read as a dark container sitting behind the phone rather than as a surface
+   the phone rests on.
+
+   This is safe only because every phone export has transparent corners. All 22 of
+   them do, checked: RGBA with alpha 0 at each corner, which is the alpha work
+   recorded in iterations/14-basket-building-hero-phone/. A phone screenshot with
+   opaque corners would show four white notches here, so re-check the alpha before
+   adding a device shot.
+
+   What this replaced, and why it existed: the frame used to pad a device by
+   clamp(--s-4, 6%, --s-7). A phone export is cropped flush to its own rounded
+   bezel, so with no padding the frame's --r-xl corner and 1px stroke landed
+   directly on the phone's corner arc, and two nearly concentric radii a pixel
+   apart read as a smudge. With no frame drawn there is no second curve to collide
+   with, so the padding had nothing left to separate and went with it. The phones
+   are about 12% wider as a result, which is the standing direction on using the
+   available width. .shots' own gap does the separating now. */
+.shot__frame--device {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.shot__frame img, .shot__frame svg { display: block; width: 100%; height: auto; }
+
+.shot figcaption {
+  margin-top: var(--s-3);
+  /* THE CAPTION WIDTH RULE, site-wide, at the user's explicit direction: a caption
+     is exactly as wide as the media it sits under. No max-width, so the figcaption
+     fills the same figure box the image fills and the two share a right edge.
+
+     This was once max-width: 56ch, about 77 characters, so that a caption obeyed
+     section 9's line-length cap. The cost was that under a one-up desktop capture
+     the caption stopped at 459px against an 837px image and the block read as
+     unaligned rather than as a caption belonging to that image. The rule was first
+     made for .shots-group on Basket Building and generalized here on 2026-09-20.
+
+     What this costs, measured: at --t-micro a full body column is about 160
+     characters at 1512 and 230 at 2560, against section 9's 80. What makes it
+     survivable rather than reckless is that captions are one or two sentences: the
+     80 cap exists because a reader loses the left edge returning to it over many
+     lines, and over two lines there is almost nothing to lose. It also only moves
+     wide media. A .shots--pair or --trio cell, and every caption at 390, is already
+     narrower than the old 56ch, so those captions did not change at all.
+
+     The corollary is a copy budget, not a CSS one: keep a caption to two sentences.
+     A long caption is now a long line. Section 3 has the budget. */
+  font-size: var(--t-micro);
+  line-height: 1.45;
+  color: var(--text-faint);
+}
+
+.shot figcaption b { color: var(--text-dim); font-weight: var(--w-semibold); }
+
+/* The standing footnote every case study ends on. Not clamped to the measure:
+   it is a boxed aside at --t-small, not prose, and it reads better as a bar that
+   closes the section than as another short paragraph. */
+.case-note {
+  display: flex;
+  gap: var(--s-3);
+  margin-top: var(--s-7);
+  padding: var(--s-5);
+  border-radius: var(--r-lg);
+  border: 1px dashed var(--stroke-strong);
+  background: var(--bg-raised);
+  color: var(--text-dim);
+  font-size: var(--t-small);
+}
+
+/* THE TEXT IS NOT CAPPED. Do not put a max-width back on it.
+
+   It was capped at --measure-case for a while, on the WCAG 1.4.8 reading that no
+   line should pass 80 characters. That cap made the note look broken: the dashed
+   panel spans the body column, 837px at 1512 and 1208 at 2560, and the text inside
+   it stopped at 694, so the box had an empty right third and the two sentences
+   wrapped to three short lines against a wide frame. A reader sees a bug, not a
+   measure.
+
+   Uncapped it is 2 lines at 1512 and 1 line at 2560, and this is the same
+   trade iteration 29 made for .shot figcaption, for the same reason: 1.4.8 is a
+   AAA success criterion about blocks of text, and the harm it names is losing the
+   left edge on the return sweep. Over one or two lines there is no return sweep to
+   lose. See iterations/35-case-note-full-width/ for the measured line counts.
+
+   The cost is a copy budget, not a CSS one: the note must stay two sentences. It
+   is the same fixed footnote on all five case studies, so that is easy to hold, but
+   a third sentence here becomes a genuine 1.4.8 failure rather than a wide line.
+   Section 3 has the budget and section 9 has the exception. */
+
+/* Next case study, so the page has an exit that is not the back button. */
+.next-case { border-top: 1px solid var(--stroke); padding-block: var(--s-8); }
+
+.next-case__link { display: flex; align-items: center; justify-content: space-between; gap: var(--s-5); }
+
+.next-case__title {
+  margin-top: var(--s-3);
+  color: var(--text);
+  background-image: var(--grad-accent);
+  background-size: 0% 2px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size var(--dur-slow) var(--ease-out);
+}
+
+.next-case__link:hover .next-case__title { background-size: 100% 2px; }
+
+.next-case__glyph { font-size: var(--t-display-3); color: var(--accent); flex: none; }
+
+/* ==========================================================================
+   CASE HERO: --split  (adopted, used by every case study)
+   ==========================================================================
+   Chosen from four candidates in September 2026. The other three (--outcome,
+   --live, --poster) were deleted along with their lab pages; see
+   DESIGN-SYSTEM.md section 12 for why this one won and what it rules out.
+
+   One rule survives from that review and governs every case study: a figure
+   belongs in the sentence that explains it, never in a card floated over the
+   screenshot it describes.
+   ========================================================================== */
+
+/* Browser chrome around a screenshot or an embed. Makes a flat PNG read as a
+   thing that runs. Three dots and a fake address bar, nothing interactive. */
+.chrome-frame {
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  border: 1px solid var(--stroke);
+  background: var(--bg-raised);
+  box-shadow: var(--shadow-lg);
+}
+
+.chrome-frame__bar {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-3) var(--s-4);
+  border-bottom: 1px solid var(--stroke);
+  background: color-mix(in oklab, var(--accent) 6%, var(--bg-raised-2));
+}
+
+.chrome-frame__dot {
+  width: 9px; height: 9px;
+  border-radius: var(--r-full);
+  background: var(--stroke-strong);
+  flex: none;
+}
+
+/* The address bar is a label, so it can carry the surface name honestly. */
+.chrome-frame__url {
+  margin-left: var(--s-2);
+  padding: 2px var(--s-3);
+  border-radius: var(--r-full);
+  background: var(--bg-raised);
+  border: 1px solid var(--stroke);
+  font-family: var(--font-mono);
+  font-size: var(--t-label);
+  color: var(--text-faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chrome-frame__body { display: block; }
+.chrome-frame__body img { display: block; width: 100%; height: auto; }
+
+/* The hero alternative to .chrome-frame, for a case study whose subject is an app
+   rather than a web page. Browser chrome around a phone screen is a lie, and a
+   whole portrait phone scaled to fit the hero's media column comes out around
+   290px wide, too small to read the screen it is meant to show off.
+
+   So the phone stands on a tinted platform at roughly the size it gets in section
+   05, and bleeds off the bottom edge. The panel's aspect ratio does the cropping:
+   at 3/2 with the phone at 52% of the panel, about 58% of the screen shows, which
+   reaches the bottom of whatever the top of the flow is doing. Set the ratio, not
+   a pixel height, so the crop stays proportional at every width. */
+.case-hero__device {
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  border: 1px solid var(--stroke);
+  background: color-mix(in oklab, var(--accent) 7%, var(--bg-raised-2));
+  box-shadow: var(--shadow-lg);
+  aspect-ratio: 3 / 2;
+  padding-top: clamp(var(--s-4), 5%, var(--s-6));
+}
+
+.case-hero__device img {
+  display: block;
+  /* 52% is the design and the rem is only a guard, so the guard has to sit above
+     whatever 52% can reach. --page-max went to 1800px in September 2026, which
+     takes the media column to 717px and 52% of it to 373px; at the old 21rem the
+     cap took over at a 646px column and the phone stopped growing while its panel
+     kept going, so on a large monitor the phone sat marooned in a wide platform
+     and the crop got shallower instead of staying proportional. 24rem is 384px,
+     clear of the 373px the widest column can ask for. */
+  width: min(52%, 24rem);
+  height: auto;
+  margin-inline: auto;
+}
+
+/* Once the hero stacks, the media column is the full container and 52% of it is
+   a toy. Squarer panel, wider phone. */
+@media (max-width: 40rem) {
+  .case-hero__device { aspect-ratio: 1 / 1; }
+  .case-hero__device img { width: min(74%, 21rem); }
+}
+
+/* --bare: the same phone with no panel and no crop, standing on the page. This is
+   now the treatment on all four phone heroes, so the panelled rule above is the
+   fallback rather than the default. It started as Basket Building's exception,
+   because the add to cart panel that screen shows off runs to its bottom edge and
+   the 3/2 platform cut the offer in half. The user then asked for the result
+   everywhere: five heroes one click apart should be one composition, and a whole
+   phone with its own shadow reads as the device it is instead of as a picture
+   mounted on a tile. A crop needs a licence and the caption was it; no crop needs
+   no licence, so the three captions stay only because each says something the deck
+   does not.
+
+   Keep the panelled rule. It is still right for a screen that has to be shown
+   larger than a whole phone would allow, and .case-hero__device on its own is what
+   a new case study gets until someone decides otherwise.
+
+   Every inherited panel property is switched off explicitly rather than by
+   splitting the base rule, so .case-hero__device stays one readable block. */
+.case-hero__device--bare {
+  background: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+  aspect-ratio: auto;
+  padding-top: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.case-hero__device--bare img {
+  width: auto;
+  height: var(--case-hero-phone-h);
+  max-width: 100%;
+  /* Not --shadow-lg: see the note on --drop-shadow-lg in tokens.css. A box
+     shadow here would draw the square corners the asset does not have. */
+  filter: var(--drop-shadow-lg);
+}
+
+/* Stacked, the media column is the whole page and vh stops being the right
+   measure: a short landscape phone would size the hero image off a 400px
+   viewport height. Back to width, narrower than the panelled 74% because there
+   is now no panel around it and the whole phone has to fit. */
+@media (max-width: 62rem) {
+  .case-hero__device--bare img { height: auto; width: min(58%, 18rem); }
+}
+
+/* A hero image that is a concept rather than shipped work has to say so, and the
+   deck is not the place: it carries the outcome. */
+.case-hero__cap {
+  margin-top: var(--s-3);
+  /* No max-width, same caption width rule as .shot figcaption: this sits under the
+     hero media and matches its column. It used to cap at 56ch. No live page uses
+     this class yet, so the rule is here so that the first page that does inherits
+     it rather than the old cap. */
+  font-size: var(--t-micro);
+  line-height: 1.45;
+  color: var(--text-faint);
+}
+.case-hero__cap b { color: var(--text-dim); font-weight: var(--w-semibold); }
+
+/* --------------------------------------------------------------------------
+   A. --split
+   Text and media side by side, so the first screen carries both the claim and
+   the evidence. The media column is wider than half, because a 16:9 screenshot
+   shrunk to half a page stops being readable.
+   -------------------------------------------------------------------------- */
+.case-hero--split .case-hero__grid {
+  display: grid;
+  /* 1.22fr to the text, not 1fr. The home page deck got wider so it could hold a
+     comfortable line; this deck could not, because it was column-bound, not
+     cap-bound. At the original ratio the text column was 516px at 1512 and the deck
+     ran 45 characters a line, the very bottom of the comfortable 45 to 75 band, in
+     five or six short lines. Then the deck took --t-deck, which pushed it back down
+     to the low 40s, so the ratio had to go further than the 1.06fr that was enough
+     before. 1.22fr gives the text 610px at 1512 and 44 to 56 counted characters, and
+     costs the media about 18% of its width, which a portrait phone frame does not
+     notice. See the calibration note in tokens.css: characters, not ch. */
+  grid-template-columns: minmax(0, 1.22fr) minmax(0, 1fr);
+  /* Was clamp(--s-6, 4vw, --s-9), which is 96px at 2560 and read as a hole rather
+     than a gutter once --page-max opened to 1800px. Two columns that belong to one
+     composition should sit closer than the space either of them owns. */
+  gap: clamp(var(--s-5), 2.2vw, var(--s-7));
+  align-items: center;
+}
+
+/* A bare phone does not need a wide track, and a wide track hurts it. The panelled
+   heroes fill their column, so their 1fr is honest. The bare phone is sized by
+   height, so at 1fr it came out 433px in a 717px track at 2560: 142px of dead air
+   on each side, which read as the phone drifting away from the headline. 1.9fr
+   sizes the track to roughly the phone plus a hairline of air at every width
+   (66px each side at 2560, 53px at 1512), so the two columns sit together. */
+.case-hero--split .case-hero__grid:has(.case-hero__device--bare) {
+  grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr);
+}
+
+/* The about page portrait, the one hero media on the site that is a photograph
+   rather than a screen. It takes the same narrow track as the bare phone, and for
+   the same reason: it is sized by a cap, not by its column, so at 1fr it would
+   have sat in the middle of a wide track with 90px of dead sand on each side at
+   1512 and 200px at 2560, reading as a picture drifting away from the headline.
+
+   Why a cap at all, when every other image on this site fills its column:
+   assets/img/headshot.jpg is 512px square and it is the only portrait asset that
+   exists. A 1fr track is about 509px at 1512, which would render the photo at 1:1
+   and make it the one soft image on the page; the 1600px wide screen captures sit
+   at roughly 1.9x their ~840px column. 20rem is 320px, so the photo renders at
+   1.6x, in the same range as the screens.
+
+   If a larger headshot is ever exported, raise the cap and re-derive this note
+   rather than deleting it: the ratio above exists to keep the track close to the
+   cap, so the two numbers have to move together. */
+.case-hero--split .case-hero__grid:has(.about-portrait) {
+  grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr);
+}
+
+.about-portrait { max-width: 20rem; margin-inline: auto; }
+
+/* The rail is a child of the text column, not a third grid item in row 2. Tried
+   the row 2 version first: the phone then has to span both rows, a spanning item
+   distributes its height across the auto rows it covers, and the headline and the
+   rail ended up pushed to opposite ends of a 922px phone with 260px of nothing
+   between them. align-content cannot fix that, because the rows really did grow.
+   In the text column they stay a block, which is what a title and its credits
+   are. */
+
+.case-hero--split .case-hero__title { max-width: 18ch; }
+/* 50ch is about 69 characters, which is exactly where the widened column tops
+   out at --page-max, so the column governs at every width and this only exists
+   as a guard. The old 38ch was about 52 characters and would have clipped the
+   wider column back to 547px, undoing the change above. */
+.case-hero--split .case-hero__deck { max-width: 50ch; }
+
+/* The media used to lean 1.4 degrees and straighten on hover. The lean never
+   shipped: .case-hero__media also carries .reveal-pop, and
+   .js-motion .reveal-pop.is-in { transform: none } is three classes to this rule's
+   two, so the lean was overwritten the moment the hero scrolled into view and the
+   computed transform was the identity matrix at every width. Removed rather than
+   given the specificity to win, because a tilted phone is not the quiet treatment
+   this site uses everywhere else. The hover lift stays. */
+.case-hero--split .case-hero__media {
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.case-hero--split .case-hero__media:hover { transform: scale(1.01); }
+
+/* Nothing is floated over the media. Numbers belong in the deck, next to the
+   sentence that gives them their meaning, not in a card that covers the very
+   screenshot it is describing. */
+
+/* Meta stops being a grid of cells and becomes a rail with dividers. */
+.case-hero--split .case-meta {
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  margin-top: var(--s-9);
+  gap: 0;
+}
+.case-hero--split .case-meta > div {
+  padding-inline: var(--s-5);
+  border-left: 1px solid var(--stroke);
+}
+.case-hero--split .case-meta > div:first-child { padding-left: 0; border-left: 0; }
+
+/* The rail sits inside the hero's text column, not in a band under both columns.
+   It started on Basket Building, the one page with no deck, where an eyebrow and a
+   headline alone were a small island in a tall empty field with the phone off to
+   the right; the rail is the mass that column was missing, it fills the width the
+   headline does not use, and it brings Role / Team / Timeline up beside the phone
+   instead of below it, which is where the 64vh phone had pushed it off the fold.
+   All five case studies now do this, so the full-width rule above it survives only
+   as the fallback for a hero written without it. The switch is keyed off where the
+   <dl> actually is, so moving it in the markup is the whole change; there is no
+   flag to keep in sync.
+   Two columns, not auto-fit: auto-fit gives three across at a mid width and leaves
+   one item alone on a second row, and 2x2 is what fills the vertical gap the
+   headline leaves. Each cell carries its own hairline above it rather than the
+   container carrying one long rule with dividers between cells, because a rule
+   drawn across a wrapping grid only lines up on the first row. */
+.case-hero--split .case-hero__grid .case-meta {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: var(--s-7);
+  column-gap: var(--s-6);
+  row-gap: var(--s-5);
+  padding-top: 0;
+  border-top: 0;
+}
+
+.case-hero--split .case-hero__grid .case-meta > div {
+  padding-inline: 0;
+  padding-top: var(--s-3);
+  border-left: 0;
+  border-top: 1px solid var(--stroke);
+}
+
+@media (max-width: 40rem) {
+  /* One column on a phone. At 320px two columns give each value about 130px, and
+     the Org line becomes six words deep. */
+  .case-hero--split .case-hero__grid .case-meta { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 62rem) {
+  .case-hero--split .case-hero__grid { grid-template-columns: 1fr; }
+  /* :has() donates its argument's specificity, so the 1.9fr rule above outranks
+     the line before this one and has to be undone by name. Without this the hero
+     stayed two columns at 320px and the phone came out 51px wide. */
+  .case-hero--split .case-hero__grid:has(.case-hero__device--bare),
+  .case-hero--split .case-hero__grid:has(.about-portrait) {
+    grid-template-columns: 1fr;
+  }
+  /* Stacked, the rail has to follow the phone: an eyebrow, a headline and four
+     rows of credits before the screen would make the first thing a visitor sees
+     on a phone a table of metadata. The markup cannot give both orders at once,
+     and desktop needs the rail inside the text column, so display: contents
+     dissolves that wrapper here and promotes the eyebrow, the headline and the
+     rail to grid items in their own right. order then puts the rail last, after
+     the media, without touching the source order a screen reader follows in
+     either layout, because order is visual only and here it matches the reading
+     order the page wants anyway.
+
+     Two consequences to hold: the title's own margin-top would now stack on top
+     of the grid's row gap and double the space under the eyebrow, so it goes; and
+     the rail's own hairline-per-cell treatment is still what it should look like,
+     so only the gap above it is set here. */
+  .case-hero--split .case-hero__grid > div:first-child:has(> .case-meta) {
+    display: contents;
+  }
+  .case-hero--split .case-hero__grid > div > .case-meta {
+    order: 1;
+    margin-top: var(--s-6);
+  }
+  .case-hero--split .case-hero__grid:has(> div > .case-meta) .case-hero__title,
+  .case-hero--split .case-hero__grid:has(> div > .case-meta) .case-hero__deck {
+    margin-top: 0;
+  }
+  /* A grid item is blockified, so the eyebrow's inline-flex stopped shrink
+     wrapping the moment display: contents promoted it out of the wrapper and it
+     ran the full column: a 347px pill around two words at 390px. It is a chip, so
+     it aligns to the start of the column and sizes to its content. */
+  .case-hero--split .case-hero__grid:has(> div > .case-meta) .case-hero__cat {
+    justify-self: start;
+  }
+  .case-hero--split .case-hero__title { max-width: 28ch; }
+  /* 40ch is about 55 characters. 28ch was about 38, under the comfortable floor:
+     stacked, the deck was the narrowest reading column on the whole site. A title
+     can be short; a paragraph cannot. */
+  .case-hero--split .case-hero__deck { max-width: 40ch; }
+  .case-hero--split .case-hero__media { transform: none; margin-top: var(--s-6); }
+  .case-hero--split .case-meta > div { padding-inline: 0; border-left: 0; }
+}
+
+/* ==========================================================================
+   LIVE PROTOTYPE SLOT
+   ==========================================================================
+   Built for self-contained HTML prototypes, including ones generated with AI:
+   point .proto-embed's data-src at any single-file page under /prototypes/.
+
+   This started as a hero variant and moved into the page body, because only one
+   case study has a shareable prototype and a hero must work for all five. Its
+   home is now a .proto-block inside .case-section__body. See site.js section 8
+   and DESIGN-SYSTEM.md section 12.
+   ========================================================================== */
+
+/* A running prototype, framed as a phone. The iframe is inert until the visitor
+   asks for it: an overlay covers it so a scroll down the page is not swallowed
+   by the frame, and so a heavy prototype is never loaded for someone who only
+   came to read. */
+.proto-embed {
+  position: relative;
+  width: 100%;
+  max-width: 22rem;
+  margin-inline: auto;
+  aspect-ratio: 9 / 17;
+  border-radius: var(--r-2xl);
+  overflow: hidden;
+  border: 10px solid var(--text);
+  background: var(--bg-raised);
+  box-shadow: var(--shadow-lg), var(--glow);
+}
+
+.proto-embed iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: #fff;
+}
+
+/* For a prototype that draws its own device frame and needs the width for a row
+   of controls. No surface of its own at all: the prototype already draws a phone,
+   and a card around a phone inside .proto-block's own panel was three nested boxes.
+   So no bezel, no border, no fill. The prototype page sets its own html and body
+   background to transparent, so .proto-block's background runs straight under the
+   running prototype and the phone appears to sit on the block itself.
+   The height here is only the fallback, and it is a fixed value rather than an
+   aspect ratio: see the --proto-h note in tokens.css. Once the prototype is
+   running, section 8 of site.js measures its document and sets an inline height
+   that fits it exactly, which is the only way to get this right at every width. */
+.proto-embed--wide {
+  max-width: none;
+  aspect-ratio: auto;
+  height: var(--proto-h);
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+/* Overrides the #fff on .proto-embed iframe. An iframe paints its own document's
+   background, so both sides have to agree for this to be transparent. */
+.proto-embed--wide iframe { background: transparent; }
+
+/* The dormant state is the one thing that does get an edge. Without it a tall
+   empty region with a single play button in the middle of it reads as a broken
+   image rather than as something waiting to be pressed. Pressing play fades it
+   away for good, so the running prototype is still unboxed. */
+.proto-embed--wide .proto-embed__cover {
+  border: 1px solid var(--stroke);
+  border-radius: var(--r-lg);
+  background: var(--bg-raised-2);
+}
+.proto-embed--wide .proto-embed__cover:hover { background: var(--bg-raised); }
+
+/* Keyed to the block's own width, not the viewport's. The case study grid means
+   the two are not even monotonic: the embed is 583px wide at a 1024px viewport
+   and 862px at 2560px, so a media query would pick the wrong fallback height. */
+.proto-block:has(.proto-embed--wide) { container-type: inline-size; }
+
+/* On a phone the block's own padding is the difference between a 393px device
+   frame fitting and not. Give the width back to the prototype; the block's own
+   border still draws the outer edge. */
+@media (max-width: 34rem) {
+  .proto-block:has(.proto-embed--wide) { padding-inline: var(--s-2); }
+}
+
+/* One tier per zoom step of the prototype's own phone frame, which steps both down
+   (narrow embed) and up (wide embed). Written widest first and narrowest last,
+   because every one of these matches a 300px container and the last match wins.
+
+   These five numbers are the SAME breakpoints as the .phone-frame zoom media
+   queries inside prototypes/basket-building/index.html (340, 440, 560, 660, 760),
+   minus 2px. In px, not rem, so they cannot drift from the queries they mirror,
+   and a token cannot be used here anyway: var() is not allowed in a container
+   query condition.
+
+   Two things make this work. An inline-size container is measured on its CONTENT
+   box, so the queried width is the embed's width, which is the iframe's viewport
+   width, which is what those zoom queries key on. And the 2px is slack in the safe
+   direction: if rounding puts the container a pixel under the real iframe width, a
+   too-LOW threshold means the embed falls into the next tier UP and gets surplus,
+   where a too-high one would hand a zoomed-up frame a tier that is too short and
+   scroll the iframe. */
+@container (max-width: 758px) {
+  .proto-embed--wide { height: var(--proto-h-5); }
+}
+@container (max-width: 658px) {
+  .proto-embed--wide { height: var(--proto-h-4); }
+}
+@container (max-width: 558px) {
+  .proto-embed--wide { height: var(--proto-h-3); }
+}
+@container (max-width: 438px) {
+  .proto-embed--wide { height: var(--proto-h-2); }
+}
+@container (max-width: 338px) {
+  .proto-embed--wide { height: var(--proto-h-1); }
+}
+
+/* The chip that says this is not a picture. */
+.proto-flag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-bottom: var(--s-4);
+  padding: 0.3rem var(--s-3);
+  border-radius: var(--r-full);
+  border: 1px solid color-mix(in oklab, var(--accent) 40%, transparent);
+  background: color-mix(in oklab, var(--accent) 12%, transparent);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--t-label);
+  letter-spacing: var(--track-label);
+  text-transform: uppercase;
+}
+
+.proto-flag__pip {
+  width: 7px; height: 7px;
+  border-radius: var(--r-full);
+  background: var(--positive);
+  animation: pulse 2.4s var(--ease-in-out) infinite;
+  flex: none;
+}
+
+/* Click-to-activate cover. A real button, so it is keyboard reachable. */
+.proto-embed__cover {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: var(--s-3);
+  padding: var(--s-6);
+  border: 0;
+  font: inherit;
+  text-align: center;
+  color: var(--text);
+  background: var(--bg-glass-strong);
+  backdrop-filter: blur(3px);
+  cursor: pointer;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+.proto-embed__cover:hover { background: var(--bg-glass); }
+.proto-embed.is-live .proto-embed__cover { opacity: 0; pointer-events: none; }
+
+.proto-embed__play {
+  width: 3.25rem; height: 3.25rem;
+  margin-inline: auto;
+  border-radius: var(--r-full);
+  background: var(--grad-accent);
+  color: var(--accent-ink);
+  display: grid; place-items: center;
+  font-size: var(--t-body);
+  box-shadow: var(--glow);
+}
+
+.proto-embed__label { font-weight: var(--w-semibold); }
+.proto-embed__sub { font-size: var(--t-micro); color: var(--text-dim); }
+
+/* No prototype for this case study yet: same frame, honest empty state. */
+.proto-embed--pending { border-style: dashed; border-color: var(--stroke-strong); border-width: 3px; }
+.proto-embed--pending .proto-embed__cover { background: var(--bg-raised); cursor: default; }
+.proto-embed--pending .proto-embed__play { background: var(--bg-raised-2); color: var(--text-faint); box-shadow: none; }
+
+/* The escape hatch under the frame, and the no-JS path to the prototype.
+   Centred under the device and sized to a 44px target. */
+.proto-open { margin-top: var(--s-3); text-align: center; }
+.proto-open a { display: inline-flex; align-items: center; gap: var(--s-2); min-height: 44px; padding-inline: var(--s-3); font-size: var(--t-micro); color: var(--text-dim); }
+.proto-open a:hover { color: var(--text); }
+
+/* The whole slot as one block in a case section: flag, device, escape hatch,
+   caption. A <figure>, so the caption is bound to the thing it describes, and
+   the caption comes last because that is where a figcaption is allowed to sit
+   when it is not first. */
+.proto-block {
+  margin-top: var(--s-6);
+  padding: clamp(var(--s-5), 3vw, var(--s-6));
+  border-radius: var(--r-xl);
+  border: 1px solid var(--stroke);
+  background:
+    radial-gradient(120% 120% at 0% 0%, color-mix(in oklab, var(--accent) 9%, transparent), transparent 62%),
+    var(--bg-raised);
+  text-align: center;
+}
+
+/* Same caption width rule, with the one difference the pattern forces: .proto-block
+   centres its contents, so this caption is centred under a centred device rather
+   than sharing a left edge with it. Dropping the old 48ch cap changes nothing on the
+   page today, because the live caption is a one line label and a centred line is as
+   wide as its own text. It matters for the next one: a caption here now runs to the
+   panel's content width instead of stopping at 48ch. margin-inline: auto stays so
+   the box is centred if a future stylesheet ever gives it a width again. */
+.proto-block > figcaption {
+  margin-inline: auto;
+  margin-top: var(--s-4);
+  font-size: var(--t-small);
+  color: var(--text-dim);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .proto-flag__pip { animation: none; }
+  .case-hero--split .case-hero__media { transition: none; }
+}

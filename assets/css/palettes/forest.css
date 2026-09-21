@@ -1,0 +1,46 @@
+/* ==========================================================================
+   PALETTE  "forest"   oat paper + deep forest green
+   Calm and editorial. The most restrained of the set.
+   Load AFTER tokens.css. Overrides tokens only, never a component rule.
+   ========================================================================== */
+
+:root {
+  --bg: #F5F2E9;
+  --bg-raised: #FFFFFF;
+  --bg-raised-2: #EDE9DC;
+  --bg-glass: rgba(255, 255, 255, 0.62);
+  --bg-glass-strong: rgba(255, 255, 255, 0.84);
+
+  --bg-dark: #11140E;
+  --bg-dark-raised: #1A1F16;
+
+  --text: #16190F;      /* 15.9:1 on --bg */
+  --text-dim: #4E5346;  /* 7.6:1 */
+  --text-faint: #5E6356; /* 5.5:1, labels 13px and up only */
+  --text-on-dark: #F5F2E9;
+  --text-on-dark-2: #BCC0B2;
+
+  --stroke: rgba(22, 25, 15, 0.10);
+  --stroke-strong: rgba(22, 25, 15, 0.22);
+  --stroke-on-dark: rgba(245, 242, 233, 0.14);
+
+  --accent: #146A47;      /* 6.7:1 under white text */
+  --accent-2: #0E4E34;
+  --accent-lift: #2E8C62; /* 3.7:1 on --bg */
+  --accent-3: #6CCBA0;    /* decorative only */
+
+  --shadow-sm: 0 1px 2px rgba(30, 44, 24, 0.08);
+  --shadow-md: 0 18px 40px -22px rgba(30, 44, 24, 0.30);
+  --shadow-lg: 0 44px 90px -40px rgba(30, 44, 24, 0.38);
+}
+
+.on-dark {
+  --bg-raised-2: #232A1E;
+  --text-faint: #8F9484;
+}
+
+/* PREVIEW ONLY. The placeholder SVGs are drawn in the ember family, so the
+   harness rotates them to match. Delete this block when adopting the palette
+   and recolor the artwork properly. */
+.palette-preview .project__media img,
+.palette-preview .hero__portrait img { filter: hue-rotate(144deg); }

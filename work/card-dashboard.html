@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Amazon Visa Card Dashboard · Rishabh Singh</title>
+<meta name="description" content="Customers could not find the servicing features we had just built. I redesigned the Amazon Visa card dashboard around how each customer uses the card, and monthly visits went from 3.3M to 7.7M.">
+<meta name="author" content="Rishabh Singh">
+<meta name="theme-color" content="#FBF7F1">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Amazon Visa Card Dashboard · Rishabh Singh">
+<meta property="og:description" content="A servicing hub redesigned around how each customer uses the card. Monthly visits went from 3.3M to 7.7M.">
+<meta property="og:url" content="https://www.rishabhsingh.design/work/card-dashboard.html">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="canonical" href="https://www.rishabhsingh.design/work/card-dashboard.html">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/components.css">
+</head>
+
+<body>
+<a class="skip-link" href="#background">Skip to the case study</a>
+
+<div class="progress" aria-hidden="true"><div class="progress__fill"></div></div>
+
+<!-- ======================= NAV (shared, do not edit) ======================= -->
+<header class="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="../index.html" aria-label="Rishabh Singh, home">
+      <span class="nav__dot" aria-hidden="true"></span> Rishabh Singh
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a class="nav__link" href="../index.html#work">Work</a>
+      <a class="nav__link" href="../about.html">About</a>
+      <a class="nav__link" href="#contact">Contact</a>
+      <a class="btn btn--primary" href="https://docs.google.com/document/d/1EHUuTUFj9zlCdyJktXC0rGSdesHq1b7P/edit" target="_blank" rel="noopener">Résumé <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ======================= CASE HERO ======================= -->
+  <section class="case-hero case-hero--split">
+    <div class="aurora" aria-hidden="true">
+      <span class="aurora__blob aurora__blob--1"></span>
+      <span class="aurora__blob aurora__blob--2"></span>
+    </div>
+
+    <div class="container case-hero__inner">
+      <a class="case-back" href="../index.html#work">
+        <span class="case-back__glyph" aria-hidden="true">←</span> All work
+      </a>
+
+      <div class="case-hero__grid">
+        <div>
+          <p class="label case-hero__cat">
+            <span aria-hidden="true">💳</span> Credit card servicing
+          </p>
+
+          <h1 class="mega case-hero__title" data-split>
+            Amazon Visa <span class="grad-text">Card Dashboard</span>
+          </h1>
+
+          <!-- Inside the hero's text column, not a band under both columns. With the
+               deck gone this rail is the whole second half of the column: it gives
+               the headline something to sit above, fills the width the headline does
+               not use, and keeps Role / Team / Timeline above the fold beside the
+               visual instead of below it. The CSS keys off this <dl> being inside
+               the text column of a .case-hero--split grid, so moving it back out to
+               a sibling of .case-hero__grid is the whole change. Stacked,
+               components.css dissolves this wrapper with display: contents and
+               orders the rail after the media, so a phone reads title, screen,
+               credits and does not open on a table of metadata. -->
+          <dl class="case-meta reveal">
+            <div>
+              <dt class="label">Role</dt>
+              <dd>UX Designer, dashboard and ingress</dd>
+            </div>
+            <div>
+              <dt class="label">Team</dt>
+              <dd>PM, me, a dev manager, 4 engineers</dd>
+            </div>
+            <div>
+              <dt class="label">Timeline</dt>
+              <dd class="num">January 2025, launched July 2026</dd>
+            </div>
+            <div>
+              <dt class="label">Platform</dt>
+              <dd>Amazon shopping app and desktop web</dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- .case-hero__device, not .chrome-frame: the dashboard's primary surface
+             is the Amazon shopping app, and browser chrome around a phone screen
+             would be a lie.
+
+             --bare, so the phone is whole and sized by height with its own drop
+             shadow, the same as the other three phone heroes. The dashboard runs
+             the length of the screen, so the 3/2 panel was cutting the rewards
+             balance off the bottom of the one screen the page is about. See the
+             --bare note in components.css. -->
+        <div class="case-hero__media reveal-pop">
+          <div class="case-hero__device case-hero__device--bare">
+            <img src="../assets/img/card-dashboard/dashboard-linked.webp"
+                 alt="The Amazon Visa card dashboard in the Amazon app, showing the card and last four digits, a row of quick action pills for transactions, statements and offers, a current balance of 2,000 dollars with the due date, minimum payment and autopay status, a Make a payment button, and a rewards balance of 121 dollars 36 cents broken out by cashback rate."
+                 width="846" height="1744" decoding="async">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================= 01 BACKGROUND ======================= -->
+  <section class="case-section" id="background" aria-labelledby="background-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">01</span>
+        <h2 class="display-3 case-section__title" id="background-heading">Background</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <figure class="pull-quote">
+          <blockquote>
+            <p>Because transactions are important and something that people check every time they go
+            to their account, I would assume they would be more obvious</p>
+          </blockquote>
+          <figcaption>Amazon Visa customer, end to end usability study</figcaption>
+        </figure>
+
+        <div class="prose">
+          <p>
+            The Amazon Visa business runs on top of wallet behavior: getting customers to use the
+            card off Amazon through features like card offers and bonus cashback on specific
+            merchants and categories. The card dashboard, known internally as the Existing
+            Cardmember page, is where customers discover and engage with all of it, servicing
+            features and offers alike. But the page was designed before any of those features
+            existed.
+          </p>
+          <p>
+            In 2022, as we were bringing card management in-house, I realized our servicing goals of
+            reducing late fees, attrition, and 1 and 2 star ratings all depend on customers being
+            able to find the features we were building, and that every one of those features was
+            going to land on a layout that did not match how customers think about managing a credit
+            card. No one owned the problem, so I made the case myself with a quick end-to-end user
+            flow and wireframes. Product agreed but could not commit resources away from what was
+            already planned.
+          </p>
+          <p>
+            A year after the servicing features launched, the data showed customers having exactly
+            the difficulty I had predicted. 28% of customer contacts traced back to customers not
+            finding servicing features, and 77% of usability participants, 23 of 30, could not find
+            features like transactions on their first attempt. I made the case again, and the
+            redesign was included in the product roadmap for 2025.
+          </p>
+        </div>
+
+        <!-- The evidence for the paragraph above it. Moved here from the top of
+             section 05 on 2026-09-20 at the user's request. A .shots block inside
+             .case-section__body spans the full media column, wider than the .prose
+             above it, which is the same one-up treatment section 05 uses. -->
+        <div class="shots">
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="../assets/img/card-dashboard/ingress-before.webp"
+                   alt="A filmstrip of seven phone screens joined by arrows, tracing the six taps it took to reach the old card dashboard: the shopping home page, the Me tab, a payments list, an Amazon Pay wallet, a cards and accounts list, the Prime Visa card detail, and finally the dashboard itself."
+                   width="1800" height="571" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>The path before the redesign.</b> Six taps from the shopping home page to the dashboard, through three surfaces that are not about servicing a credit card.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 02 PROJECT GOALS ======================= -->
+  <section class="case-section" aria-labelledby="goals-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">02</span>
+        <h2 class="display-3 case-section__title" id="goals-heading">Project goals</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <div class="prose">
+          <p>
+            Increase customer engagement with the dashboard. More engagement means customers find
+            and use the servicing features we built, which is what moves late fees, attrition, and 1
+            and 2 star ratings, and it means they discover the offers and cashback experiences that
+            drive card usage off Amazon. Engagement was the measure the project was held to, so page
+            visits and unique monthly customers were the numbers that mattered.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 03 TEAM AND ROLE ======================= -->
+  <section class="case-section" aria-labelledby="role-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">03</span>
+        <h2 class="display-3 case-section__title" id="role-heading">Team and role</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <!-- Basket Building's section 03 shape: one .prose paragraph naming the team and
+             ending on a colon, then a .case-list of short bullets. Same markup, no new
+             classes. Non-breaking space in 4&nbsp;Engineers so the count never gets
+             stranded from the noun at a line break. -->
+        <div class="prose">
+          <p>
+            Product Manager, UX Designer (me), Software Developer Manager, 4&nbsp;Engineers. My
+            responsibilities included:
+          </p>
+        </div>
+
+        <ul class="case-list">
+          <li>End-to-end user flows for every servicing feature</li>
+          <li>Dashboard wireframes and high-fidelity mock ups</li>
+          <li>Ingress and placement decisions for each launching feature</li>
+          <li>Accessibility annotations</li>
+          <li>Presenting the redesign case to product leadership</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 04 DESIGN AND OUTCOMES ======================= -->
+  <section class="case-section" aria-labelledby="outcomes-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">04</span>
+        <h2 class="display-3 case-section__title" id="outcomes-heading">Design and outcomes</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <div class="prose">
+          <p>
+            While the redesign waited for resources, our UX team formed a working group and made
+            placement decisions for every launching feature ourselves, deciding what earned a spot on
+            the page and what lived behind an ingress, preserving as much of the customer experience
+            as the existing platform allowed.
+          </p>
+          <p>
+            Once the redesign was approved, I started with the research and usage data to understand
+            how customers were actually using the page. That surfaced a segment we were not serving
+            at all: customers who would never link their Chase account and would always manage their
+            card at Chase's app/website. Linking the Amazon and Chase accounts was a requirement to
+            enable on-Amazon servicing. For them, most of the page was dead weight, a layout full of
+            servicing features they could not use.
+          </p>
+          <p>
+            That insight shaped the core of the redesign: a dynamic layout that adapts to how each
+            customer uses the page. Linked customers get a servicing-first dashboard with payments,
+            transactions, and account details up front. Unlinked customers get a page built around
+            what is relevant to them, like offers, rewards, and the option to link.
+          </p>
+          <p>
+            Discoverability could not be solved by the page alone, so I also designed new entry
+            points in high-traffic locations across the app, like the Me tab and the navigation
+            flyout, so customers could find servicing and offer features without knowing to look for
+            the dashboard first. This also gave the offers team the reach they wanted through
+            distribution instead of competing for position at the top of the page.
+          </p>
+          <p>
+            I transitioned the project to two designers with the framework, research, and stakeholder
+            context in place, and the redesign and the discoverability features launched with the
+            following outcomes.
+          </p>
+        </div>
+
+        <div class="stat-band">
+          <p class="stat">
+            <span class="stat__value num" data-count>2.3x</span>
+            <span class="stat__label">Monthly page visits, 3.3M to 7.7M</span>
+          </p>
+          <p class="stat">
+            <span class="stat__value num" data-count>+31%</span>
+            <span class="stat__label">Unique monthly customers, 1.3M to 1.7M</span>
+          </p>
+          <p class="stat">
+            <span class="stat__value num" data-count>$158</span>
+            <span class="stat__label">OPS DSI per account linked</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 05 EXPERIENCE ======================= -->
+  <!-- Real exports. Phone screens are 846px wide WebP with transparent corners,
+       and .shot__frame--device draws no frame, so each phone sits directly on the
+       page on its own bezel. All three phone screens sit on one line in
+       .shots--trio, in journey order. The wide artifacts, the desktop flyout, the
+       framework and the high fidelity proposal, take the one-up slot.
+
+       Renamed from "Screens" to "Experience" and reordered on 2026-09-20 at the
+       user's request: the experience first, then how it is reached, then the
+       thinking behind it. See iterations/32-experience-section-order/. This page
+       was the first to carry the name; later the same day the other four case
+       studies and the template were renamed to match, so "Experience" is now the
+       site-wide name for section 05 and nothing calls it "Screens". See
+       iterations/40-experience-section-name-site-wide/.
+       Later the same day the three phones were asked for on one line, Me tab then
+       wallet page then dashboard, which replaced the .shots--solo dashboard and the
+       .shots--pair ingresses with a single .shots--trio row. That makes this the
+       only live page using --trio, and it leaves .shots--solo with no user. See
+       iterations/33-three-phones-one-line/. -->
+  <section class="case-section" aria-labelledby="experience-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">05</span>
+        <h2 class="display-3 case-section__title" id="experience-heading">Experience</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <!-- The three app screens on one line, in journey order: the Me tab, the
+             wallet page it leads to, and the dashboard at the end of it. .shots--trio
+             is a fixed three-column track, so the row is the path and the reader can
+             see the whole of it without scrolling between the steps. The dashboard is
+             the same export the hero uses, deliberately: the hero shows it with no
+             explanation and this is where it gets a caption. The ingress filmstrip
+             that used to open this section is at the end of section 01 now, see
+             iterations/31-ingress-board-to-background/. -->
+        <div class="shots shots--trio">
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/card-dashboard/me-tab-ingress.webp"
+                   alt="The Account screen in the Amazon app with a new Wallet section: a horizontal row of card tiles showing the Prime Visa marked as default with its points balance, alongside other saved cards, above account settings."
+                   width="846" height="1744" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>Me tab ingress.</b> A wallet row on the screen customers already open to manage their account, so the card is one tap from the Me tab instead of six.</figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/card-dashboard/wallet-page.webp"
+                   alt="The improved wallet page for the Prime Visa, showing the card art marked as default, a Visit Cardmember page button next to Refer a friend, a rewards balance of 27 dollars 42 cents, and links to exclusive offers and to manage the rewards account."
+                   width="846" height="1744" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>The wallet page, improved.</b> The stop between the Me tab and the dashboard now names the dashboard and surfaces rewards, instead of being a dead end.</figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/card-dashboard/dashboard-linked.webp"
+                   alt="The Amazon Visa card dashboard in the Amazon app, showing the card and last four digits, a row of quick action pills for transactions, statements and offers, a current balance of 2,000 dollars with the due date, minimum payment and autopay status, a Make a payment button, and a rewards balance of 121 dollars 36 cents broken out by cashback rate."
+                   width="846" height="1744" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>The dashboard, for a linked customer.</b> The balance, the due date and the payment action lead, and the quick action pills put transactions, statements and offers in reach from the top of the page.</figcaption>
+          </figure>
+        </div>
+
+        <div class="shots">
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="../assets/img/card-dashboard/desktop-nav-flyout.webp"
+                   alt="The Amazon desktop home page with a Prime Visa item in the top navigation, its flyout open to show the rewards balance, a Manage your card row with Make a payment, View transactions and Statements, and two card offers."
+                   width="1783" height="1130" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>Desktop navigation flyout.</b> The same three servicing jobs and the offers, reachable from the shopping header without loading the dashboard at all.</figcaption>
+          </figure>
+        </div>
+
+        <div class="shots">
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="../assets/img/card-dashboard/dynamic-layout-framework.webp"
+                   alt="Two annotated wireframe columns side by side, one labelled servicing oriented for linked customers and one labelled rewards and offers oriented for unlinked customers. Callouts mark which blocks hold fixed placement, the header, pills and balance, and which blocks move by customer engagement, with notes citing the research behind each decision."
+                   width="1766" height="1188" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>The dynamic layout framework.</b> One page, two orders. The header, the quick action pills, and the balance hold fixed placement in both; everything below moves by engagement.</figcaption>
+          </figure>
+        </div>
+
+        <div class="shots">
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="../assets/img/card-dashboard/both-states-high-fidelity.webp"
+                   alt="Four high-fidelity phone screens. The linked state leads with current balance, a Make a payment button, rewards balance, and recent transactions. The unlinked state leads with a banner offering to link the Chase account, then rewards balance, card security, and equal monthly payments. Each is paired with its card menu, listing payments, statements, transactions, and rewards actions."
+                   width="1766" height="1188" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>Both states, high fidelity.</b> Each state next to its card menu. Actions an unlinked customer cannot complete on Amazon are labelled as going to Chase rather than hidden.</figcaption>
+          </figure>
+        </div>
+
+        <p class="case-note">
+          <span aria-hidden="true">📝</span>
+          <span>This page shows only parts of the project. In-depth and sensitive details, and the
+          end-to-end UX, can be covered in person or during the interview process.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= NEXT ======================= -->
+  <nav class="next-case" aria-label="Next case study">
+    <div class="container">
+      <a class="next-case__link" href="pay-bill.html">
+        <span>
+          <span class="label">Next case study</span>
+          <span class="display-2 next-case__title">Amazon Visa Pay Bill</span>
+        </span>
+        <span class="next-case__glyph arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </nav>
+</main>
+
+<!-- ======================= CONTACT (shared, do not edit) ======================= -->
+<footer class="cta on-dark" id="contact">
+  <div class="aurora" aria-hidden="true" style="opacity: 0.5">
+    <span class="aurora__blob aurora__blob--2"></span>
+    <span class="aurora__blob aurora__blob--3"></span>
+  </div>
+
+  <div class="container cta__inner">
+    <p class="label label--accent">Contact</p>
+    <h2 class="display-1 cta__title reveal" style="margin-top: var(--s-4)">
+      Interested in working <span class="grad-text">together?</span>
+    </h2>
+    <p class="lead reveal">
+      These pages are a trailer. The rest, including the parts that didn't ship, is better in
+      conversation.
+    </p>
+
+    <div class="cta__contact reveal">
+      <a class="cta__line cta__line--email" href="mailto:rishabh.ux@gmail.com">
+        rishabh.ux@gmail.com <span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="cta__line cta__line--phone" href="tel:+18123619841">+1 (812) 361 9841</a>
+    </div>
+
+    <div class="cta__actions reveal">
+      <a class="btn btn--lg" href="https://docs.google.com/document/d/1EHUuTUFj9zlCdyJktXC0rGSdesHq1b7P/edit" target="_blank" rel="noopener">Résumé <span aria-hidden="true">↗</span></a>
+      <a class="btn btn--lg" href="https://www.linkedin.com/in/rishabh-singh-34b13a82/" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a>
+    </div>
+
+    <div class="cta__base">
+      <p>© <span data-year>2026</span> Rishabh Singh. Designed and built by me.</p>
+      <p>New York, NY</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>

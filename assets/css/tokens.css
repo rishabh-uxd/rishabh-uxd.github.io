@@ -1,0 +1,351 @@
+/* ==========================================================================
+   DESIGN TOKENS  v5 "sand + forest"
+   Rishabh Singh portfolio.
+   Deep sand paper, ONE forest green accent, oversized tight type, a visible
+   drafting grid, real scroll motion.
+   Single source of truth. Never hard-code a value in a component file.
+
+   Iteration note: earlier directions live in iterations/. 01-spectrum was dark
+   with nine colors, 02-cobalt was dark with one blue, 03-ember was warm paper
+   with a brick accent. This keeps the one-accent rule: color is an identity,
+   not a variable.
+   ========================================================================== */
+
+:root {
+  /* ---------- Surfaces: deep sand paper ---------- */
+  --bg: #EDE4D6;          /* page background */
+  --bg-raised: #FBF7F0;   /* cards, panels. Warm off-white, never pure white. */
+  --bg-raised-2: #E4D9C7; /* hover / nested panel */
+  --bg-glass: rgba(251, 247, 240, 0.66);
+  --bg-glass-strong: rgba(251, 247, 240, 0.88);
+
+  /* ---------- Surfaces: the dark beat (one section at most, see .on-dark) ---------- */
+  --bg-dark: #14110C;
+  --bg-dark-raised: #1F1A13;
+
+  /* ---------- Text on paper ---------- */
+  --text: #191409;       /* 13.9:1 on --bg */
+  --text-dim: #514834;   /* 7.0:1 */
+  --text-faint: #5E5540; /* 5.3:1, safe for 13px labels, never for body copy */
+
+  /* ---------- Text on the dark beat ---------- */
+  --text-on-dark: #EDE4D6;
+  --text-on-dark-2: #BDB3A2;
+
+  /* ---------- Strokes ---------- */
+  --stroke: rgba(25, 20, 9, 0.12);
+  --stroke-strong: rgba(25, 20, 9, 0.24);
+  --stroke-on-dark: rgba(237, 228, 214, 0.14);
+
+  /* ---------- The accent. One hue, four steps. ---------- */
+  --forest: #146A47;        /* the accent, 6.7:1 under white text */
+  --forest-deep: #0E4E34;   /* deepest, second stop of every fill gradient */
+  --forest-lift: #2E8C62;   /* mid-light, 3.3:1 on --bg, last stop of display text */
+  --forest-bright: #6CCBA0; /* brightest, DECORATIVE ONLY: 1.9:1 on --bg */
+
+  /* ---------- Semantic accent. A recolor sets only these four. ---------- */
+  --accent: var(--forest);
+  --accent-2: var(--forest-deep);
+  --accent-lift: var(--forest-lift);
+  --accent-3: var(--forest-bright);
+  --accent-ink: #FFFFFF; /* text on an accent fill */
+
+  /* Fills. --accent is chosen so --accent-ink on it clears 4.5:1, which is why
+     .on-dark must NOT lighten --accent: a button is its own surface. */
+  --grad-accent: linear-gradient(115deg, var(--accent), var(--accent-2));
+  --grad-accent-soft: linear-gradient(115deg,
+      color-mix(in oklab, var(--accent) 18%, transparent),
+      color-mix(in oklab, var(--accent-3) 18%, transparent));
+  /* Gradient-clipped text. Display sizes need 3:1, small text needs 4.5:1, so
+     they are separate tokens. Never put --accent-3 in either one on light. */
+  --grad-text: linear-gradient(100deg, var(--accent-2) 4%, var(--accent) 55%, var(--accent-lift) 100%);
+  --grad-accent-text: var(--grad-accent);
+  --glow: 0 0 60px -12px color-mix(in oklab, var(--accent) 45%, transparent);
+
+  /* ---------- Feedback. The only non-accent hue on the site. ---------- */
+  --positive: #0B7B3C;
+
+  /* ---------- Typography ---------- */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display",
+               "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --w-regular: 400;
+  --w-medium: 500;
+  --w-semibold: 600;
+  --w-bold: 700;
+  --w-black: 800;
+
+  /* Display steps are deliberately huge and tightly tracked. */
+  --t-mega: clamp(2.75rem, 1rem + 6vw, 6rem);             /* hero line */
+  --t-display-1: clamp(2.25rem, 1.3rem + 3.6vw, 4.25rem); /* section statements */
+  --t-display-2: clamp(1.75rem, 1.3rem + 1.7vw, 2.75rem); /* project titles */
+  --t-display-3: clamp(1.5rem, 1.2rem + 1.4vw, 2.25rem);
+  --t-stat: clamp(1.75rem, 1.35rem + 1.1vw, 2.5rem);      /* count-up numbers */
+  --t-lead: clamp(1.125rem, 1rem + 0.55vw, 1.5rem);
+  /* The deck step, for the one paragraph that sits directly under a display
+     headline: the home page hero lead and every case study hero deck. --t-lead
+     tops out at 24px, which is a caption size next to a 68px or 96px headline and
+     makes the deck read as an afterthought. 20px to 28px is a step up that still
+     stays inside a comfortable line length in the columns those two decks get.
+     One token, so the home page hero and the project heroes cannot drift apart. */
+  --t-deck: clamp(1.25rem, 1.05rem + 0.7vw, 1.75rem);
+  --t-body: 1.0625rem;
+  --t-small: 0.9375rem;
+  --t-micro: 0.8125rem;
+  --t-label: 0.75rem;
+
+  /* 1.05, not 0.94. Leading should tighten as type grows, but it can only tighten
+     down to the type's own ink before the lines start colliding. Inter's ascent is
+     .969em and its descent .242em, so two lines of it need 1.211em of vertical
+     room to sit clear of each other. Cap height is .727em, which means a
+     descender on one line reaches .242em below its baseline while the next line's
+     capitals begin at (line-height - .727)em below it. At .94 that put the
+     capitals .213em down and the descender .242em down: the lines overlapped by
+     .029em, which is why the p of "complex" sat inside the L of "Lately".
+     1.05 puts .081em of real air between them, about 8px at the 96px hero size,
+     and still reads as tight display leading (the range for display type is
+     roughly 1.0 to 1.2; body copy sits at --lh-relaxed 1.6). Never take this
+     below 1.0. */
+  --lh-mega: 1.05;
+  /* Same floor as --lh-mega, for the same reason. --lh-tight drives .display-1: the
+     contact statement and the section statements, the only other headings on the
+     site big enough for their own ink to become the constraint. (It used to drive the
+     case study hero title too, before that title moved to .mega to match the home
+     page h1.) 1.04 was not colliding, it left .071em, but it left less air than the
+     hero did after the fix, and two big headlines leading differently is visible at a
+     glance. One floor, .081em of clearance, everywhere display type is set. */
+  --lh-tight: 1.05;
+  --lh-snug: 1.16;
+  --lh-normal: 1.45;
+  --lh-relaxed: 1.6;
+
+  --track-mega: -0.045em;
+  --track-display: -0.03em;
+  --track-tight: -0.014em;
+  --track-label: 0.16em;
+
+  /* ---------- Layout ---------- */
+  /* 1280px is the laptop composition and it holds until about 1641px, where
+     78vw overtakes it. Past that the column opens to 1800px and stops.
+
+     A fixed 1280px ceiling is the safe default and it is wrong on a big
+     monitor: on a 32 inch panel running unscaled the viewport is around 3840px,
+     so the whole site becomes a 1280px ribbon with 1280px of dead sand on each
+     side. Growing the ceiling costs nothing in readability because every
+     reading measure on this site is in ch, not in pixels: --measure,
+     --measure-card, --measure-case, .hero__lead and .case-hero__deck all cap
+     their own line length, so a wider container widens the composition and the
+     grid gaps while every paragraph stays the same number of characters wide.
+
+     62vw / 1520px was the first pass and it left a 1920px screen composing in
+     1280px, a third of the screen dead, because 62vw does not overtake the
+     floor until 2065px. That is the width most external monitors actually run
+     at, and it is where the case hero read as a narrow ribbon: the media column
+     was 492px and the phone in it 264px. 78vw moves the crossover down to
+     1641px so a 1728 or 1920 screen composes wider than the laptop rather than
+     identically to it, and 1800px is the stop. The stop is what keeps a 4K panel
+     from becoming a poster; it is not a readability limit, because every
+     paragraph is capped in ch. Verified after the change by counting characters
+     in the longest rendered line on every page at container widths 1280, 1498 and
+     1800: 77 to 79 by page, 80 on the transactions hero cap, identical at all
+     three widths. */
+  --page-max: clamp(1280px, 78vw, 1800px);
+
+  /* CALIBRATION, read this before changing any measure.
+     A ch is the advance of "0", and in Inter "0" is .6em while the average
+     character in running English text is .437em. So a ch is about 1.37 real
+     characters, and a max-width set in ch holds roughly 1.37 times the number of
+     characters it looks like it holds. Every measure on this site was originally
+     set as though 1ch were 1 character, which is why the audit passed in ch and
+     the pages still ran 84 to 103 characters a line, past the 80 that WCAG 1.4.8
+     allows and well past the 45 to 75 that reads comfortably.
+
+     The conversion is independent of font size, because both sides scale with the
+     em: CHARACTERS x 0.73 = ch. 75 characters is 55ch, 70 is 51ch, 66 is 48ch.
+     Verified by counting the characters in each rendered line at 768 through
+     5120 rather than by dividing widths. If you add a measure, size it that way
+     and verify by counting, never by eye and never in ch alone. */
+  --measure: 54ch;       /* about 74 characters */
+  --gutter: clamp(1.25rem, 0.6rem + 3vw, 3.5rem);
+
+  /* Home page project card summary. A CEILING, not a column: .project__summary
+     fills its card body column at every width narrower than this and only stops
+     here, so the card's paragraph, meta row and stat band share one right edge
+     wherever the column fits. See iteration 41.
+
+     48ch is 504px at this element's 17px, and that is the widest the five real
+     summaries can get before one of them puts 81 characters on a line. Counted
+     in 10px steps from 400 to 760 at 2560: 500px gives 78, 510 gives exactly 80,
+     520 gives 83. So the ceiling is between 510 and 519 and 48ch sits just under
+     it with the margin going the safe way.
+
+     DO NOT derive this one from the CHARACTERS x 0.73 rule above. That factor
+     describes a TYPICAL line, and 80 characters is a MAXIMUM. A longest line is
+     by definition the line that packed the most characters in, so its characters
+     are narrower than average: these summaries hit 80 at 0.375em a character,
+     not 0.437em. Applying 0.73 to a maximum target gives 58ch here, which is
+     609px and 96 characters. Calibrate a ceiling by counting the longest line,
+     the same way section 9 audits it.
+
+     This replaced --measure-short (42ch, 450px), whose only user was this rule.
+     It had two faults: it stopped 65px short of the column at 1512 and 296 at
+     2560, and the @media override that was meant to fix that for the stacked
+     card raised the cap to --measure and let the line run to 91 characters at
+     900. One ceiling passes section 9 at every width and needs no override. */
+  --measure-card: 48ch;  /* 504px, holds 80 characters at most */
+
+  /* Case study reading measure. A case study is the only place on the site with
+     long-form prose, so it gets its own measure and its own body size.
+
+     20px at 55ch is 660px holding 75 characters. The pair replaces 18px at 62ch,
+     which was 670px holding 86: the same column, 11 characters too long. Raising
+     the size rather than narrowing the column is the whole point. Characters a
+     line is column width divided by character advance, so a column can be made
+     comfortable from either end, and narrowing it here would have given back the
+     width the page was asked to use. Bigger type keeps the footprint, fixes the
+     line length, and is easier to read besides. */
+  --measure-case: 55ch;   /* about 75 characters at --t-body-case */
+  --t-body-case: 1.25rem;
+
+  /* The gap between screens in a .shots run. Extracted from .shots so
+     .shots--solo can subtract it: a lone portrait phone is sized to exactly the
+     width one cell of .shots--pair gets, which is (column - gap) / 2, so a single
+     phone and a pair of phones in the same section render at the same scale.
+     Verified: 419px at 1280, 396 at 1512, 580 at 2560, matching the measured
+     .shots--pair cell at each. Change this and both follow. */
+  --shots-gap: clamp(var(--s-5), 3vw, var(--s-7));
+
+  /* ---------- Space ---------- */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+  --s-10: 9rem;
+  --section-y: clamp(4.5rem, 2rem + 9vw, 10rem);
+
+  /* FALLBACK heights for the wide prototype iframe. Section 8a of site.js measures
+     the live prototype's own document and fits the embed to it exactly, so these
+     six are only what a visitor gets while the iframe is still loading, with JS
+     off, or over file:// where Chrome makes the iframe a separate opaque origin and
+     the measure is not allowed. They must be worst cases, never averages: too
+     little and the iframe scrolls inside itself.
+
+     They cannot be an aspect ratio, because the content height is set by a phone
+     frame of fixed width and so does not grow with the embed. They cannot be a
+     media query either, because the case study grid splits into a sticky left
+     column at 62rem and the embed's width is not monotonic in the viewport's:
+     583px at a 1024px viewport, 862px at 2560px. Hence @container on .proto-block.
+
+     One tier per zoom step of the prototype's own phone frame. It zooms at 340,
+     440, 560, 660 and 760px of iframe width, down below 440 and up above 560, so
+     the height need steps at each. Measured in Chromium against
+     prototypes/basket-building/index.html, on all five treatments, at every embed
+     width work/basket-building.html actually produces between a 320px and a 2560px
+     viewport: 776, 901, 968, 1088, 1171, 1251. Each token adds about 40px of slack.
+
+     An inline-size container is measured on its CONTENT box, so the @container
+     thresholds in components.css are in EMBED width and can mirror the prototype's
+     own zoom breakpoints one for one. Do not tier them on round numbers instead:
+     a tier whose ceiling sits above a zoom step hands a zoomed-up frame a height
+     measured for a smaller one, and the iframe scrolls inside itself. The 22.5rem
+     tier that was here before did exactly that for embeds of 341 to 360px, and no
+     sampled viewport happened to land on it.
+
+     --proto-h is the widest band and also the default, so a browser without
+     container query support gets surplus rather than a scrollbar.
+     Re-measure with iterations/13-prototype-cx-proposals/verify-fallback.py if
+     that prototype's heading, intro copy, control labels or zoom steps change. */
+  --proto-h: 81rem;    /* 1296px, covers 1251, embeds from 760px */
+  --proto-h-5: 76rem;  /* 1216px, covers 1171, embeds to  759px  */
+  --proto-h-4: 71rem;  /* 1136px, covers 1088, embeds to  659px  */
+  --proto-h-3: 63rem;  /* 1008px, covers  968, embeds to  559px  */
+  --proto-h-2: 59rem;  /*  944px, covers  901, embeds to  440px  */
+  --proto-h-1: 51rem;  /*  816px, covers  776, embeds to  340px  */
+
+  /* A phone shown whole, with no panel cropping it, is sized by HEIGHT: width
+     would let the case hero's media column decide how tall the page is, and a
+     portrait phone is 2.13 times as tall as it is wide, so a column-sized phone
+     ran 553px and pushed the hero past a 16 inch viewport. 64vh keeps it in
+     proportion to the screen it is read on, the 26rem floor stops it collapsing
+     on a short laptop, and the 60rem cap stops an unusually tall window turning
+     it into a poster. Only .case-hero__device--bare uses this; the three panelled
+     phone heroes are sized by width, because their panel is what gets cropped.
+
+     It was 52vh first, which was the largest value that kept the .case-meta rail
+     above the fold on every viewport that already fitted. The phone that came out
+     of it, 231px wide on a 16 inch MacBook Pro and 264px on a 1920 monitor, was
+     too small to read, which is the whole reason the hero shows a screen. 64vh is
+     the trade taken deliberately in the other direction: the phone is 284px and
+     325px at those two widths, the phone itself still sits entirely above the fold
+     everywhere, and the Role / Team / Timeline rail now starts below it on any
+     window under about 1200px tall. A rail below the fold invites a scroll. An
+     unreadable screen in the hero costs the page its subject. */
+  --case-hero-phone-h: clamp(26rem, 64vh, 60rem);
+
+  /* ---------- Radius. Generous, product-page soft. ---------- */
+  --r-sm: 6px;
+  --r-md: 12px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --r-2xl: 40px;
+  --r-full: 999px;
+
+  /* ---------- Elevation. Warm and soft, never a grey drop shadow. ---------- */
+  --shadow-sm: 0 1px 2px rgba(60, 46, 28, 0.10);
+  --shadow-md: 0 18px 40px -22px rgba(60, 46, 28, 0.32);
+  --shadow-lg: 0 44px 90px -40px rgba(60, 46, 28, 0.40);
+  /* A box-shadow traces the element's box, so on a phone with transparent bezel
+     corners it draws a rectangle the phone does not have. filter: drop-shadow
+     traces the alpha instead, which is the only way to give an unpanelled phone
+     any elevation at all. It is more expensive to paint than a box-shadow, so it
+     belongs on one hero image and not on a list of cards. Shorter and tighter
+     than --shadow-lg: with nothing behind the phone to lift, a 90px blur read as
+     smoke rather than as a shadow. */
+  --drop-shadow-lg: drop-shadow(0 26px 34px rgba(60, 46, 28, 0.30));
+
+  /* ---------- Motion ---------- */
+  --dur-fast: 140ms;
+  --dur-base: 300ms;
+  --dur-slow: 700ms;
+  --dur-xslow: 1200ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);        /* the workhorse */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* playful overshoot */
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+
+  /* ---------- Z ---------- */
+  --z-grid: 0;
+  --z-progress: 300;
+  --z-nav: 200;
+  --z-skip: 400;
+}
+
+/* The dark beat. Put this class on a <section> or <footer> to flip the whole
+   palette for that one block. Use it once per page at most, as contrast. */
+.on-dark {
+  --bg: var(--bg-dark);
+  --bg-raised: var(--bg-dark-raised);
+  --bg-raised-2: #29221A;
+  --bg-glass: rgba(255, 255, 255, 0.07);
+  --bg-glass-strong: rgba(255, 255, 255, 0.12);
+  --text: var(--text-on-dark);
+  --text-dim: var(--text-on-dark-2);
+  --text-faint: #918872;
+  --stroke: var(--stroke-on-dark);
+  --stroke-strong: rgba(237, 228, 214, 0.28);
+  /* --accent and --accent-2 deliberately do NOT change. Fills carry white text,
+     so lightening them here would break the button label. Only the two
+     gradient-TEXT tokens lift, because they sit on ink and need 4.5:1 there. */
+  --grad-text: linear-gradient(100deg, var(--text) 8%, var(--accent-3) 55%, var(--accent-lift) 100%);
+  /* Both stops must clear 4.5:1 on ink. --accent-lift alone does not, so the
+     second stop mixes --accent-3 toward white, which can only raise contrast. */
+  --grad-accent-text: linear-gradient(115deg,
+      var(--accent-3),
+      color-mix(in srgb, var(--accent-3) 72%, #FFFFFF));
+  color-scheme: dark;
+}

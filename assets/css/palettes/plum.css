@@ -1,0 +1,44 @@
+/* ==========================================================================
+   PALETTE  "plum"   blush paper + deep plum
+   The most distinctive of the set. Few UX portfolios look like this.
+   Load AFTER tokens.css. Overrides tokens only, never a component rule.
+   ========================================================================== */
+
+:root {
+  --bg: #FAF3F1;
+  --bg-raised: #FFFFFF;
+  --bg-raised-2: #F3E8E5;
+  --bg-glass: rgba(255, 255, 255, 0.62);
+  --bg-glass-strong: rgba(255, 255, 255, 0.84);
+
+  --bg-dark: #161014;
+  --bg-dark-raised: #1F1820;
+
+  --text: #1A1216;      /* 15.7:1 on --bg */
+  --text-dim: #57494F;  /* 7.5:1 */
+  --text-faint: #665760; /* 6.1:1, labels 13px and up only */
+  --text-on-dark: #FAF3F1;
+  --text-on-dark-2: #C2B4B8;
+
+  --stroke: rgba(26, 18, 22, 0.10);
+  --stroke-strong: rgba(26, 18, 22, 0.22);
+  --stroke-on-dark: rgba(250, 243, 241, 0.14);
+
+  --accent: #9C2B63;      /* 7.2:1 under white text */
+  --accent-2: #74174A;
+  --accent-lift: #C64B8A; /* 4.1:1 on --bg */
+  --accent-3: #E88BB5;    /* decorative only */
+
+  --shadow-sm: 0 1px 2px rgba(60, 24, 42, 0.08);
+  --shadow-md: 0 18px 40px -22px rgba(60, 24, 42, 0.30);
+  --shadow-lg: 0 44px 90px -40px rgba(60, 24, 42, 0.38);
+}
+
+.on-dark {
+  --bg-raised-2: #2A2029;
+  --text-faint: #978790;
+}
+
+/* PREVIEW ONLY. See forest.css. */
+.palette-preview .project__media img,
+.palette-preview .hero__portrait img { filter: hue-rotate(317deg); }

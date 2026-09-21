@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KeyBank account opening · Rishabh Singh</title>
+<meta name="description" content="Opening a deposit account in a KeyBank branch took 55 minutes. I designed the end to end replacement flow and brought average opening time under 5 minutes.">
+<meta name="author" content="Rishabh Singh">
+<meta name="theme-color" content="#FBF7F1">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="KeyBank account opening · Rishabh Singh">
+<meta property="og:description" content="Redesigning KeyBank's in branch deposit account opening, from 55 minutes to under 5, then extending the same flow online.">
+<meta property="og:url" content="https://www.rishabhsingh.design/work/keybank.html">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="canonical" href="https://www.rishabhsingh.design/work/keybank.html">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/components.css">
+</head>
+
+<body>
+<a class="skip-link" href="#background">Skip to the case study</a>
+
+<div class="progress" aria-hidden="true"><div class="progress__fill"></div></div>
+
+<!-- ======================= NAV (shared, do not edit) ======================= -->
+<header class="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="../index.html" aria-label="Rishabh Singh, home">
+      <span class="nav__dot" aria-hidden="true"></span> Rishabh Singh
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a class="nav__link" href="../index.html#work">Work</a>
+      <a class="nav__link" href="../about.html">About</a>
+      <a class="nav__link" href="#contact">Contact</a>
+      <a class="btn btn--primary" href="https://docs.google.com/document/d/1EHUuTUFj9zlCdyJktXC0rGSdesHq1b7P/edit" target="_blank" rel="noopener">Résumé <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ======================= CASE HERO ======================= -->
+  <section class="case-hero case-hero--split">
+    <div class="aurora" aria-hidden="true">
+      <span class="aurora__blob aurora__blob--1"></span>
+      <span class="aurora__blob aurora__blob--2"></span>
+    </div>
+
+    <div class="container case-hero__inner">
+      <a class="case-back" href="../index.html#work">
+        <span class="case-back__glyph" aria-hidden="true">←</span> All work
+      </a>
+
+      <div class="case-hero__grid">
+        <div>
+          <p class="label case-hero__cat">
+            <span aria-hidden="true">🏦</span> Account originations
+          </p>
+
+          <h1 class="mega case-hero__title" data-split>
+            KeyBank <span class="grad-text">account opening</span>
+          </h1>
+
+          <!-- Inside the hero's text column, not a band under both columns. With the
+               deck gone this rail is the whole second half of the column: it gives
+               the headline something to sit above, fills the width the headline does
+               not use, and keeps Role / Team / Timeline above the fold beside the
+               visual instead of below it. The CSS keys off this <dl> being inside
+               the text column of a .case-hero--split grid, so moving it back out to
+               a sibling of .case-hero__grid is the whole change. Stacked,
+               components.css dissolves this wrapper with display: contents and
+               orders the rail after the media, so a phone reads title, screen,
+               credits and does not open on a table of metadata. -->
+          <dl class="case-meta reveal">
+            <div>
+              <dt class="label">Role</dt>
+              <dd>UX Designer, account opening end to end</dd>
+            </div>
+            <div>
+              <dt class="label">Team</dt>
+              <dd>UX Lead, me, and a visual experience designer</dd>
+            </div>
+            <div>
+              <dt class="label">Timeline</dt>
+              <dd class="num">Started March 2018, six month UX delivery</dd>
+            </div>
+            <div>
+              <dt class="label">Org</dt>
+              <dd>g2o, for KeyBank</dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- .chrome-frame, not .case-hero__device: this is a web application a banker
+             ran on a workstation, later extended to KeyBank's online account opening.
+             The __url pill carries the surface name because the in branch tool has no
+             public address, and inventing one would be a fabrication. -->
+        <div class="case-hero__media reveal-pop">
+          <div class="chrome-frame">
+            <div class="chrome-frame__bar" aria-hidden="true">
+              <span class="chrome-frame__dot"></span>
+              <span class="chrome-frame__dot"></span>
+              <span class="chrome-frame__dot"></span>
+              <span class="chrome-frame__url">KeyBank account opening</span>
+            </div>
+            <div class="chrome-frame__body">
+              <img src="../assets/img/keybank/confirmation.webp"
+                   alt="The confirmation screen of the new flow. A red check mark above the word Congratulations, then Your Account Information listing a KeyBank Hassle-Free Account with Debit Card, account number, a 20 dollar opening deposit, routing number, a note that the initial deposit is available immediately and the debit card arrives in 8 to 10 business days, and buttons to order checks or enroll in online banking."
+                   width="1600" height="1252" decoding="async">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================= 01 BACKGROUND ======================= -->
+  <section class="case-section" id="background" aria-labelledby="background-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">01</span>
+        <h2 class="display-3 case-section__title" id="background-heading">Background</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <figure class="pull-quote">
+          <blockquote>
+            <p>
+              I lost a $75,000 direct deposit client because Key Counselor crashed mid-way and I
+              couldn't get it to work. Client left the branch frustrated.
+            </p>
+          </blockquote>
+          <figcaption>KeyBank branch manager, 48, April 2018</figcaption>
+        </figure>
+
+        <div class="prose">
+          <p>
+            The average time it took for KeyBank customers to open a deposit account in branch was
+            55 minutes. The process was excruciatingly slow and unreliable, resulting in several
+            customers taking their business to another bank. Since 51% of their prospective and 63%
+            of their existing customers preferred going to a branch to open accounts, KeyBank was
+            losing money.
+          </p>
+          <p>
+            KeyBank leadership also wanted to streamline the account opening experience into one
+            overall flow that could replace their then disparate online and in branch experiences.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 02 PROJECT GOALS ======================= -->
+  <section class="case-section" aria-labelledby="goals-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">02</span>
+        <h2 class="display-3 case-section__title" id="goals-heading">Project goals</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <div class="prose">
+          <p>
+            The ask from KeyBank executives was to bring the average account opening time in branch
+            to under 15 minutes. On top of that, our UX proposal had to be able to scale to a self
+            service experience online.
+          </p>
+          <p>
+            The project was initiated in March of 2018 with a UX delivery timeline of six months.
+            What was in scope over those six months:
+          </p>
+        </div>
+
+        <ul class="case-list">
+          <li><strong>Competitor landscape.</strong> How other banks opened a deposit account, in branch and online.</li>
+          <li><strong>Process review.</strong> Working with business stakeholders and branch managers to review their actual processes.</li>
+          <li><strong>Business and legal alignment.</strong> Getting KeyBank's business and legal groups aligned on the design proposals.</li>
+          <li><strong>An end to end flow.</strong> A redesigned in branch flow that was then also extended to their online account opening flow.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 03 TEAM AND ROLE ======================= -->
+  <section class="case-section" aria-labelledby="role-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">03</span>
+        <h2 class="display-3 case-section__title" id="role-heading">Team and role</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <div class="prose">
+          <p>
+            A UX Lead, me as the UX Designer, and a visual experience designer. My responsibilities
+            included:
+          </p>
+        </div>
+
+        <ul class="case-list">
+          <li>Creating interaction design flows</li>
+          <li>High-fidelity mock ups</li>
+          <li>Prototyping</li>
+          <li>Organizing leadership reviews</li>
+          <li>Usability testing</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 04 DESIGN AND OUTCOMES ======================= -->
+  <section class="case-section" aria-labelledby="outcomes-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">04</span>
+        <h2 class="display-3 case-section__title" id="outcomes-heading">Design and outcomes</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <div class="prose">
+          <p>
+            Given KeyBank's ask to create a proposal that could easily scale to a self service online
+            experience, I focused on designing for end customers who may not have the same financial
+            expertise as a branch associate. That is a harder audience than a trained banker, and it
+            set the bar for every question in the flow.
+          </p>
+          <p>
+            After analyzing competitors' account opening flows, I aligned with decision makers at
+            KeyBank to eliminate several redundant and unnecessary steps. I also proposed areas where
+            data collection could be automated, which saved more time. With the remaining steps I
+            designed an experience that followed logical steps, and worked with a UX writer to
+            reframe questions so that collecting information was easy and transparent.
+          </p>
+          <p>
+            The redesigned end to end flow was delivered for the branch and then extended to
+            KeyBank's online account opening flow. These are the outcomes measured after launch.
+          </p>
+        </div>
+
+        <div class="stat-band">
+          <p class="stat">
+            <span class="stat__value num" data-count>88%</span>
+            <span class="stat__label">Reduction in account opening time</span>
+          </p>
+          <p class="stat">
+            <span class="stat__value num">Under 5 min</span>
+            <span class="stat__label">Average opening time, goal was under 15</span>
+          </p>
+          <p class="stat">
+            <span class="stat__value num" data-count>4</span>
+            <span class="stat__label">Follow-on contracts awarded by KeyBank</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 05 EXPERIENCE ======================= -->
+  <section class="case-section" aria-labelledby="experience-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">05</span>
+        <h2 class="display-3 case-section__title" id="experience-heading">Experience</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <!-- Every asset here is a wide desktop screen, so they all take the one up
+             .shots slot and the plain .shot__frame. A screenshot of a full desktop
+             application at the ~350px a .shots--pair cell gives it is unreadable.
+             One .shots wrapper holds the run so the gap between figures is even. -->
+        <div class="shots">
+
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="../assets/img/keybank/legacy-key-counselor.webp"
+                   alt="Key Counselor, the system being replaced. A dense Windows application with a products and services tree on the left, a Sales folder pane of tabs, and a Key Advantage Money Market Checking details form of roughly thirty small fields covering titles, signers, deposit source, branch and officer numbers, over a strip of icon buttons along the bottom."
+                   width="1600" height="1199" loading="lazy" decoding="async">
+            </div>
+            <figcaption>
+              <b>Key Counselor, the system being replaced.</b> Everything on one dense form, in a
+              vocabulary only a trained banker could read. This is the 55 minutes.
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="../assets/img/keybank/legacy-address-validation.webp"
+                   alt="The same legacy system with a modal titled InterConnect Inquiry over it, reading Finalist address validation, a failure occurred while validating the address, Finalist has failed to validate the address, please check the address again, above a form of residence, address, city, state, zip and country fields with Cancel and Submit buttons."
+                   width="1600" height="1195" loading="lazy" decoding="async">
+            </div>
+            <figcaption>
+              <b>Where it broke.</b> A validation failure mid application, reported in the language
+              of the service that failed rather than anything the banker or the customer could act
+              on. This is the crash in the quote above.
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="../assets/img/keybank/branch-information.webp"
+                   alt="Branch Information, the first screen of the new flow. A single card holding branch number 23, officer ID 35023, each with an Edit link, and an optional Referred By field, with a Next button and a Save and Exit Application link."
+                   width="1600" height="1039" loading="lazy" decoding="async">
+            </div>
+            <figcaption>
+              <b>Branch information.</b> The first screen, and the shape of every screen after it:
+              one question group, prefilled where the system already knows the answer, one primary
+              action. Save and Exit is always available, because a branch session gets interrupted.
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="../assets/img/keybank/personal-information.webp"
+                   alt="Personal Information. A heading reading Welcome back, John, let's make sure we have your information right, then a card showing name, email address, mailing address and two masked phone numbers, and two large choices at the bottom, I Need to Update my Information and My Information is Correct."
+                   width="1600" height="1368" loading="lazy" decoding="async">
+            </div>
+            <figcaption>
+              <b>Personal information, as a confirmation.</b> For an existing customer the fastest
+              version of a form is not a form. Everything KeyBank already held is shown back, and
+              the only decision is whether it is still right.
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="../assets/img/keybank/product-selection.webp"
+                   alt="Product Selection. Personal Banking and Business Banking tabs, an Account Type menu set to Checking, then a list of accounts including KeyBank Hassle-Free, Key Express Checking, Key Advantage Checking, Key Privilege Checking, Key Privilege Select Checking and Key Student Checking, each with a Rates and Fees link and an Add Product button, beside a Selected Products panel with promotional, event and reservation code fields."
+                   width="1600" height="1191" loading="lazy" decoding="async">
+            </div>
+            <figcaption>
+              <b>Product selection.</b> Rates and fees sit next to every product rather than behind
+              a separate lookup, and the running Selected Products panel means a banker never has to
+              remember what has been added.
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="../assets/img/keybank/co-applicant.webp"
+                   alt="Co-Applicant Information. A single card asking Do you want to add someone to this account, with two large No and Yes targets, above a persistent footer bar reading Opening Today, KeyBank Hassle-Free Account, with a Rates and Fees button."
+                   width="1600" height="950" loading="lazy" decoding="async">
+            </div>
+            <figcaption>
+              <b>One question, one screen.</b> Branching questions were pulled out of the long form
+              and asked plainly, so the flow only ever shows the steps that a given application
+              actually needs. The Opening Today bar keeps the product in view the whole way.
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="../assets/img/keybank/customer-relationship.webp"
+                   alt="Customer Relationship. The question John Doe, what is your relationship to this account, with radio options Sole Owner, Co-Owner First, Custodian, No Access and Minor, and Back and Next buttons with Next disabled."
+                   width="1600" height="1274" loading="lazy" decoding="async">
+            </div>
+            <figcaption>
+              <b>Ownership, in plain words.</b> The customer's own name is in the question, and
+              Next stays disabled until there is an answer rather than failing after submission the
+              way the old system did.
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="../assets/img/keybank/id-verification.webp"
+                   alt="Identification. Let's verify your identity, select the form of ID you want to use, with four large choices, U.S. Driver's License, Passport, State ID Card and Other, the first selected, revealing State, ID Number and Expiration Date fields below."
+                   width="1600" height="1425" loading="lazy" decoding="async">
+            </div>
+            <figcaption>
+              <b>Identity verification.</b> Choose the document first, then see only the fields that
+              document needs. The old form asked for every field for every ID type.
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="../assets/img/keybank/patriot-act-verification.webp"
+                   alt="Verification. A heading reading we have to verify some things to meet USA PATRIOT Act requirements, then three separate question cards, whether records indicating the customer works in computer technology are true, country of citizenship, and whether the United States is the country of permanent residency, each answered with No and Yes targets."
+                   width="1600" height="1759" loading="lazy" decoding="async">
+            </div>
+            <figcaption>
+              <b>The regulatory questions, and why they are being asked.</b> Legally required
+              wording was the least movable part of the flow, so the work here was to say up front
+              what the questions are for and to answer them one at a time.
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="../assets/img/keybank/debit-card.webp"
+                   alt="Account Extras. Would you like to use a debit card with this account, explaining a customer can get a new card just for this account or connect to an existing KeyBank debit card, with three illustrated choices, New Debit Card, Existing KeyBank Debit Card and No Debit Card."
+                   width="1600" height="1032" loading="lazy" decoding="async">
+            </div>
+            <figcaption>
+              <b>Debit card.</b> Three outcomes including declining one, all visible at once, so the
+              option a customer wants is never hidden behind the option the bank prefers.
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="../assets/img/keybank/overdraft-consent.webp"
+                   alt="Disclosure. Overdrafts happen, what should we do when a debit or ATM transaction is more than you have available, presenting Do Not Pay Overdrafts and Pay Overdrafts side by side as two illustrated cards with the consequences of each spelled out, followed by the required consent wording and a choice below it."
+                   width="1600" height="2233" loading="lazy" decoding="async">
+            </div>
+            <figcaption>
+              <b>Overdraft consent.</b> The screen with the most legal text in the flow. Rather than
+              a wall of disclosure, the two outcomes are set side by side with what each one means
+              for the customer, and the required wording sits underneath the comparison.
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="../assets/img/keybank/confirmation.webp"
+                   alt="The confirmation screen. Congratulations, we've opened your account and sent you an email with the details on this page, above a card listing the KeyBank Hassle-Free Account with Debit Card, account number, a 20 dollar opening deposit, routing number, a note that the initial deposit is available immediately and the debit card arrives in 8 to 10 business days, with a Print link and Order Checks and Enroll in Online Banking buttons."
+                   width="1600" height="1252" loading="lazy" decoding="async">
+            </div>
+            <figcaption>
+              <b>Confirmation.</b> The account and routing numbers printed on screen with the note
+              that they are deliberately not emailed, plus the two things a new customer does next.
+              This is the screen in the hero, at full width.
+            </figcaption>
+          </figure>
+
+        </div>
+
+        <p class="case-note">
+          <span aria-hidden="true">📝</span>
+          <span>This page shows only parts of the project. In-depth and sensitive details, and the
+          end-to-end UX, can be covered in person or during the interview process.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= NEXT ======================= -->
+  <nav class="next-case" aria-label="Next case study">
+    <div class="container">
+      <a class="next-case__link" href="basket-building.html">
+        <span>
+          <span class="label">Next case study</span>
+          <span class="display-2 next-case__title">Improving Basket Building</span>
+        </span>
+        <span class="next-case__glyph arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </nav>
+</main>
+
+<!-- ======================= CONTACT (shared, do not edit) ======================= -->
+<!-- The one dark beat on the page. See .on-dark in tokens.css. -->
+<footer class="cta on-dark" id="contact">
+  <div class="aurora" aria-hidden="true" style="opacity: 0.5">
+    <span class="aurora__blob aurora__blob--2"></span>
+    <span class="aurora__blob aurora__blob--3"></span>
+  </div>
+
+  <div class="container cta__inner">
+    <p class="label label--accent">Contact</p>
+    <h2 class="display-1 cta__title reveal" style="margin-top: var(--s-4)">
+      Interested in working <span class="grad-text">together?</span>
+    </h2>
+    <p class="lead reveal">
+      These pages are a trailer. The rest, including the parts that didn't ship, is better in
+      conversation.
+    </p>
+
+    <div class="cta__contact reveal">
+      <a class="cta__line cta__line--email" href="mailto:rishabh.ux@gmail.com">
+        rishabh.ux@gmail.com <span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="cta__line cta__line--phone" href="tel:+18123619841">+1 (812) 361 9841</a>
+    </div>
+
+    <div class="cta__actions reveal">
+      <a class="btn btn--lg" href="https://docs.google.com/document/d/1EHUuTUFj9zlCdyJktXC0rGSdesHq1b7P/edit" target="_blank" rel="noopener">Résumé <span aria-hidden="true">↗</span></a>
+      <a class="btn btn--lg" href="https://www.linkedin.com/in/rishabh-singh-34b13a82/" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a>
+    </div>
+
+    <div class="cta__base">
+      <p>© <span data-year>2026</span> Rishabh Singh. Designed and built by me.</p>
+      <p>New York, NY</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>

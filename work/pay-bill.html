@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Amazon Visa Pay Bill · Rishabh Singh</title>
+<meta name="description" content="Designing the first way to pay an Amazon Visa bill on Amazon. Late fees fell 23% against a 20% goal, and the work won an Amazon Inventor Award.">
+<meta name="author" content="Rishabh Singh">
+<meta name="theme-color" content="#FBF7F1">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Amazon Visa Pay Bill · Rishabh Singh">
+<meta property="og:description" content="Designing the first way to pay an Amazon Visa bill on Amazon. Late fees fell 23% against a 20% goal.">
+<meta property="og:url" content="https://www.rishabhsingh.design/work/pay-bill.html">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="canonical" href="https://www.rishabhsingh.design/work/pay-bill.html">
+<link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/base.css">
+<link rel="stylesheet" href="../assets/css/components.css">
+</head>
+
+<body>
+<a class="skip-link" href="#background">Skip to the case study</a>
+
+<div class="progress" aria-hidden="true"><div class="progress__fill"></div></div>
+
+<!-- ======================= NAV ======================= -->
+<header class="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="../index.html" aria-label="Rishabh Singh, home">
+      <span class="nav__dot" aria-hidden="true"></span> Rishabh Singh
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a class="nav__link" href="../index.html#work">Work</a>
+      <a class="nav__link" href="../about.html">About</a>
+      <a class="nav__link" href="#contact">Contact</a>
+      <a class="btn btn--primary" href="https://docs.google.com/document/d/1EHUuTUFj9zlCdyJktXC0rGSdesHq1b7P/edit" target="_blank" rel="noopener">Résumé <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ======================= CASE HERO ======================= -->
+  <section class="case-hero case-hero--split">
+    <div class="aurora" aria-hidden="true">
+      <span class="aurora__blob aurora__blob--1"></span>
+      <span class="aurora__blob aurora__blob--2"></span>
+    </div>
+
+    <div class="container case-hero__inner">
+      <a class="case-back" href="../index.html#work">
+        <span class="case-back__glyph" aria-hidden="true">←</span> All work
+      </a>
+
+      <div class="case-hero__grid">
+        <div>
+          <p class="label case-hero__cat">
+            <span aria-hidden="true">💳</span> Credit card servicing
+          </p>
+
+          <h1 class="mega case-hero__title" data-split>
+            Amazon Visa <span class="grad-text">Pay Bill</span>
+          </h1>
+
+          <!-- Inside the hero's text column, not a band under both columns. With the
+               deck gone this rail is the whole second half of the column: it gives
+               the headline something to sit above, fills the width the headline does
+               not use, and keeps Role / Team / Timeline above the fold beside the
+               visual instead of below it. The CSS keys off this <dl> being inside
+               the text column of a .case-hero--split grid, so moving it back out to
+               a sibling of .case-hero__grid is the whole change. Stacked,
+               components.css dissolves this wrapper with display: contents and
+               orders the rail after the media, so a phone reads title, screen,
+               credits and does not open on a table of metadata. -->
+          <dl class="case-meta reveal">
+            <div>
+              <dt class="label">Role</dt>
+              <dd>UX lead, end to end</dd>
+            </div>
+            <div>
+              <dt class="label">Team</dt>
+              <dd>PM, me, 15&nbsp;engineers</dd>
+            </div>
+            <div>
+              <dt class="label">Timeline</dt>
+              <dd class="num">March 2022, launched October 2023</dd>
+            </div>
+            <div>
+              <dt class="label">Recognition</dt>
+              <dd>Amazon Inventor Award, 2023</dd>
+            </div>
+          </dl>
+        </div>
+
+        <!-- .case-hero__device, not .chrome-frame: this is the app, not the web
+             page, and browser chrome around a phone screen would be a lie.
+
+             --bare, so the phone is whole and sized by height with its own drop
+             shadow, the same as the other three phone heroes. It was panelled and
+             cropped just below the slider and the interest figure; the crop was
+             never the point, and a whole phone reads as the device it is rather
+             than as a picture mounted on a tile. See the --bare note in
+             components.css.
+
+             This is the SHIPPED Select amount screen, and it has to stay that way.
+             The hero used to show the slider concept, which was cut from Pay Bill
+             and never launched, and the caption underneath was the only thing
+             saying so. The caption is gone, so an unlabelled hero would be
+             claiming an unshipped design as the product. The slider still gets
+             its own frame and its own caption in Experience, beside this exact
+             screen, which is where the comparison belongs anyway. -->
+        <div class="case-hero__media reveal-pop">
+          <div class="case-hero__device case-hero__device--bare">
+            <img src="../assets/img/pay-bill/otp-select-amount.webp"
+                 alt="The Select amount step in the Amazon app, with a custom amount field above three options, minimum payment due, statement balance, and current balance, and a Continue button."
+                 width="840" height="1731" decoding="async">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ======================= 01 BACKGROUND ======================= -->
+  <section class="case-section" id="background" aria-labelledby="background-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">01</span>
+        <h2 class="display-3 case-section__title" id="background-heading">Background</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <figure class="pull-quote">
+          <blockquote>
+            <p>If this is the Amazon credit card why can't I access the account from Amazon</p>
+          </blockquote>
+          <figcaption>Amazon Visa customer, one star review, February 2021</figcaption>
+        </figure>
+
+        <div class="prose">
+          <p>
+            The Amazon Visa is a Chase co-branded card and one of Amazon's most important payment
+            products. Until 2023, customers who wanted to see a statement or pay a bill had to leave
+            Amazon and do it on Chase's site, which most of them did not expect.
+          </p>
+          <p>
+            About half of the one and two star reviews on the card were about account management, and
+            roughly one in five new cardholders picked up a late fee while they were still waiting for
+            the physical card to arrive. Amazon's S-team decided to bring card management in-house. I
+            led UX for three of those features, and Pay Bill was the first one out.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 02 GOALS ======================= -->
+  <section class="case-section" aria-labelledby="goals-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">02</span>
+        <h2 class="display-3 case-section__title" id="goals-heading">Project goals</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <div class="prose">
+          <p>
+            Build a transparent and intuitive Pay Bill experience, so that fewer customers incur a
+            late fee, fewer customers close the account because of one, and managing the card feels
+            like the rest of Amazon. The year one targets were a 20% reduction in monthly late fee
+            incidence and a 20% reduction in attrition.
+          </p>
+          <p>
+            We kicked off in March 2022 with a six month UX timeline and four sub-features in scope:
+          </p>
+        </div>
+
+        <ul class="case-list">
+          <li><strong>One-time payment.</strong> Pick an amount, pick a bank account, pay.</li>
+          <li><strong>Manage bank accounts.</strong> Add, verify, remove, set a default.</li>
+          <li><strong>Automatic payments.</strong> Enroll, change the amount, cancel.</li>
+          <li><strong>Payment activity.</strong> See what is scheduled, pending, and posted.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 03 TEAM AND ROLE ======================= -->
+  <section class="case-section" aria-labelledby="role-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">03</span>
+        <h2 class="display-3 case-section__title" id="role-heading">Team and role</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <div class="prose">
+          <p>
+            A Product Manager, me as the only designer, and 15 engineers. My responsibilities were:
+          </p>
+        </div>
+
+        <ul class="case-list">
+          <li>Creating interaction design flows</li>
+          <li>High-fidelity mock ups</li>
+          <li>Prototyping</li>
+          <li>Partnering with UX Research on end-to-end usability testing</li>
+          <li>Organizing leadership reviews, both at Amazon and at Chase</li>
+          <li>Accessibility annotations</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 04 DESIGN AND OUTCOMES ======================= -->
+  <section class="case-section" aria-labelledby="outcomes-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">04</span>
+        <h2 class="display-3 case-section__title" id="outcomes-heading">Design and outcomes</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <div class="prose">
+          <p>
+            I worked the payment experience out in wireframes early, before there were requirements
+            to design against. Amazon used them to write those requirements, and Chase used them to
+            check their APIs and their legal and compliance position. Several things surfaced that
+            way before any engineering started, and one of them cost us the best idea in the project.
+          </p>
+          <p>
+            Specifically, the slider experience we had proposed had to be axed from the initial
+            release because of an unresolved L&amp;C issue on the Chase side. The slider showed
+            customers the estimated interest for whatever payment amount they selected, in real time,
+            so they could see the cost of their choice as they made it instead of reading about
+            interest in fine print. Usability participants called it something they'd never seen a
+            credit card do. When it was cut, I redesigned the selection experience on a compressed
+            timeline with no room for usability testing, using competitor patterns as a familiarity
+            proxy.
+          </p>
+          <p>
+            The slider won an Amazon Inventor Award in 2023. Its implementation and a modified
+            version of the design were later used in another project that launched and shipped.
+          </p>
+          <p>
+            Pay Bill launched in October 2023. The numbers below are from an analysis run in
+            September 2024, about eleven months in.
+          </p>
+        </div>
+
+        <div class="stat-band">
+          <p class="stat">
+            <span class="stat__value num" data-count>2.3M</span>
+            <span class="stat__label">One-time payments made</span>
+          </p>
+          <p class="stat">
+            <span class="stat__value num" data-count>23%</span>
+            <span class="stat__label">Fewer late fees, against a 20% goal</span>
+          </p>
+          <p class="stat">
+            <span class="stat__value num" data-count>21%</span>
+            <span class="stat__label">Less attrition, against a 20% goal</span>
+          </p>
+          <p class="stat">
+            <span class="stat__value num" data-count>10%</span>
+            <span class="stat__label">Fewer 1 and 2 star ratings</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 05 EXPERIENCE ======================= -->
+  <!-- Real exports, pulled from the shipped work. Phone screens are 840px wide
+       WebP with transparent corners, and .shot__frame--device draws no frame, so
+       each phone sits directly on the page on its own bezel. Paired two up on
+       purpose: a portrait phone in the one-up slot would render 1700px tall. The
+       one wide asset (the annotation sheet) closes the section in the one-up
+       slot. -->
+  <section class="case-section" aria-labelledby="experience-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">05</span>
+        <h2 class="display-3 case-section__title" id="experience-heading">Experience</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <!-- The shipped amount step next to the concept it was tested against.
+             Same screen, same export size, so the comparison is the point. -->
+        <div class="shots shots--pair">
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/pay-bill/otp-select-amount.webp"
+                   alt="Select amount step in the Amazon app: a custom amount field above three options, minimum payment due, statement balance, and current balance, with a Continue button"
+                   width="840" height="1731" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>Select amount.</b> The first step of a one time payment: type a custom amount, or pick the minimum due, the statement balance, or the current balance. Launched October 2023.</figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/pay-bill/slider-select-amount.webp"
+                   alt="The same Select amount step with a slider under the amount field, snapping between the minimum due, statement balance, and current balance, and an estimated interest charge of 13 dollars 65 cents below it"
+                   width="840" height="1731" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>The slider concept.</b> A slider that snaps to the same three amounts and shows the interest you would carry at each one. This is the idea behind the Amazon Inventor Award. It was cut from Pay Bill, and its implementation and a modified version of the design later shipped in another project.</figcaption>
+          </figure>
+        </div>
+
+        <div class="shots shots--pair">
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/pay-bill/otp-confirm-payment.webp"
+                   alt="Confirm payment sheet showing the amount selected, the payment date, the bank account, the 8 PM cutoff, and a Submit payment button"
+                   width="840" height="1731" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>Confirm payment.</b> The review step spells out the cutoff time, what the issuer will do next, and how to cancel, before there is anything to submit. Launched October 2023.</figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/pay-bill/otp-payment-submitted.webp"
+                   alt="Payment submitted screen with a green check, the words thank you for your payment of 980 dollars, and a summary listing confirmation number, bank account, payment date, and status pending"
+                   width="840" height="1731" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>Payment submitted.</b> A confirmation number on screen, not only in email, because the payment posts days after it is made. Launched October 2023.</figcaption>
+          </figure>
+        </div>
+
+        <div class="shots shots--pair">
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/pay-bill/autopay-how-it-works.webp"
+                   alt="Automatic payments screen showing current status off, a three step explanation of how enrollment works, and a Set up automatic payments button"
+                   width="840" height="1731" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>Automatic payments, entry.</b> Current status first, then the three steps, so nobody enrolls without knowing what they are agreeing to. Launched October 2023.</figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/pay-bill/autopay-confirm-settings.webp"
+                   alt="Confirm autopay settings screen listing payment type, frequency, bank account, and payment date, with a link to the automatic payment agreement and a checked agreement box"
+                   width="840" height="1731" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>Automatic payments, confirm.</b> Every term restated in plain language, including what happens when the due date lands on a weekend. Launched October 2023.</figcaption>
+          </figure>
+        </div>
+
+        <div class="shots shots--pair">
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/pay-bill/bank-accounts-list.webp"
+                   alt="Manage bank accounts screen listing three saved accounts, each with a default marker or a set as default action, and a remove account button"
+                   width="840" height="1731" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>Manage bank accounts.</b> Multiple accounts, one default, and a standing note that Amazon fetches this from the issuer and does not store it. Launched October 2023.</figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/pay-bill/bank-accounts-add.webp"
+                   alt="Add a bank account screen with a diagram of a paper check labelling which number is the routing number and which is the account number, above fields for both"
+                   width="840" height="1731" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>Add an account.</b> The check diagram is the whole design: routing and account numbers are the step people abandon, so the form shows where to find them. Launched October 2023.</figcaption>
+          </figure>
+        </div>
+
+        <div class="shots shots--pair">
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/pay-bill/activity-list.webp"
+                   alt="Payment activity screen grouping payments by month, each row showing amount, date, and a status of pending or completed, with automatic payments marked"
+                   width="840" height="1731" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>Payment activity.</b> Pending and completed payments in one list, grouped by month, with automatic payments marked as such. Launched October 2023.</figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/pay-bill/activity-detail.webp"
+                   alt="Payment detail screen for a 1500 dollar payment listing confirmation number, bank account, payment date, type, how it was submitted, and status, with a cancel payment action"
+                   width="840" height="1731" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>Payment detail.</b> Cancelling is reachable here for as long as the payment is still pending, which is the request the old flow had no answer for. Launched October 2023.</figcaption>
+          </figure>
+        </div>
+
+        <div class="shots">
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="../assets/img/pay-bill/accessibility-annotations.webp"
+                   alt="An annotated desktop layout of the pay bill flow, with labelled callouts marking reading order, ARIA radio button roles, checked and unchecked states, accessible names, and which links open in a new window"
+                   width="1600" height="1388" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>Accessibility annotations.</b> Reading order, roles, names, and the expected screen reader output, handed to engineering with the mocks.</figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="../assets/img/pay-bill/web-select-amount-voiceover.webp"
+                   alt="The Select amount step of the pay bill flow on amazon.com, with a VoiceOver caption reading: you are currently on a radio button, 2 of 3. To select this option, press Control-Option-Space."
+                   width="1237" height="797" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>The same screen, verified.</b> The annotations checked against the built page with VoiceOver, which is the half of the job that makes the annotations worth writing. Launched October 2023.</figcaption>
+          </figure>
+        </div>
+
+        <p class="case-note">
+          <span aria-hidden="true">📝</span>
+          <span>This page shows only parts of the project. In-depth and sensitive details, and the
+          end-to-end UX, can be covered in person or during the interview process.</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= NEXT ======================= -->
+  <nav class="next-case" aria-label="Next case study">
+    <div class="container">
+      <a class="next-case__link" href="transactions.html">
+        <span>
+          <span class="label">Next case study</span>
+          <span class="display-2 next-case__title">Amazon Visa Transactions</span>
+        </span>
+        <span class="next-case__glyph arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </nav>
+</main>
+
+<!-- ======================= CONTACT ======================= -->
+<!-- The one dark beat on the page. See .on-dark in tokens.css. -->
+<footer class="cta on-dark" id="contact">
+  <div class="aurora" aria-hidden="true" style="opacity: 0.5">
+    <span class="aurora__blob aurora__blob--2"></span>
+    <span class="aurora__blob aurora__blob--3"></span>
+  </div>
+
+  <div class="container cta__inner">
+    <p class="label label--accent">Contact</p>
+    <h2 class="display-1 cta__title reveal" style="margin-top: var(--s-4)">
+      Interested in working <span class="grad-text">together?</span>
+    </h2>
+    <p class="lead reveal">
+      These pages are a trailer. The rest, including the parts that didn't ship, is better in
+      conversation.
+    </p>
+
+    <div class="cta__contact reveal">
+      <a class="cta__line cta__line--email" href="mailto:rishabh.ux@gmail.com">
+        rishabh.ux@gmail.com <span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="cta__line cta__line--phone" href="tel:+18123619841">+1 (812) 361 9841</a>
+    </div>
+
+    <div class="cta__actions reveal">
+      <a class="btn btn--lg" href="https://docs.google.com/document/d/1EHUuTUFj9zlCdyJktXC0rGSdesHq1b7P/edit" target="_blank" rel="noopener">Résumé <span aria-hidden="true">↗</span></a>
+      <a class="btn btn--lg" href="https://www.linkedin.com/in/rishabh-singh-34b13a82/" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">↗</span></a>
+    </div>
+
+    <div class="cta__base">
+      <p>© <span data-year>2026</span> Rishabh Singh. Designed and built by me.</p>
+      <p>New York, NY</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../assets/js/site.js" defer></script>
+</body>
+</html>

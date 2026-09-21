@@ -1,0 +1,44 @@
+/* ==========================================================================
+   PALETTE  "indigo"   cool paper + violet indigo
+   The only palette here with a cool background. Digital rather than editorial.
+   Load AFTER tokens.css. Overrides tokens only, never a component rule.
+   ========================================================================== */
+
+:root {
+  --bg: #F5F4F8;
+  --bg-raised: #FFFFFF;
+  --bg-raised-2: #EBEAF2;
+  --bg-glass: rgba(255, 255, 255, 0.62);
+  --bg-glass-strong: rgba(255, 255, 255, 0.84);
+
+  --bg-dark: #100F16;
+  --bg-dark-raised: #1A1922;
+
+  --text: #15141B;      /* 15.8:1 on --bg */
+  --text-dim: #4F4E5A;  /* 7.4:1 */
+  --text-faint: #5E5D69; /* 5.5:1, labels 13px and up only */
+  --text-on-dark: #F5F4F8;
+  --text-on-dark-2: #B8B6C4;
+
+  --stroke: rgba(21, 20, 27, 0.10);
+  --stroke-strong: rgba(21, 20, 27, 0.22);
+  --stroke-on-dark: rgba(245, 244, 248, 0.14);
+
+  --accent: #4A3AD4;      /* 7.3:1 under white text */
+  --accent-2: #3524A8;
+  --accent-lift: #6E5CF0; /* 4.3:1 on --bg */
+  --accent-3: #A79BFF;    /* decorative only */
+
+  --shadow-sm: 0 1px 2px rgba(32, 26, 70, 0.08);
+  --shadow-md: 0 18px 40px -22px rgba(32, 26, 70, 0.30);
+  --shadow-lg: 0 44px 90px -40px rgba(32, 26, 70, 0.38);
+}
+
+.on-dark {
+  --bg-raised-2: #24222F;
+  --text-faint: #8C8A9A;
+}
+
+/* PREVIEW ONLY. See forest.css. */
+.palette-preview .project__media img,
+.palette-preview .hero__portrait img { filter: hue-rotate(233deg); }
