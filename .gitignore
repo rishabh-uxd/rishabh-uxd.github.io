@@ -32,3 +32,9 @@ iterations/
 # their output: prototypes/basket-building/index.html is generated, scrubbed,
 # and ships, because work/basket-building.html embeds it in an iframe.
 prototypes/**/*.py
+
+# The case study skeleton is a working file, not a page. Published, it was
+# reachable at /work/_TEMPLATE.html with its {{PLACEHOLDER}} text showing, which
+# is not something a recruiter should be able to open. It stays on disk because
+# DESIGN-SYSTEM.md section 12 says to copy it when adding a case study.
+work/_TEMPLATE.html
