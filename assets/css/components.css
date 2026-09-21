@@ -991,6 +991,30 @@ a:hover .arrow, .btn:hover .arrow { transform: translateX(5px); }
 .shots-group { margin-top: var(--s-8); }
 .shots-group .prose + .shots { margin-top: var(--s-5); }
 
+/* The lead-in paragraph spans the screens it introduces, instead of stopping at
+   --measure-case two thirds of the way across. Both halves are required and
+   neither works alone: the wider measure without the larger size runs to about 96
+   characters at 1512, and the larger size without the wider measure just sets the
+   same 75 characters in bigger type. The reasoning and the measured span at every
+   viewport are on --measure-case-wide in tokens.css.
+
+   Scoped to .shots-group on purpose. This is the pattern where a paragraph and a
+   full-width media run are one thought, so the paragraph is the caption's cousin
+   rather than body copy, and .shot figcaption already got the same widening for
+   the same reason. Ordinary .prose in a case section is unaffected and still
+   carries --measure-case.
+
+   Leading is NOT touched, though 28px type at --lh-relaxed looks loosely stacked
+   and the instinct is to bring it down a step. WCAG 1.4.8 asks for line spacing of
+   at least 1.5 within a paragraph, and it is the same success criterion as the 80
+   character ceiling this rule is built around. --lh-snug is 1.16 and --lh-normal is
+   1.45, so both would fail it; --lh-relaxed at 1.6 is the only compliant token on
+   the scale. The looseness is the price of the size and it stays. */
+.case-section__body .shots-group .prose {
+  max-width: var(--measure-case-wide);
+  font-size: var(--t-body-lead);
+}
+
 /* The .shots-group caption override that used to live here is gone: it set
    max-width: none on these captions only, and .shot figcaption now carries that
    site-wide. Nothing about Basket Building's captions changed when it was deleted.

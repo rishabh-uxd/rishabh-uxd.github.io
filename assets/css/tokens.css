@@ -208,6 +208,37 @@
   --measure-case: 55ch;   /* about 75 characters at --t-body-case */
   --t-body-case: 1.25rem;
 
+  /* Lead-in measure and size, for the one paragraph that introduces a run of
+     full-width screens. Only user: .shots-group .prose.
+
+     The problem it solves: a .prose capped at --measure-case is 694px at every
+     viewport over about 1000px, while the one-up .shots below it spans the whole
+     body column, 837px at 1512 and 1208px at 2560. The paragraph ends a third of
+     the way short of the image it introduces and reads as though it were clipped.
+
+     Widening it at --t-body-case is not available. The column at 1512 would put
+     about 96 characters on a line, past the 80 WCAG 1.4.8 allows, and section 9
+     does not bend. So the size goes up with the width and the line length stays
+     put, the same trade --measure-case itself records above.
+
+     58ch, not 55ch, because ch is a proportion of the font size: a ch measure
+     holds the same CHARACTER count at any size, so 58ch is 79 characters whether
+     the type is 20px or 28px. 58 is the largest value that stays inside the 80
+     ceiling, and it buys 4 characters of width for nothing.
+
+     Measured span of the column, and characters at the longest line:
+       390 -> 100%, 40 chars     1512 -> 100%, 68
+       744 -> 100%, 78           1920 -> 100%, 80
+      1280 -> 100%, 78           2560 ->  81%, 80
+     At and below 744 the column is already narrower than the block, so nothing
+     changes there. Past about 1980 the type stops growing and the paragraph stops
+     spanning: filling 1208px would need 34.7px, which is within a pixel of
+     --t-display-3's 36px cap at that viewport, and body copy set to the size of
+     the h2 above it is a worse fault than a short line. Wide monitors keep the
+     white space, which is what --measure-case does there too. */
+  --measure-case-wide: 58ch;
+  --t-body-lead: clamp(var(--t-body-case), 2vw, 1.75rem);
+
   /* The gap between screens in a .shots run. Extracted from .shots so
      .shots--solo can subtract it: a lone portrait phone is sized to exactly the
      width one cell of .shots--pair gets, which is (column - gap) / 2, so a single
