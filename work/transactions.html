@@ -291,10 +291,11 @@
   <!-- ======================= 05 EXPERIENCE ======================= -->
   <!-- Real exports. Phone screens are 862px wide WebP with transparent corners,
        and .shot__frame--device draws no frame, so each phone sits directly on the
-       page on its own bezel. They pair two up. The one wide artifact left here,
-       the annotation sheet, takes the one-up slot; the reviews evidence that used
-       to open this section now closes section 01, where the paragraph it is
-       evidence for lives. -->
+       page on its own bezel. They pair two up, and the pairs run in release
+       order, P0 then P1 then P2, which is the order the hero's Timeline rail
+       names. The one wide artifact left here, the annotation sheet, takes the
+       one-up slot; the reviews evidence that used to open this section now closes
+       section 01, where the paragraph it is evidence for lives. -->
   <section class="case-section" aria-labelledby="experience-heading">
     <div class="container case-section__grid">
       <div class="case-section__aside reveal">
@@ -402,6 +403,41 @@
                    width="862" height="1776" loading="lazy" decoding="async">
             </div>
             <figcaption><b>The same screen for an Amazon charge.</b> Order number, statement name, and the rate that earned the points, so the reward is attached to the purchase that produced it.</figcaption>
+          </figure>
+        </div>
+
+        <!-- P2, September 2025. Added 2026-09-21 from the user's Figma frame, and
+             it closes the gap iteration 48 recorded: the hero's Timeline rail names
+             three releases and this section showed screens for two.
+
+             Placed after the P1 pair rather than at the literal end of the section,
+             which is what was asked for, because the two blocks below are the
+             accessibility annotations and the same annotation running in
+             production, and that pair is the section's closing argument. Release
+             screens dropped after it would read as an appendix to it.
+
+             Encoder of record: iterations/50-transactions-p2-screens/proc.py. Do
+             not re-export these from Figma without it. A Figma frame export is
+             fully opaque and carries the frame's own #F5F5F5 fill in the corners
+             outside the phone silhouette, and the iPhone component bakes in six
+             antenna ticks; the script removes both. -->
+        <div class="shots shots--pair">
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/transactions/list-p2.webp"
+                   alt="The transactions list at the third release, scrolled to Activity since last statement. A Best Buy row for 487 dollars 21 cents on July 28, 2022 reads 2 percent back under the amount, and an Amazon.com row for 191 dollars 92 cents on July 18, 2022 reads 6 percent back and opens out to an order number link with thumbnails of four items from that order and a plus 8 for the rest."
+                   width="862" height="1776" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>The list, third release.</b> The items from an Amazon order sit in the row with the charge, so a customer can place a purchase without opening it. The earn rate is spelled out under each amount instead of sitting in a badge.</figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame shot__frame--device">
+              <img src="../assets/img/transactions/detail-p2-amazon.webp"
+                   alt="A transaction detail screen at the third release for a 368 dollar 73 cent Amazon.com charge. Under the order number are thumbnails of four items from the order and a plus 8 for the rest, and the rewards row reads plus 2,078 points with 6 percent back beside it."
+                   width="862" height="1776" loading="lazy" decoding="async">
+            </div>
+            <figcaption><b>Detail, third release.</b> The items from the order appear under the order number here too. The rewards row states the rate next to the points it earned, where before the rate was a badge on its own.</figcaption>
           </figure>
         </div>
 
