@@ -158,12 +158,30 @@
              which is where numbers go by default on this site, and the home page card
              carries it as a figure. Same reasoning in 03. -->
 
-        <!-- NO SCREENS YET. The draft of this page carried a .shots--pair of two
-             placeholder-shot.svg for the two states of the tool, before and after a
-             check runs. They are out because no real capture of Design Insight
-             exists, and every other page on this site earns its images. When the two
-             captures arrive the markup is in
-             iterations/53-practice-page-draft/practice.html. -->
+        <!-- One up .shots and the plain .shot__frame, not .shots--pair, for the same
+             reason KeyBank gives: this is a 2000px wide desktop application, and at the
+             ~350px a pair cell allows it would be unreadable.
+
+             ONLY THE INPUT SCREEN IS HERE. The results screen from the same Figma frame
+             (2411:27725) is held back: the design it has under review is an unreleased
+             Amazon concept, labelled FUTURE CONCEPT on the canvas, and both it and the
+             finding text name an internal widget and an unannounced device. It can ship
+             once the tool is re-run against a design that is already public, which the
+             screens on this site are. -->
+        <div class="shots">
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="assets/img/design-insight/input-screen.webp"
+                   alt="The Design Insight input screen. Under a heading reading Design Insight and the line AI-simulated feedback for your CX, a required Figma link field, a required description field prompting what the project is, what users are trying to accomplish and which part of the screen you own, a choice between a single screen and multiple screens, an optional dropzone to upload research documents or PRDs, and five feedback types to tick: Accessibility, Usability Heuristics, Persona Walkthroughs, Task Analysis and Hypothesis Validation. A full width Analyze button sits at the bottom."
+                   width="1040" height="1508" loading="lazy" decoding="async">
+            </div>
+            <figcaption>
+              <b>What a designer fills in.</b> The description and the optional upload are what
+              decide whether the feedback is grounded in the team's own evidence or in the model's
+              training data.
+            </figcaption>
+          </figure>
+        </div>
       </div>
     </div>
   </section>
