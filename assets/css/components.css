@@ -645,75 +645,80 @@ a:hover .arrow, .btn:hover .arrow { transform: translateX(5px); }
    measured 160 / 161 / 160 at 1512, 99 / 100 / 99 at 744, 72 / 73 / 72 at 390. */
 .practice { border-top: 1px solid var(--stroke); }
 
-/* The standfirst runs the full width of the section head's divider above it, and
-   it does that with COLUMNS, not with a wide measure. This is the one paragraph on
-   the site set in more than one column, so the reasoning is worth having here.
+/* The standfirst runs the full width of the section head's divider above it, and it
+   does that as TWO PARAGRAPHS SIDE BY SIDE, each one whole. Getting here took three
+   wrong answers, so the reasoning is worth having in full.
 
-   A max-width cannot do this job at every width. A measure is a fixed pixel box, so
-   whichever number you pick it matches the container at exactly one viewport and
-   stops short of the divider at every wider one. It shipped at 84ch for that
+   A max-width cannot do this job at any width but one. A measure is a fixed pixel
+   box, so whichever number you pick it matches the container at exactly one viewport
+   and stops short of the divider at every wider one. It shipped at 84ch for that
    reason, calibrated where the container was about 1170 to 1390 wide, and on a
    32 inch monitor the container reaches 1690 while 84ch is still 1210, so the
    paragraph ended a third of the way short of the rule. That is what was reported.
 
-   Widening the measure further is not available. Span and size are one dial: a line
-   is characters x advance x size, the character count is pinned at 80 by WCAG 1.4.8,
-   and at the 24px cap a compliant 80 character line is about 920px wide AT ANY
-   VIEWPORT, FOR ANY COPY. No single column wider than 920px can be filled by
-   compliant body text, so 1690 was never reachable in one column. 84ch was already
+   Widening the measure is not available either. Span and size are one dial: a line is
+   characters x advance x size, the character count is pinned at 80 by WCAG 1.4.8, and
+   at the 24px cap a compliant 80 character line is about 920px wide AT ANY VIEWPORT,
+   FOR ANY COPY. No single column wider than 920px can be filled by compliant body
+   text, so 1690 was never reachable in one column of running text. 84ch was already
    over the ceiling at 101 characters, and it was the only measure on the site that
-   was; this rule is what let it go.
+   was; that is what let it go.
 
-   Columns are the way out, because they multiply span without touching line length.
-   A multi-column block has no width of its own: it fills its container and shares
-   the space between the columns, so it lands on the divider by construction at every
-   width, which is the thing no measure can do.
+   Two columns are the way out, because they multiply span without touching line
+   length. A two column block has no width of its own: it fills its container and
+   shares the space, so it lands on the divider by construction at every width.
 
-   TWO columns, by count, never three. column-width was tried first and it is the
-   wrong tool here, because it sets a minimum rather than a count and so keeps
-   adding columns as the container grows: at 2100
-   and up it gave three, and a 270 character deck split three ways is two or three
-   lines per column. That reads as three fragments rather than one paragraph, and it
-   broke a phrase across a column boundary ("documentation a" / "designer can learn
-   from"), which a reader has to reassemble. Judged on the rendered page at 2560,
-   not from the numbers. One column break is the most this much copy can carry.
+   BUT NOT WITH column-count, WHICH IS WHAT THIS SHIPPED AS FOR ONE COMMIT. CSS
+   columns flow ONE paragraph across the break, so the sentence continues at the top
+   of the second column and the reader has to travel back up to finish it. At three
+   lines a column that is not a paragraph in two columns, it is a paragraph cut in
+   half. The user caught it immediately, "Why is this text breaking into two
+   columns?", and they were right: nothing about the copy asked to be interrupted
+   there. Do not reach for column-count again on running prose that a reader is meant
+   to read straight through.
 
-   So the count is fixed at two above 860px and one below. Measured worst characters
-   per line:
+   The fix is structural, not typographic. Two separate paragraphs in a two column
+   grid, each one read top to bottom and finished before the eye moves right. Same
+   span, same line length, no reassembly. This is what a magazine does with a
+   two column deck and it is why the copy is now written as two thoughts: what these
+   four things are, then how they pair up.
 
-     390 to 859    1 column     78
-     861 up        2 columns    37 at 861, 72 at 2560 and at 3840
+   The column gap and the 860px collapse are both borrowed from .practice-grid below,
+   so the deck's two columns sit exactly over the two card columns and the band reads
+   as a single grid rather than as a paragraph that happens to sit above one. The
+   collapse lives in .practice-grid's own media block, for the reason given there.
+
+   Measured worst characters per line, DPR 2:
+
+     390 to 859    stacked, one column     78
+     861 up        two columns             37 at 861, 72 at 2560 and at 3840
 
    Two bands to watch, for different reasons. Just under 860 the type has nearly hit
-   its 24px cap while the container is still growing, so the single line grows with it
-   and 78 is the worst line on the site, with two characters of headroom. At the top
-   end --page-max caps the container at 1800, so the widest a column ever gets is
-   about 828px and 72 characters, and 2560 and 3840 measure identically. Without that
-   cap this treatment would fail on a wide panel.
+   its 24px cap while the container is still growing, so the line grows with it and 78
+   is the worst line on the site, with two characters of headroom. At the top end
+   --page-max caps the container at 1800, so the widest a column ever gets is about
+   828px and 72 characters, and 2560 and 3840 measure identically. Without that cap
+   this treatment would fail on a wide panel.
 
-   The copy is written to the shape, twice over. Columns balance by height, so a
-   paragraph much shorter than this one goes back to looking like fragments even at
-   two columns; and the counts above are a property of THIS copy's word breaks, not a
-   guarantee. Keep this standfirst at roughly 250 characters or more, and re-measure
-   the rendered lines after any rewrite. */
+   The copy is written to the shape, and it has to be. The two paragraphs must be
+   close to the same length or the right column ends a line short and the row looks
+   ragged; these are 203 and 205 characters and both set as three lines. The counts
+   above are a property of THIS copy's word breaks, not a guarantee, so re-measure the
+   rendered lines after any rewrite. */
 .practice-lead {
   margin-top: var(--s-6);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  row-gap: var(--s-4);
+  column-gap: clamp(var(--s-5), 2.5vw, var(--s-6));
+}
+
+.practice-lead p {
+  margin: 0;
   color: var(--text-dim);
   font-size: var(--t-lead-wide);
   line-height: var(--lh-relaxed);
   letter-spacing: -0.008em;
-}
-
-/* 860px and the gap are both borrowed from .practice-grid below, deliberately.
-   Sharing them puts the deck's two columns exactly over the two card columns, and
-   makes them collapse to one column at the same width, so the band reads as a single
-   grid rather than as a paragraph that happens to sit above one. */
-@media (min-width: 53.75rem) {
-  .practice-lead {
-    column-count: 2;
-    column-gap: clamp(var(--s-5), 2.5vw, var(--s-6));
-    column-fill: balance;
-  }
 }
 
 /* Two by two, --s-8 below the head, the same offset .projects uses.
@@ -812,9 +817,16 @@ a:hover .arrow, .btn:hover .arrow { transform: translateX(5px); }
 }
 
 /* 860px, not a breakpoint token, because it is where the two columns stop
-   holding the longest card title on one line. */
+   holding the longest card title on one line.
+
+   The deck above collapses in this same block, not in a min-width mirror of it, and
+   that is deliberate: written as `min-width: 53.75rem` the two rules both applied at
+   exactly 860px, so the deck held two columns while the cards had already gone to
+   one. One px wide and nobody would have seen it, but two rules that must agree
+   belong in one place. Whatever this number becomes, they move together. */
 @media (max-width: 860px) {
   .practice-grid { grid-template-columns: minmax(0, 1fr); }
+  .practice-lead { grid-template-columns: minmax(0, 1fr); }
 }
 
 /* --------------------------------------------------------------------------

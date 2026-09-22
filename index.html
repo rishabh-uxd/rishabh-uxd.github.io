@@ -315,15 +315,28 @@
         <p class="label num">Four things</p>
       </div>
 
-      <!-- Set in columns, so it lands on the divider above it at every width. The
-           reasoning is on .practice-lead in components.css and it constrains the
-           copy: keep this at roughly 250 characters or more, or the columns balance
-           into one line each and read as three fragments. -->
-      <p class="practice-lead reveal">
-        The case studies are work I shipped to customers. These four are work I did for the people
-        I work with: documentation a designer can learn from, and tools that take on work the team
-        used to do by hand. Each one started as a problem I kept watching us hit, mine included.
-      </p>
+      <!-- TWO paragraphs, not one paragraph in two columns. Side by side they span
+           the divider above them at every width, and because each one is whole the
+           reader finishes a column before moving right. This shipped for one commit
+           as a single paragraph in column-count: 2, which cut a sentence in half
+           across the gutter and the user caught it at once. The full reasoning is on
+           .practice-lead in components.css.
+
+           It constrains the copy: the two must stay close to the same length, about
+           200 characters each, or the right column ends a line short and the row
+           looks ragged. -->
+      <div class="practice-lead reveal">
+        <p>
+          The case studies are work I shipped to customers. These four are work I did for the
+          people I work with: two documents a designer can learn from, and two tools that take on
+          work the team used to do by hand.
+        </p>
+        <p>
+          They sit in pairs. The documentation and the tool are about finding a problem earlier;
+          the agent and the playbook are about designing with AI. Each started as a problem I kept
+          watching us hit, mine included.
+        </p>
+      </div>
 
       <!-- Whole card is the link. Two cards go to each section of practice.html,
            which is correct: the standard and the tool are one story, and so are the
