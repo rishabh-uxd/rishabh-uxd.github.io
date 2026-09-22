@@ -162,18 +162,22 @@
              reason KeyBank gives: these are 2000px wide desktop screens, and at the
              ~350px a pair cell allows they would be unreadable.
 
-             The two are cropped to render at the same size, 835 x 480 and 835 x 459,
-             because the form is a tall portrait and the results screen is wide: whole,
-             the form ran 1211 tall against the other's 459. The fix is in the crops,
-             not here. Do not reach for a height cap on the form if it needs shrinking
-             again: matching 459 that way renders it 317 wide and unreadable.
+             The two do NOT render at the same size: 835 x 1061 for the form against
+             835 x 459 for the results screen. That is deliberate, and an earlier pass
+             did match them by cutting the form off under the upload dropzone. The user
+             asked for the entire interface back instead. Do not "fix" the mismatch: a
+             tall portrait form and a wide landscape screen cannot be one size in a
+             single column unless one is too small to read, and a height cap that put
+             this form at 459 would render it 317 wide, worse than the 320 that forced
+             the crop in the first place.
 
              Both sources are far wider than they render, 2374 and 2400 against an 835
              box, because a 2x display asks for 1670 device pixels there and the case
              column is wider still on a large monitor. An earlier pass shipped the form
              at 1187 and it visibly upscaled. Local screenshots run at DPR 1 and cannot
-             catch that, so check the arithmetic, not the capture. Iteration 54 has both
-             encodes and why each cut lands where it does.
+             catch that, so check the arithmetic, not the capture; iteration 54 has a
+             reusable DPR 2 audit. It also has both encodes and why the form's crop is
+             wider than the form, which is what holds its height down.
 
              The design under review on the results screen is a dummy, confirmed by the
              user, so it publishes. -->
@@ -181,8 +185,8 @@
           <figure class="shot">
             <div class="shot__frame">
               <img src="assets/img/design-insight/input-screen.webp"
-                   alt="The Design Insight input form. A required Figma link field, with a note to link to a specific artboard rather than a whole file. A required description field prompting what the project is, what users are trying to accomplish and which part of the screen you own. A choice between a single screen and multiple screens. Then an optional dropzone to upload research documents, PRDs or other context, which takes up to five files."
-                   width="2374" height="1364" loading="lazy" decoding="async">
+                   alt="The whole Design Insight input screen. Under a heading reading Design Insight and the line AI-simulated feedback for your CX: a required Figma link field, with a note to link to a specific artboard rather than a whole file; a required description field prompting what the project is, what users are trying to accomplish and which part of the screen you own; a choice between a single screen and multiple screens; an optional dropzone to upload research documents, PRDs or other context, which takes up to five files; then five feedback types to tick, each with a line explaining it, Accessibility for screen reader, keyboard, low vision and cognitive experience, Usability Heuristics for Nielsen's ten applied to the design, Persona Walkthroughs for simulated users narrating their friction points, Task Analysis for predicted friction and failure points per task, and Hypothesis Validation for whether the design supports the stated hypothesis. A full width Analyze button sits at the bottom."
+                   width="2374" height="3016" loading="lazy" decoding="async">
             </div>
             <figcaption>
               <b>What a designer fills in.</b> The description and the optional upload are what
