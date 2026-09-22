@@ -152,11 +152,19 @@
           </p>
         </div>
 
-        <!-- NO .stat-band here, deliberately. This section has one figure, the week
-             an approval now takes, and .stat-band is a two column grid, so a single
-             stat leaves half the panel empty. It is in the paragraph above instead,
-             which is where numbers go by default on this site, and the home page card
-             carries it as a figure. Same reasoning in 03. -->
+        <!-- .stat-pill, not .stat-band. This section has one figure and .stat-band is
+             a two column grid, so a single stat in it leaves half the panel empty.
+             The pill shrink wraps to its own words instead, which is what it is for.
+             Section 03 has the same one-figure shape and could take one too.
+
+             No data-count. The counter animates up to its value, and counting up to
+             1 animates almost nothing, which is the same reason 01's zero does
+             without it. The 3.5 in the unit is the baseline, not a target, so it
+             must not animate either. -->
+        <p class="stat-pill">
+          <span class="stat-pill__value num">1</span>
+          <span class="stat-pill__unit">week on average for an accessibility approval, down from 3.5</span>
+        </p>
 
         <!-- One up .shots and the plain .shot__frame, not .shots--pair, for the same
              reason KeyBank gives: these are 2000px wide desktop screens, and at the

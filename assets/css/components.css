@@ -1077,6 +1077,68 @@ a:hover .arrow, .btn:hover .arrow { transform: translateX(5px); }
   .stat-band { grid-template-columns: 1fr; }
 }
 
+/* The one-figure case, which .stat-band cannot do: that band is a two column
+   grid, so a single callout in it leaves half the panel empty. This shrink wraps
+   instead, which is the whole reason it is a pill and not a narrow band. Same
+   surface language as .stat-band, a --stroke hairline over --bg-raised with the
+   accent wash, so a section carrying one figure and a section carrying two read
+   as siblings rather than as two different ideas.
+
+   inline-flex on a baseline, because the figure is one sentence: the numeral is
+   the subject and the unit finishes it. Do not stack them. No max-width and no
+   --measure-case cap, unlike .stat-band: it is already as wide as its own words
+   and nothing else.
+
+   Repeating a number that is already in the prose above is deliberate and is
+   what section 01 does too, where 7 and 0 appear in both. The paragraph carries
+   the number with its caveat, the pill carries it for someone scanning. */
+.stat-pill {
+  display: inline-flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--s-1) var(--s-3);
+  margin-top: var(--s-7);
+  padding: var(--s-4) var(--s-6);
+  border-radius: var(--r-full);
+  border: 1px solid var(--stroke);
+  background:
+    radial-gradient(120% 160% at 100% 0%, color-mix(in oklab, var(--accent) 9%, transparent), transparent 60%),
+    var(--bg-raised);
+}
+
+/* Matches .stat__value and .practice-card__value, so the same figure reads the
+   same on the home page card and here. */
+.stat-pill__value {
+  font-size: var(--t-stat);
+  font-weight: var(--w-black);
+  letter-spacing: var(--track-mega);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  background: var(--grad-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* --text-dim, not --text-faint: this sets at --t-small, which is body size, and
+   --text-faint is only safe down at 13px labels. */
+.stat-pill__unit {
+  color: var(--text-dim);
+  font-size: var(--t-small);
+  line-height: 1.35;
+}
+
+/* At phone width the pill's own words outrun the column, so it goes full width
+   and squares off to --r-xl. A 999px radius on a two line box draws a lozenge
+   with the text pressed into its waist. */
+@media (max-width: 30rem) {
+  .stat-pill {
+    display: flex;
+    border-radius: var(--r-xl);
+    padding: var(--s-5);
+  }
+}
+
 /* An h3 that names a run of screens, for a case study whose section 05 holds more
    than one set. Without it a reader scrolling three phones, then two more, has no
    way to know whether they are looking at one set of five or two sets, and the
