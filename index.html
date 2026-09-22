@@ -44,7 +44,7 @@
     </a>
     <nav class="nav__links" aria-label="Primary">
       <a class="nav__link" href="#work">Work</a>
-      <a class="nav__link" href="#practice">Practice</a>
+      <a class="nav__link" href="#practice">Built for the team</a>
       <a class="nav__link" href="about.html">About</a>
       <a class="nav__link" href="#contact">Contact</a>
       <a class="btn btn--primary" href="https://docs.google.com/document/d/1EHUuTUFj9zlCdyJktXC0rGSdesHq1b7P/edit" target="_blank" rel="noopener">Résumé <span aria-hidden="true">↗</span></a>
@@ -311,13 +311,18 @@
   <section class="section practice" id="practice" aria-labelledby="practice-heading">
     <div class="container">
       <div class="section-head reveal">
-        <h2 class="display-3 section-head__title" id="practice-heading">Practice</h2>
+        <h2 class="display-3 section-head__title" id="practice-heading">Built for the team</h2>
         <p class="label num">Four things</p>
       </div>
 
+      <!-- Set in columns, so it lands on the divider above it at every width. The
+           reasoning is on .practice-lead in components.css and it constrains the
+           copy: keep this at roughly 250 characters or more, or the columns balance
+           into one line each and read as three fragments. -->
       <p class="practice-lead reveal">
-        Alongside the shipped work, I build for the people I work with: a standard, a tool, an
-        agent, and the playbook the agent came out of.
+        The case studies are work I shipped to customers. These four are work I did for the people
+        I work with: documentation a designer can learn from, and tools that take on work the team
+        used to do by hand. Each one started as a problem I kept watching us hit, mine included.
       </p>
 
       <!-- Whole card is the link. Two cards go to each section of practice.html,

@@ -622,10 +622,15 @@ a:hover .arrow, .btn:hover .arrow { transform: translateX(5px); }
 }
 
 /* --------------------------------------------------------------------------
-   Practice band, home page
+   "Built for the team" band, home page
    Four things built for the team rather than shipped to customers. A peer
    section to Selected work, not a sixth case study, so everything here is
    deliberately quieter than .project above.
+
+   The class names still say .practice-*, and so does the band's id, because they
+   are the target of the nav link on all nine pages and of any URL already shared.
+   The user facing name changed in iterations/57-built-for-the-team/; the
+   identifiers did not.
    -------------------------------------------------------------------------- */
 
 /* SPACING AND SEPARATION. The band keeps .section's symmetric --section-y, the
@@ -640,16 +645,75 @@ a:hover .arrow, .btn:hover .arrow { transform: translateX(5px); }
    measured 160 / 161 / 160 at 1512, 99 / 100 / 99 at 744, 72 / 73 / 72 at 390. */
 .practice { border-top: 1px solid var(--stroke); }
 
-/* The standfirst runs the full width of the section head's divider above it.
-   --measure-lead-wide is over the 1.4.8 character ceiling and tokens.css says at
-   length why, what was tried first, and what would let it go back. */
+/* The standfirst runs the full width of the section head's divider above it, and
+   it does that with COLUMNS, not with a wide measure. This is the one paragraph on
+   the site set in more than one column, so the reasoning is worth having here.
+
+   A max-width cannot do this job at every width. A measure is a fixed pixel box, so
+   whichever number you pick it matches the container at exactly one viewport and
+   stops short of the divider at every wider one. It shipped at 84ch for that
+   reason, calibrated where the container was about 1170 to 1390 wide, and on a
+   32 inch monitor the container reaches 1690 while 84ch is still 1210, so the
+   paragraph ended a third of the way short of the rule. That is what was reported.
+
+   Widening the measure further is not available. Span and size are one dial: a line
+   is characters x advance x size, the character count is pinned at 80 by WCAG 1.4.8,
+   and at the 24px cap a compliant 80 character line is about 920px wide AT ANY
+   VIEWPORT, FOR ANY COPY. No single column wider than 920px can be filled by
+   compliant body text, so 1690 was never reachable in one column. 84ch was already
+   over the ceiling at 101 characters, and it was the only measure on the site that
+   was; this rule is what let it go.
+
+   Columns are the way out, because they multiply span without touching line length.
+   A multi-column block has no width of its own: it fills its container and shares
+   the space between the columns, so it lands on the divider by construction at every
+   width, which is the thing no measure can do.
+
+   TWO columns, by count, never three. column-width was tried first and it is the
+   wrong tool here, because it sets a minimum rather than a count and so keeps
+   adding columns as the container grows: at 2100
+   and up it gave three, and a 270 character deck split three ways is two or three
+   lines per column. That reads as three fragments rather than one paragraph, and it
+   broke a phrase across a column boundary ("documentation a" / "designer can learn
+   from"), which a reader has to reassemble. Judged on the rendered page at 2560,
+   not from the numbers. One column break is the most this much copy can carry.
+
+   So the count is fixed at two above 860px and one below. Measured worst characters
+   per line:
+
+     390 to 859    1 column     78
+     861 up        2 columns    37 at 861, 72 at 2560 and at 3840
+
+   Two bands to watch, for different reasons. Just under 860 the type has nearly hit
+   its 24px cap while the container is still growing, so the single line grows with it
+   and 78 is the worst line on the site, with two characters of headroom. At the top
+   end --page-max caps the container at 1800, so the widest a column ever gets is
+   about 828px and 72 characters, and 2560 and 3840 measure identically. Without that
+   cap this treatment would fail on a wide panel.
+
+   The copy is written to the shape, twice over. Columns balance by height, so a
+   paragraph much shorter than this one goes back to looking like fragments even at
+   two columns; and the counts above are a property of THIS copy's word breaks, not a
+   guarantee. Keep this standfirst at roughly 250 characters or more, and re-measure
+   the rendered lines after any rewrite. */
 .practice-lead {
   margin-top: var(--s-6);
-  max-width: var(--measure-lead-wide);
   color: var(--text-dim);
   font-size: var(--t-lead-wide);
   line-height: var(--lh-relaxed);
   letter-spacing: -0.008em;
+}
+
+/* 860px and the gap are both borrowed from .practice-grid below, deliberately.
+   Sharing them puts the deck's two columns exactly over the two card columns, and
+   makes them collapse to one column at the same width, so the band reads as a single
+   grid rather than as a paragraph that happens to sit above one. */
+@media (min-width: 53.75rem) {
+  .practice-lead {
+    column-count: 2;
+    column-gap: clamp(var(--s-5), 2.5vw, var(--s-6));
+    column-fill: balance;
+  }
 }
 
 /* Two by two, --s-8 below the head, the same offset .projects uses.
