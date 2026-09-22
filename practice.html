@@ -152,19 +152,15 @@
           </p>
         </div>
 
-        <!-- .stat-pill, not .stat-band. This section has one figure and .stat-band is
-             a two column grid, so a single stat in it leaves half the panel empty.
-             The pill shrink wraps to its own words instead, which is what it is for.
-             Section 03 has the same one-figure shape and could take one too.
+        <!-- NO figure element here. The section has one number, the week an approval
+             now takes, and it is in the third paragraph above, which is where numbers
+             go by default on this site. The home page card carries it as a figure.
 
-             No data-count. The counter animates up to its value, and counting up to
-             1 animates almost nothing, which is the same reason 01's zero does
-             without it. The 3.5 in the unit is the baseline, not a target, so it
-             must not animate either. -->
-        <p class="stat-pill">
-          <span class="stat-pill__value num">1</span>
-          <span class="stat-pill__unit">week on average for an accessibility approval, down from 3.5</span>
-        </p>
+             This held a .stat-pill for one commit and the user removed it, "for now",
+             so the component is still in components.css and is currently used by no
+             page. Do not reach for .stat-band as a substitute: it is a two column
+             grid, so one stat leaves half the panel empty, which is why the pill was
+             built. Same shape in 03. -->
 
         <!-- One up .shots and the plain .shot__frame, not .shots--pair, for the same
              reason KeyBank gives: these are 2000px wide desktop screens, and at the
@@ -225,24 +221,44 @@
     <div class="container case-section__grid">
       <div class="case-section__aside reveal">
         <span class="label case-section__num num">03</span>
-        <h2 class="display-3 case-section__title" id="agent-heading">Prototyping from a written request</h2>
+        <h2 class="display-3 case-section__title" id="agent-heading">A custom prototyping agent</h2>
       </div>
 
       <div class="case-section__body reveal">
         <div class="prose">
           <p>
-            A designer who wants to show a stakeholder a working screen has to either build it by
-            hand or wait for an engineer. I built an agent that takes a written request and returns
-            a runnable prototype on the real design system, close enough to a production Amazon page
-            to put in front of someone on the first prompt. It saves about two and a half hours
-            every time someone would otherwise have assembled one. I run it in a terminal.
+            Most of the people who need to show a stakeholder an Amazon screen are not designers. A
+            product manager or an engineer on a team without one has to build something themselves
+            or wait for a designer to have time. So I built an agent for them, and made a plain
+            sentence the whole of the input. I gave it nothing to ask back, because a list of design
+            questions is the thing the people who need it most cannot answer, so it decides the
+            details itself and says at the end which calls it made.
+          </p>
+          <p>
+            I built it on the design system's own tokens and on a replica of the Amazon.com header,
+            with the logo, cart and search glyphs taken from the real vector files rather than
+            redrawn, because a screen that reads as a generic mock up gets discussed as a mock up.
+            What it writes is one self-contained HTML file that opens in a browser with no build
+            step, with real React inside it so an engineer can pick it up and keep going. When a
+            Figma file already exists I had it pull the real component geometry and match that
+            instead, though it never needs one.
+          </p>
+          <p>
+            It saves about two and a half hours every time someone would otherwise have assembled a
+            screen by hand. I run it in a terminal.
           </p>
         </div>
 
-        <!-- NO SCREEN YET, same reason as 02. The draft had a one-up placeholder for
-             the agent's terminal, and NOT in a .chrome-frame: browser chrome around a
-             terminal would be a lie, the same argument as the transactions phone hero.
-             Markup is in the iteration. -->
+        <!-- NO SCREEN YET. This is now the only section on the page that wants one and
+             has none: 02 got its two in iteration 54. What is wanted is the agent's
+             terminal, one up, and NOT in a .chrome-frame, because browser chrome around
+             a terminal would be a lie, the same argument as the transactions phone hero.
+             The placeholder markup is in iteration 53.
+
+             A screen of what it BUILDS would be the other option and is a worse one: a
+             prototype of an Amazon page looks like an Amazon page, so a reader would
+             read it as a screenshot of Amazon rather than as this agent's output. The
+             terminal is the thing only this section can show. -->
       </div>
     </div>
   </section>
