@@ -162,17 +162,21 @@
              reason KeyBank gives: these are 2000px wide desktop screens, and at the
              ~350px a pair cell allows they would be unreadable.
 
+             The two are cropped to render at the same size, 835 x 480 and 835 x 459,
+             because the form is a tall portrait and the results screen is wide: whole,
+             the form ran 1211 tall against the other's 459. The fix is in the crops,
+             not here. Do not reach for a height cap on the form if it needs shrinking
+             again: matching 459 that way renders it 317 wide and unreadable. Iteration
+             54 has both encodes and why each cut lands where it does.
+
              The design under review on the results screen is a dummy, confirmed by the
-             user, so it publishes. It is NOT cropped the way the input screen was: its
-             two panes are the point, since they show the findings being read off a
-             design, and its findings text stays legible at 1512 and 1280 uncropped.
-             Iteration 54 has both encodes and the measurements. -->
+             user, so it publishes. -->
         <div class="shots">
           <figure class="shot">
             <div class="shot__frame">
               <img src="assets/img/design-insight/input-screen.webp"
-                   alt="The Design Insight input screen. Under a heading reading Design Insight and the line AI-simulated feedback for your CX, a required Figma link field, a required description field prompting what the project is, what users are trying to accomplish and which part of the screen you own, a choice between a single screen and multiple screens, an optional dropzone to upload research documents or PRDs, and five feedback types to tick: Accessibility, Usability Heuristics, Persona Walkthroughs, Task Analysis and Hypothesis Validation. A full width Analyze button sits at the bottom."
-                   width="1040" height="1508" loading="lazy" decoding="async">
+                   alt="The Design Insight input form. A required Figma link field, with a note to link to a specific artboard rather than a whole file. A required description field prompting what the project is, what users are trying to accomplish and which part of the screen you own. A choice between a single screen and multiple screens. Then an optional dropzone to upload research documents, PRDs or other context, which takes up to five files."
+                   width="1187" height="682" loading="lazy" decoding="async">
             </div>
             <figcaption>
               <b>What a designer fills in.</b> The description and the optional upload are what
