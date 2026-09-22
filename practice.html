@@ -66,8 +66,8 @@
       <div class="prose">
         <p>
           The case studies are things I shipped to customers. These are things I built for the
-          people I work with: a review tool, an accessibility standard, an agent, and the playbook
-          the agent came out of. Each one exists because a team kept hitting the same wall.
+          people I work with: an accessibility standard, a review tool, an agent, and the manual
+          the agent came out of. Each one came out of a different problem.
         </p>
       </div>
     </div>
@@ -101,12 +101,40 @@
             requirement each of them owns, what their part of it is, and where it sits in the way
             they already work. Nothing has blocked a launch since.
           </p>
+        </div>
+
+        <div class="stat-band">
+          <p class="stat">
+            <span class="stat__value num" data-count>7</span>
+            <span class="stat__label">Accessibility launch blockers cleared in credit card servicing</span>
+          </p>
+          <p class="stat">
+            <!-- No data-count on this one. The counter animates up to its value, and
+                 counting up to zero animates nothing. -->
+            <span class="stat__value num">0</span>
+            <span class="stat__label">Accessibility defects have blocked a launch since</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 02 DESIGN INSIGHT ======================= -->
+  <section class="case-section" id="design-insight" aria-labelledby="insight-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">02</span>
+        <h2 class="display-3 case-section__title" id="insight-heading">Checking a design before the review</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <div class="prose">
           <p>
-            Reviews were the other half of it. Getting one done and approved took about three and a
-            half weeks, so I built Design Insight. A designer runs it on their own work first and
-            gets back what is missing against the documentation, where the design breaks usability
-            heuristics, and a walkthrough of the main tasks as a few personas. An approval now takes
-            about a week.
+            A review came after a design was finished, and getting one done and approved took about
+            three and a half weeks. So I built Design Insight. A designer runs it on their own work
+            first and gets back what is missing against the documentation, where the design breaks
+            usability heuristics, and a walkthrough of the main tasks as a few personas. An approval
+            now takes about a week.
           </p>
           <p>
             A team with its own research can hand that over and the results are grounded in it.
@@ -115,16 +143,11 @@
           </p>
         </div>
 
-        <div class="stat-band">
-          <p class="stat">
-            <span class="stat__value num" data-count>7</span>
-            <span class="stat__label">Accessibility launch blockers cleared, and none in any launch since</span>
-          </p>
-          <p class="stat">
-            <span class="stat__value num" data-count>1</span>
-            <span class="stat__label">Week for an accessibility approval, on average, down from 3.5</span>
-          </p>
-        </div>
+        <!-- NO .stat-band here, deliberately. This section has one figure, the week
+             an approval now takes, and .stat-band is a two column grid, so a single
+             stat leaves half the panel empty. It is in the paragraph above instead,
+             which is where numbers go by default on this site, and the home page card
+             carries it as a figure. Same reasoning in 03. -->
 
         <!-- NO SCREENS YET. The draft of this page carried a .shots--pair of two
              placeholder-shot.svg for the two states of the tool, before and after a
@@ -136,42 +159,48 @@
     </div>
   </section>
 
-  <!-- ======================= 02 BUILDING WITH AI ======================= -->
-  <section class="case-section" id="ai" aria-labelledby="ai-heading">
+  <!-- ======================= 03 THE PROTOTYPER AGENT ======================= -->
+  <section class="case-section" id="prototyper" aria-labelledby="agent-heading">
     <div class="container case-section__grid">
       <div class="case-section__aside reveal">
-        <span class="label case-section__num num">02</span>
-        <h2 class="display-3 case-section__title" id="ai-heading">Building with AI</h2>
+        <span class="label case-section__num num">03</span>
+        <h2 class="display-3 case-section__title" id="agent-heading">Prototyping from a written request</h2>
       </div>
 
       <div class="case-section__body reveal">
         <div class="prose">
           <p>
             A designer who wants to show a stakeholder a working screen has to either build it by
-            hand or wait for an engineer. I built an agent that takes a plain English request and
-            returns a runnable prototype on the real design system, which saves about two and a half
-            hours every time someone would otherwise have assembled one. I run it in a terminal.
+            hand or wait for an engineer. I built an agent that takes a written request and returns
+            a runnable prototype on the real design system, close enough to a production Amazon page
+            to put in front of someone on the first prompt. It saves about two and a half hours
+            every time someone would otherwise have assembled one. I run it in a terminal.
           </p>
         </div>
 
-        <!-- NO .stat-band here, deliberately. This section has one figure, and
-             .stat-band is a two column grid, so a single stat leaves half the panel
-             empty, which is the same void the home page band was rebuilt to avoid.
-             The two and a half hours is in the paragraph above instead, which is
-             where numbers go by default on this site. The home page card carries it
-             as a figure. -->
+        <!-- NO SCREEN YET, same reason as 02. The draft had a one-up placeholder for
+             the agent's terminal, and NOT in a .chrome-frame: browser chrome around a
+             terminal would be a lie, the same argument as the transactions phone hero.
+             Markup is in the iteration. -->
+      </div>
+    </div>
+  </section>
 
-        <!-- NO SCREEN YET, same reason as section 01. The draft had a one-up
-             placeholder for the agent's terminal, and NOT in a .chrome-frame:
-             browser chrome around a terminal would be a lie, the same argument as the
-             transactions phone hero. Markup is in the iteration. -->
+  <!-- ======================= 04 THE AI BUILDER PLAYBOOK ======================= -->
+  <section class="case-section" id="playbook" aria-labelledby="playbook-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">04</span>
+        <h2 class="display-3 case-section__title" id="playbook-heading">A manual for designing with AI</h2>
+      </div>
 
+      <div class="case-section__body reveal">
         <div class="prose">
           <p>
-            The agent came out of a manual I wrote for UX designers who are shipping production
-            experiences with AI and an engineering partner, and it is what the rest of the group
-            works from now. I wrote it out of my own mistakes on a live retail feature, so it is
-            meant to be worked through in order rather than read once. It has:
+            I wrote a manual for UX designers who are shipping production experiences with AI and an
+            engineering partner. The agent above came out of it, and the rest of the group works
+            from it now. I wrote it out of my own mistakes on a live retail feature, so it is meant
+            to be worked through in order rather than read once. It has:
           </p>
         </div>
 
@@ -182,7 +211,7 @@
         </ul>
 
         <p class="case-note">
-          The playbook has no adoption figures yet, so this section makes no claim about its impact.
+          The playbook has no adoption figures yet, so I make no claim about its impact.
         </p>
       </div>
     </div>
