@@ -263,19 +263,27 @@
      home page, the one paragraph on this site asked to run the full width of the
      section it opens.
 
-     There is no --measure-lead-wide any more, and that is the point. It was 84ch,
-     and it was the ONLY measure on this site over the WCAG 1.4.8 character ceiling,
-     at 101 characters a line at 1280 and 114 at 1920. It is gone because that
-     paragraph now sets at --measure-case-wide like the rest of the site and stops
-     short of the divider it was chasing, which is the only compliant answer and took
-     five passes and two rejected shipments to accept. The arithmetic
-     that rules out ever solving this with a measure, and the three passes that
-     tried, are recorded in full on .practice-lead in components.css and in
-     iterations/57-built-for-the-team/. Do not reintroduce the token.
+     There is no --measure-lead-wide any more, and there is no measure on that
+     paragraph at all. It has NO max-width, on purpose, so it runs the full width of
+     the container and lands flush with the divider above it. The deleted token was
+     84ch, which reached only about 72% of the container and was therefore the worst of
+     both: over the character ceiling AND still visibly short of the rule it was
+     chasing. Six treatments and three rejected shipments are tabulated on
+     .practice-lead in components.css, including a fully compliant 58ch one. Read that
+     before adding any measure back, and do not reintroduce the token.
 
-     The size token stays. It is --t-lead's own range with a slightly faster ramp, so
-     it reaches the 24px cap by about 1000px wide and never exceeds any other lead on
-     the site. It introduces no new size. */
+     THIS SIZE TOKEN IS NOW THE ONLY LEVER ON THAT PARAGRAPH'S LINE LENGTH, and it
+     works backwards from how a measure worked. The column is fixed at the container,
+     so characters on the line = container / (advance x size): raising the size
+     SHORTENS the line. 24px gives about 161 characters of capacity at 1690px, 32px
+     about 121, 36px about 107. 36px is the hard ceiling because that is
+     --t-display-3, the size of the h2 the paragraph sits under, and 80 characters at
+     full width would need 48px, a third larger than its own heading. That is the
+     whole reason the two asks could not both be met.
+
+     The value is unchanged: --t-lead's own range with a slightly faster ramp, so it
+     reaches the 24px cap by about 1000px wide and never exceeds any other lead on the
+     site. It introduces no new size. If the line has to come down, raise this. */
   --t-lead-wide: clamp(1.125rem, 2.5vw, 1.5rem);
 
   /* The gap between screens in a .shots run. Extracted from .shots so

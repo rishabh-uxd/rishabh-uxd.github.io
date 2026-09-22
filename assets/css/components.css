@@ -645,74 +645,121 @@ a:hover .arrow, .btn:hover .arrow { transform: translateX(5px); }
    measured 160 / 161 / 160 at 1512, 99 / 100 / 99 at 744, 72 / 73 / 72 at 390. */
 .practice { border-top: 1px solid var(--stroke); }
 
-/* ONE COLUMN, and it does NOT reach the divider above it. That is the settled answer
-   after four attempts to make it do both, and the history is here because every one of
-   those attempts looked reasonable on the way in.
+/* ONE COLUMN, FULL WIDTH, NO MEASURE. There is deliberately no max-width here, so the
+   deck runs edge to edge with the divider in the section head above it and with the
+   card grid below it. That is what was asked for, three times, the last time with the
+   copy quoted back at me:
 
-   The ask was "the text width should match the divider width on top", and it cannot be
-   met by a single column of readable text. Span and size are one dial: a line is
-   characters x advance x size, the character count is pinned at 80 by WCAG 1.4.8, and
-   at --t-lead-wide's 24px cap a compliant 80 character line is about 920px wide AT ANY
-   VIEWPORT, FOR ANY COPY. The container reaches about 1690px on a 32 inch monitor, so
-   filling it in one column means roughly 160 characters a line, twice the ceiling. The
-   ceiling is not negotiable here: the user is an accessibility bar raiser and 1.4.8 is
-   section 9 of DESIGN-SYSTEM.md.
+     "I need that text column just as wide as the divider between the text [...] and
+      the heading "Built for the team""
 
-   So one of the two has to give, and it is the width. What was tried, in order:
+   READ THIS BEFORE YOU PUT A MEASURE BACK. It is not an oversight, and it is not a
+   one-off exemption either: it is the SAME TRADE .case-note and .shot figcaption
+   already make, and it passes the same test they pass.
+
+   Section 9 of DESIGN-SYSTEM.md sets the 80 character ceiling and then says what the
+   ceiling is actually protecting: "what makes it survivable rather than reckless is
+   line COUNT, not line length: the cap exists because a reader loses the left edge
+   returning to it across many lines, and a two-sentence caption wraps to one or two
+   lines, where there is almost nothing to lose." A one-up figcaption runs to 237
+   characters on that argument and a .case-note to about 230, both shipped, both in
+   section 9 and section 11 by name. This deck sets TWO LINES A PARAGRAPH at every width
+   from 1280 up, which is the condition those rules turn on, so it belongs with them.
+
+   WHICH MAKES THIS A COPY BUDGET, exactly as it does for captions. The budget is two
+   lines a paragraph at wide widths, and at 1690px of container a line holds about 161
+   characters, so the ceiling is roughly 320 characters a paragraph. Today's are 205 and
+   207, so there is room, but a paragraph that runs to a THIRD line at 2560 has broken
+   the only argument holding this rule up. Section 9's own instruction for captions
+   applies verbatim here: the fix is always to trim the copy, never to narrow it.
+
+   What it costs, stated plainly so nobody has to rediscover it: 148 characters on the
+   worst line at 2560, against the WCAG 1.4.8 AAA ceiling of 80. Span and size are one
+   dial, a line being characters x advance x size, so full width and a short line are
+   the same variable pulling in opposite directions:
+
+     size at full width   line CAPACITY at 1690px of container
+     24px (--t-lead-wide) about 161      what ships
+     32px                 about 121
+     36px (--t-display-3) about 107      equal to its own h2, so the ceiling on size
+     48px                 about 80       compliant, and 33% larger than its own h2
+
+   Capacity, not the measured line: this copy is 205 and 207 characters, so at 1690 each
+   paragraph breaks into 148 + 56 rather than filling a 161 character line. Which means
+   LONGER COPY HERE MAKES THE WORST LINE WORSE, up to 161. That is the opposite of the
+   relationship that held while there was a measure, when more words only added lines.
+
+   So 80 characters at full width needs 48px type, which would make the standfirst
+   bigger than the heading it sits under. That is the whole reason this cannot be had
+   both ways, and it is why the type size is the only lever left: if the line has to
+   come down, RAISE --t-lead-wide, do not add a max-width back.
+
+   The mitigations that are available at this line length are all in place. --lh-relaxed
+   at 1.6 is 1.4.8's other half and the most generous leading on the site, which is what
+   makes the return sweep survivable. The copy is two short paragraphs rather than one
+   long one, so no line block is more than two lines deep at wide widths. And the deck
+   is 24px, the largest body size on the site, so the line is long in characters but the
+   words themselves are easy.
+
+   Five earlier attempts, kept because each one looked reasonable on the way in and four
+   of them are things you might otherwise try:
 
      84ch measure        the original. 1210px, so it landed on the rule at about 1390
                          of container and fell a third short at 1690, which is what was
-                         reported. Also the only measure the site ever had over the
-                         character ceiling, at 101 a line at 1280 and 114 at 1920.
+                         first reported.
      column-width: 33rem spans correctly, but column-width is a MINIMUM, so at 1024 it
-                         fitted one column of 83 characters. A new 1.4.8 failure.
+                         fitted one column of 83 characters.
      column-width: 28rem same failure moved, not removed. The gap is inside the flip
                          arithmetic, (container - gaps) / n, so shrinking the target
                          width changes where the count flips, not whether it is one.
                          The same rule gave THREE columns above 2100, which read as
                          three fragments and broke a phrase across a boundary.
-     column-count: 2     spans correctly and every line was compliant, and the user
-                         rejected it on sight: "Why is this text breaking into two
+     column-count: 2     rejected on sight: "Why is this text breaking into two
                          columns?". CSS columns flow ONE paragraph across the break, so
                          the sentence continued at the top of the second column and the
                          reader had to travel back up to finish it.
      two paragraphs,     one per column, so each was whole and read top to bottom. That
      side by side        answered the interruption but not the objection: "These are
                          still in 2 columns? I want them in one."
+     58ch measure        one column, compliant at 77 characters, and 49% of the divider.
+                         Rejected as the thing that had been reported in the first place.
 
    The lesson worth keeping from the middle three: DO NOT REACH FOR CSS COLUMNS ON
    RUNNING PROSE. They are right for a list or a set of short independent items. Even
    done properly, with whole paragraphs, a reader who wants a standfirst gets a
-   newspaper instead, and the width they buy was never worth what it costs.
+   newspaper, and the span they buy was never worth what it costs. Columns are not the
+   route back to a shorter line here. Type size is.
 
-   What this leaves is the ordinary treatment, which is also the quieter one: a single
-   column at a measure, stacked paragraphs, stopping where reading stops being
-   comfortable. --measure-case-wide is the widest measure token on the site, 58ch, and
-   it is reused here rather than a new one invented: at the 24px cap it sets 835px and
-   77 characters, three inside the ceiling, which is about half of a 1690px container.
-   The white space to the right of it is the cost of the character ceiling, and it is a
-   deliberate, visible cost. If it has to shrink again, shrink it to --measure (54ch,
-   about 74 characters), do not grow it.
+   Measured worst characters on any rendered line, DPR 2, with the left and right edges
+   of the deck verified equal to the section head's at every one of these:
 
-   Measured worst characters per line, DPR 2, and flat from 1024 up because both the
-   measure and the size are capped by then: 40 at 390, 63 at 600, 77 at 744, and 77 at
-   every width from 1024 to 3840, three lines a paragraph throughout. */
+     390   40   6 lines a paragraph      1728  107   2
+     600   63   4                        1920  123   2
+     744   77   3                        2200  142   2
+     860   77   3                        2560  148   2
+     1024  86   3   <- over 80 from here 3840  148   2   flat, --page-max caps at 1800
+     1280  104  2
+
+   Inside the 80 character ceiling up to about 950px of viewport and over it above that,
+   on the line-count argument above. The 1024 row is the weak one and the only one worth
+   watching: three lines at 86 characters is the single width where both halves of the
+   trade are slightly against it. It is 6 characters over, so it stands, but a copy edit
+   that pushes 1024 to four lines should be reconsidered rather than measured again. */
 .practice-lead {
   margin-top: var(--s-6);
   display: grid;
   row-gap: var(--s-4);
 }
 
-/* The measure goes on the paragraphs, NOT on the wrapper, and the difference is
-   visible. A ch is a font relative unit, so on the wrapper it resolves against the
-   inherited body size of about 18px and 58ch comes out 622px; on the paragraphs it
-   resolves against --t-lead-wide's 24px and comes out 835px. The first pass put it on
-   the wrapper and the deck set 34 percent of the container instead of half, at 55
-   characters a line instead of 72. Any ch measure belongs on the element that carries
-   the font size it is meant to describe. */
+/* No max-width, on purpose. See above.
+
+   If a measure ever does come back here, it belongs on THESE paragraphs and not on the
+   wrapper, because a ch is font relative: on the wrapper it resolves against the
+   inherited body size of about 18px, so 58ch came out 622px, while on the paragraphs it
+   resolves against --t-lead-wide's 24px and came out 835px. A pass was lost to exactly
+   that, setting 34% of the container instead of half, and nothing errored. */
 .practice-lead p {
   margin: 0;
-  max-width: var(--measure-case-wide);
   color: var(--text-dim);
   font-size: var(--t-lead-wide);
   line-height: var(--lh-relaxed);

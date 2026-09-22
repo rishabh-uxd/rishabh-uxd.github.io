@@ -315,16 +315,22 @@
         <p class="label num">Four things</p>
       </div>
 
-      <!-- ONE column, two stacked paragraphs, at a measure that stops short of the
-           divider above it. It does not match the divider's width and it cannot: a
-           compliant 80 character line is about 920px at this size and the container
-           reaches 1690, so filling it in one column would mean roughly 160 characters
-           a line.
+      <!-- ONE column, two stacked paragraphs, FULL WIDTH: flush with the divider above
+           it and with the card grid below it, which is what was asked for three times.
 
-           Four attempts to have both are recorded on .practice-lead in components.css,
-           including two that shipped. Read them before widening this: an 84ch measure
-           and a two column version were each rejected, the second one twice, "I want
-           them in one". -->
+           There is no measure on .practice-lead in components.css and that is not an
+           oversight: it is the same trade .case-note and .shot figcaption already make,
+           and it stands on the same argument in section 9 of DESIGN-SYSTEM.md, that a
+           long line is survivable when the block is only two lines deep.
+
+           SO THIS COPY IS ON A BUDGET. Two lines a paragraph at wide widths, about 320
+           characters, and these two are 205 and 207. A paragraph that reaches a third
+           line at 2560 breaks the argument the full width rests on, and the worst line
+           goes from 148 toward 161. Trim it, do not narrow it.
+
+           Six earlier treatments are tabulated on that rule, three of which shipped and
+           were rejected, including a compliant 58ch one. Read them before changing
+           anything here. -->
       <div class="practice-lead reveal">
         <p>
           The case studies are work I shipped to customers. These four are work I did for the
