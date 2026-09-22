@@ -166,8 +166,14 @@
              because the form is a tall portrait and the results screen is wide: whole,
              the form ran 1211 tall against the other's 459. The fix is in the crops,
              not here. Do not reach for a height cap on the form if it needs shrinking
-             again: matching 459 that way renders it 317 wide and unreadable. Iteration
-             54 has both encodes and why each cut lands where it does.
+             again: matching 459 that way renders it 317 wide and unreadable.
+
+             Both sources are far wider than they render, 2374 and 2400 against an 835
+             box, because a 2x display asks for 1670 device pixels there and the case
+             column is wider still on a large monitor. An earlier pass shipped the form
+             at 1187 and it visibly upscaled. Local screenshots run at DPR 1 and cannot
+             catch that, so check the arithmetic, not the capture. Iteration 54 has both
+             encodes and why each cut lands where it does.
 
              The design under review on the results screen is a dummy, confirmed by the
              user, so it publishes. -->
@@ -176,7 +182,7 @@
             <div class="shot__frame">
               <img src="assets/img/design-insight/input-screen.webp"
                    alt="The Design Insight input form. A required Figma link field, with a note to link to a specific artboard rather than a whole file. A required description field prompting what the project is, what users are trying to accomplish and which part of the screen you own. A choice between a single screen and multiple screens. Then an optional dropzone to upload research documents, PRDs or other context, which takes up to five files."
-                   width="1187" height="682" loading="lazy" decoding="async">
+                   width="2374" height="1364" loading="lazy" decoding="async">
             </div>
             <figcaption>
               <b>What a designer fills in.</b> The description and the optional upload are what
@@ -189,7 +195,7 @@
             <div class="shot__frame">
               <img src="assets/img/design-insight/results-screen.webp"
                    alt="The Design Insight results screen, split down the middle. Tabs for Usability Heuristics, Accessibility and Task Analysis run across the top, with Accessibility open. The design under review sits on the left, a mock up of a product detail page in two states. On the right, a score of 85 out of 100 for accessibility confidence, then findings grouped under Screen reader and Keyboard. Each carries a severity of medium, a WCAG success criterion, the element it applies to, what the problem is, and a recommendation."
-                   width="1600" height="880" loading="lazy" decoding="async">
+                   width="2400" height="1320" loading="lazy" decoding="async">
             </div>
             <figcaption>
               <b>What comes back.</b> Each finding names the element, the success criterion it
