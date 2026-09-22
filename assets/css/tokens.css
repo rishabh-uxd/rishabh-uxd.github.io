@@ -259,6 +259,38 @@
   --measure-case-wide: 58ch;
   --t-body-lead: clamp(var(--t-body-case), 2vw, 1.375rem);
 
+  /* Lead-in measure and size for the Practice band's standfirst on the home page,
+     the one paragraph on this site that is asked to run the full width of the
+     section it opens.
+
+     READ THIS BEFORE REUSING IT. --measure-lead-wide is 84ch and 84ch is NOT
+     compliant with WCAG 1.4.8: it puts 101 characters on a line at 1280 and 114 at
+     1920, against the 80 character ceiling every other measure here is calibrated
+     to. It is set deliberately and on the user's instruction, after three passes
+     that tried to reach the full width the other way, and it is the only measure on
+     the site that is over the ceiling. Do not copy it to a second paragraph.
+
+     The three passes, because they establish that there is no third option.
+     Span and size are one dial: line width is characters x advance x size, and the
+     character count is pinned by the ceiling, so at --t-lead's 24px cap a
+     compliant 80 character line is about 920px wide AT ANY VIEWPORT, FOR ANY COPY.
+     A column wider than 920px cannot be filled by compliant body text.
+
+       58ch at 28px   80% of the column, 79 characters   rejected, type too large
+       58ch at 34px   99% of the column, 77 characters   rejected, type too large
+       58ch at 24px   72% of the column, 77 characters   rejected, stops short
+       84ch at 24px   94% of the column, 101 characters  shipped
+
+     The compliant way to fill the column is more words, not a wider measure:
+     about 230 characters of copy sets as three lines of 77 at 24px and fills the
+     same width. If that copy is ever written, this token goes back to 58ch.
+
+     The size token is --t-lead's own range with a slightly faster ramp, so it
+     reaches the 24px cap by about 1000px wide and never exceeds any other lead on
+     the site. It introduces no new size. */
+  --measure-lead-wide: 84ch;
+  --t-lead-wide: clamp(1.125rem, 2.4vw, 1.5rem);
+
   /* The gap between screens in a .shots run. Extracted from .shots so
      .shots--solo can subtract it: a lone portrait phone is sized to exactly the
      width one cell of .shots--pair gets, which is (column - gap) / 2, so a single

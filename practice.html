@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Practice · Rishabh Singh</title>
+<meta name="theme-color" content="#FBF7F1">
+
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+</head>
+
+<body>
+<a class="skip-link" href="#accessibility">Skip to the content</a>
+
+<div class="progress" aria-hidden="true"><div class="progress__fill"></div></div>
+
+<header class="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="index.html" aria-label="Rishabh Singh, home">
+      <span class="nav__dot" aria-hidden="true"></span> Rishabh Singh
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a class="nav__link" href="index.html#work">Work</a>
+      <a class="nav__link" href="practice.html" aria-current="page">Practice</a>
+      <a class="nav__link" href="about.html">About</a>
+      <a class="nav__link" href="#contact">Contact</a>
+      <a class="btn btn--primary" href="https://docs.google.com/document/d/1EHUuTUFj9zlCdyJktXC0rGSdesHq1b7P/edit" target="_blank" rel="noopener">Résumé <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ======================= HERO =======================
+       Lighter than a case hero on purpose: no metadata rail, no device, no
+       .stat-band. This page is an index of capability, not a sixth case study,
+       and if it opens like one it competes with the five. -->
+  <section class="case-hero">
+    <div class="aurora" aria-hidden="true">
+      <span class="aurora__blob aurora__blob--1"></span>
+      <span class="aurora__blob aurora__blob--2"></span>
+    </div>
+
+    <div class="container case-hero__inner">
+      <!-- Back to the band this page is reached from, not to #work: a reader
+           arrives here from a Practice card, so "All work" would send them somewhere
+           they have not been. -->
+      <a class="case-back" href="index.html#practice">
+        <span class="case-back__glyph" aria-hidden="true">←</span> Home
+      </a>
+
+      <p class="label case-hero__cat">Practice</p>
+
+      <h1 class="mega case-hero__title" data-split>
+        Tools, agents, and <span class="grad-text">documentation</span>
+      </h1>
+
+      <div class="prose">
+        <p>
+          The case studies are things I shipped to customers. These are things I built for the
+          people I work with: a review tool, an accessibility standard, an agent, and the playbook
+          the agent came out of. Each one exists because a team kept hitting the same wall.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 01 ACCESSIBILITY ======================= -->
+  <section class="case-section" id="accessibility" aria-labelledby="a11y-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">01</span>
+        <h2 class="display-3 case-section__title" id="a11y-heading">Raising the accessibility bar</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <div class="prose">
+          <p>
+            Servicing launched with 7 accessibility launch blockers. Finding them late meant an
+            annotation, a fix, and a re-review for each one, and the same categories of defect kept
+            arriving with the next set of mock ups. I wrote the accessibility documentation the
+            design and product groups now work from, covering reading order, heading levels, roles,
+            names, states, and what has to be annotated before a hand off. Every iteration launch
+            since has gone out with zero blockers.
+          </p>
+          <p>
+            Getting a review done and approved was the other half of the problem, so I built
+            Design Insight. It reads a design against the standard and reports what is missing
+            before a reviewer sees it, which takes an average of three and a half weeks off each
+            review.
+          </p>
+        </div>
+
+        <div class="stat-band">
+          <p class="stat">
+            <span class="stat__value num" data-count>0</span>
+            <span class="stat__label">Accessibility launch blockers since, down from 7</span>
+          </p>
+          <p class="stat">
+            <span class="stat__value num" data-count>3.5</span>
+            <span class="stat__label">Weeks off each accessibility review, on average</span>
+          </p>
+        </div>
+
+        <!-- NO SCREENS YET. The draft of this page carried a .shots--pair of two
+             placeholder-shot.svg for the two states of the tool, before and after a
+             check runs. They are out because no real capture of Design Insight
+             exists, and every other page on this site earns its images. When the two
+             captures arrive the markup is in
+             iterations/53-practice-page-draft/practice.html. -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= 02 BUILDING WITH AI ======================= -->
+  <section class="case-section" id="ai" aria-labelledby="ai-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">02</span>
+        <h2 class="display-3 case-section__title" id="ai-heading">Building with AI</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <div class="prose">
+          <p>
+            A designer who wants to show a stakeholder a working screen has to either build it by
+            hand or wait for an engineer. I built an agent that takes a plain English request and
+            returns a runnable prototype on the real design system, which saves about two and a half
+            hours every time someone would otherwise have assembled one. A terminal is the whole
+            interface: a sentence in, a prototype out.
+          </p>
+        </div>
+
+        <!-- NO .stat-band here, deliberately. This section has one figure, and
+             .stat-band is a two column grid, so a single stat leaves half the panel
+             empty, which is the same void the home page band was rebuilt to avoid.
+             The two and a half hours is in the paragraph above instead, which is
+             where numbers go by default on this site. The home page card carries it
+             as a figure. -->
+
+        <!-- NO SCREEN YET, same reason as section 01. The draft had a one-up
+             placeholder for the agent's terminal, and NOT in a .chrome-frame:
+             browser chrome around a terminal would be a lie, the same argument as the
+             transactions phone hero. Markup is in the iteration. -->
+
+        <div class="prose">
+          <p>
+            The agent came out of a playbook I wrote for building with AI, which is what the rest of
+            the group works from now. It covers where an agent belongs in a design process and where
+            it does not, how to write a brief an agent can act on, what has to be checked by a person
+            before anything is shown, and how to keep generated work on the design system. It
+            contains:
+          </p>
+        </div>
+
+        <ul class="case-list">
+          <li><strong>A brief format.</strong> What an agent needs to be told, in the order it needs telling.</li>
+          <li><strong>A review gate.</strong> The checks a person runs before generated work leaves the room, accessibility first.</li>
+          <li><strong>Design system rules.</strong> How to keep an agent inside the tokens and components instead of inventing new ones.</li>
+          <li><strong>Worked examples.</strong> The prototyper agent, start to finish, including what it got wrong.</li>
+        </ul>
+
+        <p class="case-note">
+          The playbook has no adoption figures yet, so this section makes no claim about its impact.
+          The two figures above are the measured ones.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <nav class="next-case" aria-label="Next">
+    <div class="container">
+      <a class="next-case__link" href="work/pay-bill.html">
+        <span>
+          <span class="label">Case studies</span>
+          <span class="display-2 next-case__title">Amazon Visa Pay Bill</span>
+        </span>
+        <span class="next-case__glyph arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </nav>
+</main>
+
+<footer class="cta on-dark" id="contact">
+  <div class="aurora" aria-hidden="true" style="opacity: 0.5">
+    <span class="aurora__blob aurora__blob--2"></span>
+    <span class="aurora__blob aurora__blob--3"></span>
+  </div>
+
+  <div class="container cta__inner">
+    <p class="label label--accent">Contact</p>
+    <h2 class="display-1 cta__title reveal" style="margin-top: var(--s-4)">
+      Interested in working <span class="grad-text">together?</span>
+    </h2>
+    <p class="lead reveal">
+      These pages are a trailer. The rest, including the parts that didn't ship, is better in
+      conversation.
+    </p>
+
+    <div class="cta__contact reveal">
+      <a class="cta__line cta__line--email" href="mailto:rishabh.ux@gmail.com">
+        rishabh.ux@gmail.com <span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="cta__line cta__line--phone" href="tel:+18123619841">+1 (812) 361 9841</a>
+    </div>
+
+    <div class="cta__base">
+      <p>© <span data-year>2026</span> Rishabh Singh. Designed and built by me.</p>
+      <p>New York, NY</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js" defer></script>
+</body>
+</html>

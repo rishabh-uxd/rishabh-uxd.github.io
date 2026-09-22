@@ -622,6 +622,138 @@ a:hover .arrow, .btn:hover .arrow { transform: translateX(5px); }
 }
 
 /* --------------------------------------------------------------------------
+   Practice band, home page
+   Four things built for the team rather than shipped to customers. A peer
+   section to Selected work, not a sixth case study, so everything here is
+   deliberately quieter than .project above.
+   -------------------------------------------------------------------------- */
+
+/* SPACING AND SEPARATION. The band keeps .section's symmetric --section-y, the
+   same rhythm as Selected work, so it reads as a peer rather than an appendix. An
+   earlier draft wrapped it in the .band panel, which stacked the panel's padding
+   on the section's and left two unequal pockets of air, 165px outside and 180px
+   inside. One rhythm, not two.
+
+   Separation is this one full-bleed hairline at the section's top edge. Because
+   the padding above and below the boundary is the same --section-y, the rule lands
+   dead centre in the gap, which is the whole reason it can be this quiet:
+   measured 160 / 161 / 160 at 1512, 99 / 100 / 99 at 744, 72 / 73 / 72 at 390. */
+.practice { border-top: 1px solid var(--stroke); }
+
+/* The standfirst runs the full width of the section head's divider above it.
+   --measure-lead-wide is over the 1.4.8 character ceiling and tokens.css says at
+   length why, what was tried first, and what would let it go back. */
+.practice-lead {
+  margin-top: var(--s-6);
+  max-width: var(--measure-lead-wide);
+  color: var(--text-dim);
+  font-size: var(--t-lead-wide);
+  line-height: var(--lh-relaxed);
+  letter-spacing: -0.008em;
+}
+
+/* Two by two, --s-8 below the head, the same offset .projects uses.
+
+   Cards, not index rows, because the reading order the content wants is name,
+   then evidence, then the way in, and that is a vertical order. A row forces the
+   figure alongside the name instead of after it, and whichever side the figure
+   took, the row had a void on the other. */
+.practice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(var(--s-5), 2.5vw, var(--s-6));
+  margin-top: var(--s-8);
+}
+
+/* Quieter than .project on four counts: a 1px --stroke hairline instead of a 2px
+   --accent ring, --r-lg instead of --r-2xl, no shadow until hover, and no media
+   panel. Four of these must not read as case studies six through nine. */
+.practice-card {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(var(--s-5), 2.5vw, var(--s-6));
+  border: 1px solid var(--stroke);
+  border-radius: var(--r-lg);
+  background: var(--bg-raised);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color var(--dur-base) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out);
+}
+
+.practice-card:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-sm);
+}
+
+.practice-card:hover .practice-card__title { color: var(--accent-2); }
+.practice-card:hover .arrow { transform: translateX(var(--s-1)); }
+
+.practice-card__title {
+  font-size: var(--t-lead);
+  font-weight: var(--w-semibold);
+  letter-spacing: var(--track-tight);
+  line-height: var(--lh-snug);
+  transition: color var(--dur-base) var(--ease-out);
+}
+
+.practice-card__desc {
+  margin-top: var(--s-3);
+  color: var(--text-dim);
+  font-size: var(--t-body);
+  line-height: var(--lh-relaxed);
+}
+
+/* The figure reads as one statement, "0 launch blockers since", so the numeral
+   and its unit share a baseline rather than stacking. Its own hairline above,
+   because it is evidence for the two lines before it and not more of them. */
+.practice-card__stat {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-3);
+  margin-top: var(--s-5);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--stroke);
+}
+
+.practice-card__value {
+  font-size: var(--t-stat);
+  font-weight: var(--w-black);
+  letter-spacing: var(--track-mega);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  background: var(--grad-accent);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.practice-card__unit {
+  color: var(--text-dim);
+  font-size: var(--t-small);
+  line-height: 1.35;
+}
+
+/* margin-top: auto, so the four calls to action line up across a row however
+   unevenly the descriptions above them wrap. */
+.practice-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-top: auto;
+  padding-top: var(--s-5);
+  color: var(--accent-2);
+  font-size: var(--t-small);
+  font-weight: var(--w-semibold);
+}
+
+/* 860px, not a breakpoint token, because it is where the two columns stop
+   holding the longest card title on one line. */
+@media (max-width: 860px) {
+  .practice-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* --------------------------------------------------------------------------
    CTA footer
    -------------------------------------------------------------------------- */
 .cta {
