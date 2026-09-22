@@ -159,15 +159,14 @@
              carries it as a figure. Same reasoning in 03. -->
 
         <!-- One up .shots and the plain .shot__frame, not .shots--pair, for the same
-             reason KeyBank gives: this is a 2000px wide desktop application, and at the
-             ~350px a pair cell allows it would be unreadable.
+             reason KeyBank gives: these are 2000px wide desktop screens, and at the
+             ~350px a pair cell allows they would be unreadable.
 
-             ONLY THE INPUT SCREEN IS HERE. The results screen from the same Figma frame
-             (2411:27725) is held back: the design it has under review is an unreleased
-             Amazon concept, labelled FUTURE CONCEPT on the canvas, and both it and the
-             finding text name an internal widget and an unannounced device. It can ship
-             once the tool is re-run against a design that is already public, which the
-             screens on this site are. -->
+             The design under review on the results screen is a dummy, confirmed by the
+             user, so it publishes. It is NOT cropped the way the input screen was: its
+             two panes are the point, since they show the findings being read off a
+             design, and its findings text stays legible at 1512 and 1280 uncropped.
+             Iteration 54 has both encodes and the measurements. -->
         <div class="shots">
           <figure class="shot">
             <div class="shot__frame">
@@ -179,6 +178,19 @@
               <b>What a designer fills in.</b> The description and the optional upload are what
               decide whether the feedback is grounded in the team's own evidence or in the model's
               training data.
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="assets/img/design-insight/results-screen.webp"
+                   alt="The Design Insight results screen, split down the middle. Tabs for Usability Heuristics, Accessibility and Task Analysis run across the top, with Accessibility open. The design under review sits on the left, a mock up of a product detail page in two states. On the right, a score of 85 out of 100 for accessibility confidence, then findings grouped under Screen reader and Keyboard. Each carries a severity of medium, a WCAG success criterion, the element it applies to, what the problem is, and a recommendation."
+                   width="1600" height="880" loading="lazy" decoding="async">
+            </div>
+            <figcaption>
+              <b>What comes back.</b> Each finding names the element, the success criterion it
+              fails, and what to do about it, which is what makes it something a designer can act
+              on rather than a score to argue with.
             </figcaption>
           </figure>
         </div>
