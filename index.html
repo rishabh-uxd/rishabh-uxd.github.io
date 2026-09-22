@@ -315,16 +315,16 @@
         <p class="label num">Four things</p>
       </div>
 
-      <!-- TWO paragraphs, not one paragraph in two columns. Side by side they span
-           the divider above them at every width, and because each one is whole the
-           reader finishes a column before moving right. This shipped for one commit
-           as a single paragraph in column-count: 2, which cut a sentence in half
-           across the gutter and the user caught it at once. The full reasoning is on
-           .practice-lead in components.css.
+      <!-- ONE column, two stacked paragraphs, at a measure that stops short of the
+           divider above it. It does not match the divider's width and it cannot: a
+           compliant 80 character line is about 920px at this size and the container
+           reaches 1690, so filling it in one column would mean roughly 160 characters
+           a line.
 
-           It constrains the copy: the two must stay close to the same length, about
-           200 characters each, or the right column ends a line short and the row
-           looks ragged. -->
+           Four attempts to have both are recorded on .practice-lead in components.css,
+           including two that shipped. Read them before widening this: an 84ch measure
+           and a two column version were each rejected, the second one twice, "I want
+           them in one". -->
       <div class="practice-lead reveal">
         <p>
           The case studies are work I shipped to customers. These four are work I did for the

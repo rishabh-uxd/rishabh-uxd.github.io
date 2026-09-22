@@ -265,9 +265,10 @@
 
      There is no --measure-lead-wide any more, and that is the point. It was 84ch,
      and it was the ONLY measure on this site over the WCAG 1.4.8 character ceiling,
-     at 101 characters a line at 1280 and 114 at 1920. It is gone because the
-     paragraph now spans its container in two columns instead of in one wide
-     measure, so every line on the site is inside the ceiling again. The arithmetic
+     at 101 characters a line at 1280 and 114 at 1920. It is gone because that
+     paragraph now sets at --measure-case-wide like the rest of the site and stops
+     short of the divider it was chasing, which is the only compliant answer and took
+     five passes and two rejected shipments to accept. The arithmetic
      that rules out ever solving this with a measure, and the three passes that
      tried, are recorded in full on .practice-lead in components.css and in
      iterations/57-built-for-the-team/. Do not reintroduce the token.
