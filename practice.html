@@ -227,12 +227,25 @@
       <div class="case-section__body reveal">
         <div class="prose">
           <p>
-            Most of the people who need to show a stakeholder an Amazon screen are not designers. A
-            product manager or an engineer on a team without one has to build something themselves
-            or wait for a designer to have time. So I built an agent for them, and made a plain
-            sentence the whole of the input. I gave it nothing to ask back, because a list of design
-            questions is the thing the people who need it most cannot answer, so it decides the
-            details itself and says at the end which calls it made.
+            The experiences my team designs live inside pages we do not own. A central team owns the
+            Amazon home page, another owns search results, and North America Stores Design builds
+            the part that sits within them. So every prototype started with two and a half to three
+            hours of rebuilding a page that is already in production, before anyone could look at
+            the part that was new.
+          </p>
+          <p>
+            Written steering files for the design system did not close that gap. They gave me the
+            tokens and the components, and the patterns particular to a given page belong to the
+            central team that owns that page, so the design system holds no record of them. A
+            prototype could be correct on every token and still not be the page.
+          </p>
+          <p>
+            So I built an agent with that page-level knowledge in it. Ask it for the home page,
+            search results, a detail page, a cart or a checkout, and it renders that page as it
+            stands in production, from the first prompt. I made a plain sentence the whole of the
+            input and gave it nothing to ask back, because a list of design questions is the thing
+            the people who need it most cannot answer, so it decides the details itself and says at
+            the end which calls it made.
           </p>
           <p>
             I built it on the design system's own tokens and on a replica of the Amazon.com header,
@@ -244,8 +257,10 @@
             instead, though it never needs one.
           </p>
           <p>
-            It saves about two and a half hours every time someone would otherwise have assembled a
-            screen by hand. I run it in a terminal.
+            That returns two and a half to three hours on every prototype, and it is the part of
+            the job nobody on my team owns. A designer spends that time on the experience they do
+            own instead, and a product manager or an engineer with no designer to ask gets the same
+            production-accurate page to put an idea on. I run it in a terminal.
           </p>
         </div>
 
