@@ -426,10 +426,20 @@ a:hover .arrow, .btn:hover .arrow { transform: translateX(5px); }
   margin-top: var(--s-8);
 }
 
-/* The accent ring goes all the way round, at the user's direction. It used to be
-   a 1px --stroke hairline with a 2px --grad-accent bar across the top only, which
-   read as a card that had lost three of its four green edges rather than as a
-   deliberate top rule.
+/* The ring is a quiet --stroke hairline at rest and lights up --accent on hover,
+   at the user's direction: "I want the green border to only illuminate once I
+   hover over the project thumbnail." It was full --accent in both states from
+   iteration 23 until then, which made five green rings the loudest thing on the
+   page and left hover with nowhere to go but darker. Now the green is the reward
+   for pointing at a card rather than the card's resting state.
+
+   THE WIDTH STAYS 2px IN BOTH STATES and only border-color moves. Going from 1px
+   to 2px on hover would relayout the card and shift every line inside it by a
+   pixel, which reads as a jolt, so the resting border carries the full 2px at
+   --stroke's 12% ink instead of being thinner or transparent. Transparent was the
+   other option and is wrong here: the cards sit on --bg with a --bg-raised fill
+   that is only a few percent lighter, so without an edge the card loses its
+   boundary at rest and --shadow-sm alone is not enough to give it one.
 
    Solid --accent, not border-image with --grad-accent. A gradient border is only
    reachable through border-image, and border-image does not follow border-radius,
@@ -437,11 +447,12 @@ a:hover .arrow, .btn:hover .arrow { transform: translateX(5px); }
    it. The mask-composite ring trick does respect the radius but needs a -webkit-
    fallback to work in Safari, which is a lot of machinery for a gradient whose two
    stops are both dark green: at 2px the difference between --grad-accent and flat
-   --accent is not visible. See iterations/23-project-card-green-ring/. */
+   --accent is not visible. See iterations/23-project-card-green-ring/ for that
+   pass and iterations/58-project-ring-on-hover/ for this one. */
 .project {
   position: relative;
   border-radius: var(--r-2xl);
-  border: 2px solid var(--accent);
+  border: 2px solid var(--stroke);
   background:
     radial-gradient(120% 120% at 100% 0%, color-mix(in oklab, var(--accent) 9%, transparent), transparent 60%),
     var(--bg-raised);
@@ -451,13 +462,22 @@ a:hover .arrow, .btn:hover .arrow { transform: translateX(5px); }
               box-shadow var(--dur-slow) var(--ease-out);
 }
 
-/* Hover deepens the ring rather than lighting it up. The old rule moved the border
-   from --stroke to --accent at 35%, which was a brightening; against a ring that is
-   already full --accent that would read as the card going pale on hover. --accent-2
-   is the gradient's own second stop, so this is the one colour the ring was already
-   made of. */
-.project:hover {
-  border-color: var(--accent-2);
+/* :focus-within is not optional decoration alongside :hover. The card's whole face is
+   a click target through .project__link's ::after, so a keyboard user tabbing to the
+   title is doing the same thing a mouse user hovering is doing, and they should get
+   the same green. Without it the ring would be a mouse-only affordance and the two
+   input modes would show different pages. .project__link:focus-visible::after still
+   draws its own --accent outline on top of this, which is the actual 2.4.7 focus
+   indicator; this rule is the card-level companion to it, not a replacement.
+
+   --accent, not --accent-2. --accent-2 is --forest-deep and was the old hover colour
+   back when the ring was already full --accent at rest and could only deepen. Now
+   that rest is a grey hairline the move is an illumination, so it lands on the
+   brighter of the two greens. Both are still in play on the page: .practice-card's
+   title uses --accent-2 on hover. */
+.project:hover,
+.project:focus-within {
+  border-color: var(--accent);
   box-shadow: var(--shadow-lg);
 }
 
