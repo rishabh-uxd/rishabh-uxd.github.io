@@ -3158,13 +3158,22 @@ html, body { background: transparent; }
    clears .proto-wrap's padding: 417 x 1.35 = 563px inside 760 - 20. 1.35 is the cap
    because the WebP assets are encoded at 3.0x their 1x boxes, which still leaves
    2.2x device pixels at the largest zoom (see build-assets.py). Raising this cap
-   without raising SCALE there would start softening the product images. */
+   without raising SCALE there would start softening the product images.
+
+   The bands set --phone-zoom rather than zoom directly, so that a host page can
+   override the lot with --proto-zoom. They are keyed to WIDTH alone, which is all
+   this file can see: framed in a case study its own viewport height is the height
+   the host gave the iframe, so a height query here would only ever read back the
+   answer. The host measures the real viewport and hands the zoom down. See
+   section 8a of assets/js/site.js. Width-only remains the behaviour when this file
+   is opened on its own, where the page scrolls like any other page. */
+.phone-frame { zoom: var(--proto-zoom, var(--phone-zoom, 1)); }
 @media (max-width: 600px) { .proto-wrap { padding: 4px 6px 12px; } }
-@media (max-width: 440px) { .phone-frame { zoom: 0.80; } }
-@media (max-width: 340px) { .phone-frame { zoom: 0.62; } }
-@media (min-width: 560px) { .phone-frame { zoom: 1.15; } }
-@media (min-width: 660px) { .phone-frame { zoom: 1.25; } }
-@media (min-width: 760px) { .phone-frame { zoom: 1.35; } }
+@media (max-width: 440px) { .phone-frame { --phone-zoom: 0.80; } }
+@media (max-width: 340px) { .phone-frame { --phone-zoom: 0.62; } }
+@media (min-width: 560px) { .phone-frame { --phone-zoom: 1.15; } }
+@media (min-width: 660px) { .phone-frame { --phone-zoom: 1.25; } }
+@media (min-width: 760px) { .phone-frame { --phone-zoom: 1.35; } }
 
 </style>
 </head>

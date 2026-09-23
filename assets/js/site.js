@@ -248,15 +248,82 @@
      try/catch because over file:// Chrome treats the iframe as a separate opaque
      origin and contentDocument throws. The CSS tokens stay as the fallback and are
      measured never to scroll, so that case degrades to surplus, not a scrollbar. */
+  /* The embed is sized to one screenful: as tall as the viewport leaves under the
+     fixed nav, which owns the top 80px of every viewport because it is position:
+     fixed. So the heading, the two selects and the whole phone are visible together
+     without scrolling, at every window size, which is what "use the space" means
+     for something a visitor has to operate rather than read.
+
+     FILL is 1 and it is a calibration, not a taste judgement. On a 2560x1440
+     monitor, the size the user said looked right, the embed came out 1259px tall in
+     the 1240px the nav leaves: it was already filling exactly one screenful there,
+     to within 2%. What was wrong was that it got there by accident, through a zoom
+     keyed to the embed's WIDTH, so a 16-inch MacBook Pro was handed the same 1259px
+     in 920px of room and a 14-inch the same again in 780.
+
+     ZMAX is the prototype's own cap and the reason for it is in that file: its WebP
+     assets are encoded at 3.0x, so past 1.35 the product images start to soften.
+     ZMIN is its narrow-embed floor.
+
+     PHONE_W is the frame's border-box width at 1x, and with GUTTER it caps the zoom
+     by width so an enlarged phone can never overflow the embed sideways. 96 rather
+     than .proto-wrap's 20px of padding, because that padding is not the whole of
+     what the prototype leaves itself: back-solving its own bands gives 340 - 0.62 x
+     393 = 96px of clear width at its narrowest and more at every other step, so 96
+     is the tightest it ever chooses to run. Allowing only the padding let a 390px
+     viewport push the phone to 0.79 and nearly edge to edge, which is not what that
+     band was for. At 96 the width cap reproduces the 0.62 band exactly at 390 and
+     never binds from about 560px of embed up, where height takes over. */
+  var PROTO_FILL = 1, PROTO_ZMAX = 1.35, PROTO_ZMIN = 0.62,
+      PROTO_PHONE_W = 393, PROTO_GUTTER = 96;
+
   function fitEmbed(box) {
     var frame = box.querySelector('iframe');
     if (!frame) return;
     var fitted = 0;
+    var zoomed = 0;
+
+    /* Only the phone frame zooms; the heading, the intro line and the two selects
+       above it do not. So the embed's height is surround + zoom * phoneNat, and the
+       zoom that fills a given height is (target - surround) / phoneNat. Both terms
+       are measured off the live document rather than assumed: the surround grows
+       when the selects wrap at a narrow embed, and phoneNat is read back through
+       whatever zoom is in force so it does not matter which of the prototype's own
+       width bands picked it. The frame is found by which one has a box rather than
+       by a panel class, so it does not matter which treatment is on show either.
+
+       A one-shot solve, not an iteration, because the surround does not depend on the
+       zoom. That is also why this cannot fight the height fit below: the zoom is
+       computed from the viewport and the embed's width, never from the height that
+       fit() writes. */
+    function zoomToFit(doc) {
+      var frames = doc.querySelectorAll('.phone-frame'), phone = null, i;
+      for (i = 0; i < frames.length; i++) {
+        if (frames[i].getBoundingClientRect().height > 0) { phone = frames[i]; break; }
+      }
+      if (!phone) return;
+      var at = parseFloat(getComputedStyle(phone).zoom) || 1;
+      var ph = phone.getBoundingClientRect().height;
+      var nat = ph / at;
+      if (nat < 100) return;                  /* not laid out yet */
+      var surround = doc.body.getBoundingClientRect().height - ph;
+      var nav = document.querySelector('.nav');
+      var under = nav ? nav.getBoundingClientRect().bottom : 0;
+      var room = (window.innerHeight - under) * PROTO_FILL - surround;
+      var z = Math.min(room / nat,
+                       (box.clientWidth - PROTO_GUTTER) / PROTO_PHONE_W,
+                       PROTO_ZMAX);
+      z = Math.round(Math.max(z, PROTO_ZMIN) * 100) / 100;
+      if (Math.abs(z - zoomed) < 0.01) return;  /* dead band, so it cannot churn */
+      zoomed = z;
+      doc.documentElement.style.setProperty('--proto-zoom', z);
+    }
 
     function fit() {
       try {
         var doc = frame.contentDocument;
         if (!doc || !doc.body) return;
+        zoomToFit(doc);
         var rect = doc.body.getBoundingClientRect();
         var scrolled = doc.documentElement.scrollTop || doc.body.scrollTop || 0;
         var below = parseFloat(getComputedStyle(doc.body).marginBottom) || 0;
@@ -277,6 +344,17 @@
           new ResizeObserver(fit).observe(frame.contentDocument.body);
         }
       } catch (e) { /* cross-origin */ }
+
+      /* And on the window, because the observer above cannot see this one: a resize
+         that changes only the window's HEIGHT leaves the embed's width alone, so the
+         embedded body never reflows and never reports anything, while the height the
+         zoom is solved against has just changed. One rAF so a drag coalesces. */
+      var queued = false;
+      window.addEventListener('resize', function () {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(function () { queued = false; fit(); });
+      });
     }
 
     /* The load event may already have fired: this embed carries its src in the

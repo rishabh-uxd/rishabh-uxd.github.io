@@ -338,7 +338,14 @@
      --proto-h is the widest band and also the default, so a browser without
      container query support gets surplus rather than a scrollbar.
      Re-measure with iterations/13-prototype-cx-proposals/verify-fallback.py if
-     that prototype's heading, intro copy, control labels or zoom steps change. */
+     that prototype's heading, intro copy, control labels or zoom steps change.
+
+     These six are the WIDTH-only story, and that is now the fallback in a second
+     sense as well: with JS on, section 8a also hands the prototype a zoom solved
+     against the viewport's HEIGHT, so the embed comes out one screenful tall rather
+     than at whichever of the six bands its width happened to select. The bands stay
+     because they are still what a no-JS or cross-origin visitor gets, and the zoom
+     steps they are measured against are still the ones in force then. */
   --proto-h: 81rem;    /* 1296px, covers 1251, embeds from 760px */
   --proto-h-5: 76rem;  /* 1216px, covers 1171, embeds to  759px  */
   --proto-h-4: 71rem;  /* 1136px, covers 1088, embeds to  659px  */
