@@ -54,7 +54,8 @@ Dashboard before it went to `--trio`: the markup is in
 
 Real screen assets: Pay Bill (`assets/img/pay-bill/`, 14 WebP), Card Dashboard,
 Transactions (`assets/img/transactions/`, 16 WebP), KeyBank
-(`assets/img/keybank/`, 13 WebP), Basket Building (`assets/img/basket-building/`, 8 WebP).
+(`assets/img/keybank/`, 13 WebP), Basket Building (`assets/img/basket-building/`, 10 WebP,
+four of them with no live user since iteration 20 emptied that page's section 05).
 No live page references a `placeholder-*.svg`. Before you touch any of these
 images, read the matching `iterations/08-` through `11-*-source-assets/README.md`:
 each one records where the originals came from, what became what, and the crop and
@@ -67,7 +68,12 @@ the corners have to be punched in, and its README says how. The one exception is
 `basket-building/home-card.webp`, whose encoder of record is
 `iterations/22-home-card-phone-geometry/reproc.py`: it carries iteration 14's alpha
 work but lays the three phones out on Card Dashboard's geometry (445 wide, 44 gap,
-88 pad) so the two home page thumbnails match.
+88 pad) so the two home page thumbnails match. The Basket Building **hero** is a
+third exception, `bundle-carousel.webp`, encoded by
+`iterations/60-bundle-carousel-hero/proc.py`: it comes from a Figma frame export
+rather than a browser capture, so its bezel is a squircle and iteration 14's
+punched-in circle is wrong for it. That script reads the corner alpha off the
+image instead, and its README proves why a circle cannot fit.
 
 ## The traps, learned the hard way
 

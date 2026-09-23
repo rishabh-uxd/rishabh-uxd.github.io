@@ -142,12 +142,30 @@
              exists to show runs to the bottom of it, so a panel cropping the
              phone cropped the point, and a tinted rounded platform put a second
              box around a device that is already a box. See the --bare note in
-             components.css. -->
+             components.css.
+
+             The asset is bundle-carousel.webp, the current Figma frame, and it
+             replaced treatment-single.webp in September 2026 at the user's
+             direction. Same composition, later screen: the single bundle card
+             became a scrollable row of them, and the card now carries three
+             ticked reasons the bundle fits, labelled "Summarized from product
+             information". Those reasons are the whole point of the AI Builder
+             work this page is about, so the hero was showing an earlier screen
+             than the page describes. treatment-single.webp had no other user on
+             any live page; it is archived in
+             iterations/60-bundle-carousel-hero/before/.
+
+             940 wide, not the 840 the other four phones use, because this one is
+             sized off --case-hero-phone-h and that clamp can reach 60rem. The
+             encoder of record is that iteration's proc.py, NOT iteration 14's
+             reproc.py: a Figma frame export comes back opaque white outside the
+             phone and the bezel is a squircle, so the corner alpha has to be
+             read off the image rather than drawn as a circle. -->
         <div class="case-hero__media reveal-pop">
           <div class="case-hero__device case-hero__device--bare">
-            <img src="../assets/img/basket-building/treatment-single.webp"
-                 alt="Amazon search results in the app with the add to cart panel open over them. It reads Added to cart, then Get this item in a bundle and save $499.99, then one bundle card pairing the TV with an LG soundbar at 25 percent off, with Bundle details and Switch to bundle buttons."
-                 width="840" height="1787" decoding="async">
+            <img src="../assets/img/basket-building/bundle-carousel.webp"
+                 alt="Amazon search results in the app with the add to cart panel open over them. It reads Added to cart, then Get this item in a bundle and save up to $499.99, then a row of bundle cards, the first pairing the television with an LG Dolby Atmos soundbar at 22 percent off. Under the card, three ticked reasons the bundle fits, labelled Summarized from product information, then Bundle details and Switch buttons."
+                 width="940" height="1937" decoding="async">
           </div>
         </div>
 
