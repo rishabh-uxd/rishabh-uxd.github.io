@@ -519,7 +519,11 @@ a:hover .arrow, .btn:hover .arrow { transform: translateX(5px); }
   color: var(--text);
 }
 
-.project__year { margin-left: auto; }
+/* nowrap because these are now ranges, "2022–23", and an en dash is a break
+   opportunity: at 390 the chip broke after the dash and read as two lines, 2022–
+   over 23. The row has no flex-wrap, so the cost is paid by .project__tag, which
+   already wrapped to two lines at that width. */
+.project__year { margin-left: auto; white-space: nowrap; }
 
 .project__title { margin-bottom: var(--s-4); max-width: 20ch; }
 
