@@ -145,14 +145,13 @@
               <p class="project__meta">
                 <span class="project__index num">01</span>
                 <span class="project__tag label">Credit card servicing</span>
-                <!-- A RANGE, not the start year. Every one of these used to carry the
-                     year the work began, which is the least flattering year available
-                     and on two cards was not even a year the page supports. The range
-                     is read off that case study's own Timeline cell: pay-bill.html
-                     says "March 2022, launched October 2023". It also does a second
-                     job a single year cannot, which is to show how long the programme
-                     ran, and duration is scope. -->
-                <span class="project__year label num">2022&#8211;23</span>
+                <!-- No year on any of the five cards, removed at the user's direction
+                     in iteration 65. Each one used to carry a range read off its own
+                     case study's Timeline cell, and that iteration's README holds all
+                     five so they can be put back in one paste. Every case study page
+                     still carries its own dates in the Timeline cell of its hero rail,
+                     so nothing became undateable; what went is the date on the
+                     thumbnail, which was the first thing a skimmer read. -->
               </p>
               <h3 class="display-2 project__title">
                 <a class="project__link" href="work/pay-bill.html">Amazon Visa Pay Bill</a>
@@ -170,9 +169,14 @@
             </div>
             <figure class="project__media">
               <!-- 4:3 composite, transparent behind the two phones, so the tinted
-                   .project__media panel shows through instead of a baked-in colour. -->
+                   .project__media panel shows through instead of a baked-in colour.
+                   Rebuilt in iteration 65 from the Figma frames the user supplied, and
+                   iterations/65-years-off-cards-new-paybill-frames/proc.py is the
+                   encoder of record: the exports arrive opaque on the frame's own grey,
+                   so the corners have to be keyed back out, and it holds the geometry
+                   this asset shares with the other home page thumbnails. -->
               <img src="assets/img/pay-bill/home-card.webp"
-                   alt="Payment amount selection screen beside the interest slider concept"
+                   alt="Two phone screens. The Amazon Visa select amount screen, with a custom amount field and radio buttons for the minimum payment due, the statement balance and the current balance, next to the interest slider concept, where a $550.00 payment shows an estimated interest charge of $13.65 if you pay today."
                    width="1600" height="1200" loading="lazy" decoding="async">
             </figure>
           </div>
@@ -185,8 +189,6 @@
               <p class="project__meta">
                 <span class="project__index num">02</span>
                 <span class="project__tag label">Credit card servicing</span>
-                <!-- card-dashboard.html: "January 2025, launched July 2026". -->
-                <span class="project__year label num">2025&#8211;26</span>
               </p>
               <h3 class="display-2 project__title">
                 <a class="project__link" href="work/card-dashboard.html">Amazon Visa Card Dashboard</a>
@@ -217,7 +219,6 @@
               <p class="project__meta">
                 <span class="project__index num">03</span>
                 <span class="project__tag label">AI Builder</span>
-                <span class="project__year label num">2026</span>
               </p>
               <h3 class="display-2 project__title">
                 <a class="project__link" href="work/basket-building.html">Improving Basket Building</a>
@@ -249,15 +250,6 @@
               <p class="project__meta">
                 <span class="project__index num">04</span>
                 <span class="project__tag label">Credit card servicing</span>
-                <!-- 2022 was asked for explicitly (iteration 58) and is kept as the
-                     start, so this is the one card whose first year is not read off
-                     its page: transactions.html's Timeline is "October 2023, September
-                     2024, September 2025", which are three releases rather than a
-                     kickoff, and design work starting the year before the first of
-                     them is consistent with that. The end year comes from the page.
-                     Without the range, 2022 alone sat next to a page whose earliest
-                     date is 2023 and read as a contradiction. -->
-                <span class="project__year label num">2022&#8211;25</span>
               </p>
               <h3 class="display-2 project__title">
                 <a class="project__link" href="work/transactions.html">Amazon Visa Transactions</a>
@@ -287,14 +279,6 @@
               <p class="project__meta">
                 <span class="project__index num">05</span>
                 <span class="project__tag label">Banking, at g2o</span>
-                <!-- 2019, kept on the user's instruction after a turn at 2018. A
-                     single year rather than a range, and the only card whose year is
-                     not read off its page: keybank.html says March 2018 twice and its
-                     one dated quote is April 2018, none of which is wrong, since a
-                     six month UX delivery from March 2018 hands off to a build that
-                     ran into 2019 and the page does not cover the build. Do not
-                     "correct" this to 2018 again. -->
-                <span class="project__year label num">2019</span>
               </p>
               <h3 class="display-2 project__title">
                 <a class="project__link" href="work/keybank.html">KeyBank account opening</a>
