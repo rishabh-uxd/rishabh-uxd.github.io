@@ -116,12 +116,18 @@
         <!-- .shot__frame, not .chrome-frame and not .case-hero__device: the first
              claims the image is a running application and the second is sized for
              a phone bezel. .shot__frame is just a radius, a hairline and a soft
-             shadow, which is what a photograph wants. -->
+             shadow, which is what a photograph wants.
+
+             The photograph is a crop, and the crop is deliberate: as shot it is a
+             full figure from head to sneakers, and at the width this slot renders
+             it takes the face down to 60px. Cropped to a half figure the face is
+             97px at the same width. iterations/64-about-portrait-photo/proc.py is
+             the encoder of record and holds the landmarks and the measurements. -->
         <div class="case-hero__media reveal-pop">
           <div class="shot__frame about-portrait">
-            <img src="assets/img/headshot.jpg"
-                 alt="Rishabh Singh, smiling, in a gray hoodie against a cream wall."
-                 width="512" height="512" decoding="async">
+            <img src="assets/img/about/portrait.webp"
+                 alt="Rishabh Singh, hands in his pockets, in a printed camp-collar shirt at Rockefeller Center, with the plaza's flags and hedges behind him."
+                 width="1000" height="1250" decoding="async">
           </div>
         </div>
       </div>

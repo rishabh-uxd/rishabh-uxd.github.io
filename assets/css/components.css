@@ -1759,21 +1759,32 @@ a:hover .arrow, .btn:hover .arrow { transform: translateX(5px); }
    have sat in the middle of a wide track with 90px of dead sand on each side at
    1512 and 200px at 2560, reading as a picture drifting away from the headline.
 
-   Why a cap at all, when every other image on this site fills its column:
-   assets/img/headshot.jpg is 512px square and it is the only portrait asset that
-   exists. A 1fr track is about 509px at 1512, which would render the photo at 1:1
-   and make it the one soft image on the page; the 1600px wide screen captures sit
-   at roughly 1.9x their ~840px column. 20rem is 320px, so the photo renders at
-   1.6x, in the same range as the screens.
+   Why a cap at all, when every other image on this site fills its column: the
+   cap used to exist because the only portrait asset was 512px square, so a wide
+   track rendered it soft. That reason is gone. assets/img/about/portrait.webp is
+   1000 x 1250, and what the cap now does is stop a 4:5 photograph from growing
+   taller than the headline beside it. The track is 317 to 463px from 1024 to
+   1920, so at 26rem the track governs there and the photo simply fills it; the
+   cap only bites in the stacked layout at 744, where a 1fr track is 680px and a
+   767px tall photograph would be the whole screen, and above 1920.
 
-   If a larger headshot is ever exported, raise the cap and re-derive this note
-   rather than deleting it: the ratio above exists to keep the track close to the
-   cap, so the two numbers have to move together. */
+   The earlier note said the cap and the 1.9fr ratio have to move together, and
+   the re-derivation is this: 26rem is 416px, the 1.9fr track at 1512 is 392px,
+   so the two are within 24px and the ratio does the sizing at the widths that
+   matter. Widening the ratio would push the track past the cap and put the dead
+   sand back. So the cap moved and the ratio did not, and if the cap moves again,
+   check it against the track at 1512 the same way.
+
+   416 x 2 = 832 is the DPR 2 floor, against 1000px of source, so the photograph
+   is the first image in this slot that is not upscaled. The 512px headshot
+   measured 0.81 at every viewport from 390 to 3840: it was the one soft image on
+   the page the whole time, and the old note's claim that it rendered at 1.6x had
+   simply left DPR out. */
 .case-hero--split .case-hero__grid:has(.about-portrait) {
   grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr);
 }
 
-.about-portrait { max-width: 20rem; margin-inline: auto; }
+.about-portrait { max-width: 26rem; margin-inline: auto; }
 
 /* The rail is a child of the text column, not a third grid item in row 2. Tried
    the row 2 version first: the phone then has to span both rows, a spanning item
