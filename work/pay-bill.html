@@ -123,7 +123,16 @@
              saying so. The caption is gone, so an unlabelled hero would be
              claiming an unshipped design as the product. The slider still gets
              its own frame and its own caption in Experience, beside this exact
-             screen, which is where the comparison belongs anyway. -->
+             screen, which is where the comparison belongs anyway.
+
+             The asset was rebuilt in iteration 66 from the Figma frame the user
+             supplied, node 2445:43500, the same node iteration 65 took the left
+             half of the home page thumbnail from, so the thumbnail and this hero
+             are now the same generation of the screen.
+             iterations/66-pay-bill-hero-new-frame/proc.py is the encoder of
+             record: the export arrives opaque on the frame's own grey and has to
+             be keyed, and 840 x 1731 is a constraint rather than a default,
+             because section 05 pairs this file with the slider at that size. -->
         <div class="case-hero__media reveal-pop">
           <div class="case-hero__device case-hero__device--bare">
             <img src="../assets/img/pay-bill/otp-select-amount.webp"
@@ -301,7 +310,15 @@
 
       <div class="case-section__body reveal">
         <!-- The shipped amount step next to the concept it was tested against.
-             Same screen, same export size, so the comparison is the point. -->
+             Same screen, same export size, so the comparison is the point.
+
+             Both halves were rebuilt from new Figma frames in iteration 66, which
+             is why the slider is in an iteration whose request was about the hero:
+             rebuilding only the shipped screen would have left the pair with two
+             different Continue button shapes, and at this size that reads as two
+             different screens rather than one screen with and without a slider.
+             That equal size is also what pins both files to 840 x 1731 when the
+             source could give 940. -->
         <div class="shots shots--pair">
           <figure class="shot">
             <div class="shot__frame shot__frame--device">
