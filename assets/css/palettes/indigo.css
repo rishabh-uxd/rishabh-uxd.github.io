@@ -1,0 +1,38 @@
+
+:root {
+  --bg: #F5F4F8;
+  --bg-raised: #FFFFFF;
+  --bg-raised-2: #EBEAF2;
+  --bg-glass: rgba(255, 255, 255, 0.62);
+  --bg-glass-strong: rgba(255, 255, 255, 0.84);
+
+  --bg-dark: #100F16;
+  --bg-dark-raised: #1A1922;
+
+  --text: #15141B;
+  --text-dim: #4F4E5A;
+  --text-faint: #5E5D69;
+  --text-on-dark: #F5F4F8;
+  --text-on-dark-2: #B8B6C4;
+
+  --stroke: rgba(21, 20, 27, 0.10);
+  --stroke-strong: rgba(21, 20, 27, 0.22);
+  --stroke-on-dark: rgba(245, 244, 248, 0.14);
+
+  --accent: #4A3AD4;
+  --accent-2: #3524A8;
+  --accent-lift: #6E5CF0;
+  --accent-3: #A79BFF;
+
+  --shadow-sm: 0 1px 2px rgba(32, 26, 70, 0.08);
+  --shadow-md: 0 18px 40px -22px rgba(32, 26, 70, 0.30);
+  --shadow-lg: 0 44px 90px -40px rgba(32, 26, 70, 0.38);
+}
+
+.on-dark {
+  --bg-raised-2: #24222F;
+  --text-faint: #8C8A9A;
+}
+
+.palette-preview .project__media img,
+.palette-preview .hero__portrait img { filter: hue-rotate(233deg); }

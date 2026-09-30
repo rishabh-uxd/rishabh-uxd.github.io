@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Standards and tools · Rishabh Singh</title>
+<meta name="theme-color" content="#FBF7F1">
+
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+</head>
+
+<body>
+<a class="skip-link" href="#accessibility">Skip to the content</a>
+
+<div class="progress" aria-hidden="true"><div class="progress__fill"></div></div>
+
+<header class="nav">
+  <div class="nav__inner">
+    <a class="nav__brand" href="index.html" aria-label="Rishabh Singh, home">
+      <span class="nav__dot" aria-hidden="true"></span> Rishabh Singh
+    </a>
+    <nav class="nav__links" aria-label="Primary">
+      <a class="nav__link" href="index.html#work">Work</a>
+      <a class="nav__link" href="practice.html" aria-current="page">Standards and tools</a>
+      <a class="nav__link" href="about.html">About</a>
+      <a class="nav__link" href="#contact">Contact</a>
+      <a class="btn btn--primary" href="https://docs.google.com/document/d/1EHUuTUFj9zlCdyJktXC0rGSdesHq1b7P/edit" target="_blank" rel="noopener">Résumé <span aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="case-hero">
+    <div class="aurora" aria-hidden="true">
+      <span class="aurora__blob aurora__blob--1"></span>
+      <span class="aurora__blob aurora__blob--2"></span>
+    </div>
+
+    <div class="container case-hero__inner">
+      <a class="case-back" href="index.html#practice">
+        <span class="case-back__glyph" aria-hidden="true">←</span> Home
+      </a>
+
+      <p class="label case-hero__cat">Standards and tools</p>
+
+      <h1 class="mega case-hero__title" data-split>
+        Tools, agents, and <span class="grad-text">documentation</span>
+      </h1>
+
+    </div>
+  </section>
+
+  <section class="case-section" id="accessibility" aria-labelledby="a11y-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">01</span>
+        <h2 class="display-3 case-section__title" id="a11y-heading">Raising the accessibility bar</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <div class="prose">
+          <p>
+            Credit card servicing had 7 launch blocking defects. They were all accessibility
+            problems, and finding them that late meant an annotation, a fix, and another review for
+            each one. The same defects kept coming back after that, in implementation and in mock
+            ups across the team. Amazon has a set of critical customer requirements for
+            accessibility, but reading one and knowing what it asked of a particular screen were
+            two different things, and few of us had been shown how to annotate a file so that an
+            engineer could build from it.
+          </p>
+          <p>
+            A design can meet every requirement and still ship inaccessible, if the requirements
+            never reach the spec or the build does not follow the annotations. So I wrote for all
+            three groups. Designers learn accessibility and how to annotate for it, covering reading
+            order, heading levels, roles, names, states, and what has to be on a file before a hand
+            off. Product and engineering follow a standard operating procedure that sets out which
+            requirement each of them owns, what their part of it is, and where it sits in the way
+            they already work. Nothing has blocked a launch since.
+          </p>
+        </div>
+
+        <div class="stat-band">
+          <p class="stat">
+            <span class="stat__value num" data-count>7</span>
+            <span class="stat__label">Accessibility launch blockers cleared in credit card servicing</span>
+          </p>
+          <p class="stat">
+            <span class="stat__value num">0</span>
+            <span class="stat__label">Accessibility defects have blocked a launch since</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-section" id="design-insight" aria-labelledby="insight-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">02</span>
+        <h2 class="display-3 case-section__title" id="insight-heading">Design Insight (AI&nbsp;tool)</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <div class="prose">
+          <p>
+            Nobody looked hard at a proposal until a formal review or a usability test, and both of
+            those come late. The accessibility review was mine to run, so designs reached me
+            finished, and getting one done and approved took about 3.5 weeks.
+          </p>
+          <p>
+            So I built Design Insight, to let a designer find the faults in their own proposal
+            before any of that. It reads a design against the same documentation and returns what is
+            missing, where the design breaks usability heuristics, and a walkthrough of the main
+            tasks as a few personas. A designer can run it as often as they like and fix what comes
+            back, so the version that reaches a review or a test is not the first one.
+          </p>
+          <p>
+            Accessibility is the part I can put a number on, because I was the one approving it.
+            <strong>An approval now takes about a week, down from 3.5.</strong>
+          </p>
+          <p>
+            A team with its own research can hand that over and the results are grounded in it.
+            Without it, the results come from the model's training data. That is a place to start a
+            conversation, not a substitute for testing with people.
+          </p>
+        </div>
+
+        <div class="shots">
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="assets/img/design-insight/input-screen.webp"
+                   alt="The whole Design Insight input screen. Under a heading reading Design Insight and the line AI-simulated feedback for your CX: a required Figma link field, with a note to link to a specific artboard rather than a whole file; a required description field prompting what the project is, what users are trying to accomplish and which part of the screen you own; a choice between a single screen and multiple screens; an optional dropzone to upload research documents, PRDs or other context, which takes up to five files; then five feedback types to tick, each with a line explaining it, Accessibility for screen reader, keyboard, low vision and cognitive experience, Usability Heuristics for Nielsen's ten applied to the design, Persona Walkthroughs for simulated users narrating their friction points, Task Analysis for predicted friction and failure points per task, and Hypothesis Validation for whether the design supports the stated hypothesis. A full width Analyze button sits at the bottom."
+                   width="2374" height="3016" loading="lazy" decoding="async">
+            </div>
+            <figcaption>
+              <b>What a designer fills in.</b> The description and the optional upload are what
+              decide whether the feedback is grounded in the team's own evidence or in the model's
+              training data.
+            </figcaption>
+          </figure>
+
+          <figure class="shot">
+            <div class="shot__frame">
+              <img src="assets/img/design-insight/results-screen.webp"
+                   alt="The Design Insight results screen, split down the middle. Tabs for Usability Heuristics, Accessibility and Task Analysis run across the top, with Accessibility open. The design under review sits on the left, a mock up of a product detail page in two states. On the right, a score of 85 out of 100 for accessibility confidence, then findings grouped under Screen reader and Keyboard. Each carries a severity of medium, a WCAG success criterion, the element it applies to, what the problem is, and a recommendation."
+                   width="2400" height="1320" loading="lazy" decoding="async">
+            </div>
+            <figcaption>
+              <b>What comes back.</b> Each finding names the element, the success criterion it
+              fails, and what to do about it, which is what makes it something a designer can act
+              on rather than a score to argue with.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="case-section" id="prototyper" aria-labelledby="agent-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">03</span>
+        <h2 class="display-3 case-section__title" id="agent-heading">A custom prototyping agent</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <div class="prose">
+          <p>
+            The experiences my team designs sit inside pages other teams own, the Amazon home page
+            and search results among them. Rebuilding one of those pages as a prototype, accurately
+            enough to show someone, took two and a half to three hours every time, before anyone
+            could look at what was new.
+          </p>
+          <p>
+            The design system covers the components every team shares. The parts particular to a
+            single page belong to the team that owns it, and so do the names for them, down to what
+            each block on the page is called. None of that is in the design system, so rebuilding one
+            of those pages meant reading the live page and copying it by eye.
+          </p>
+          <p>
+            I built an agent that already knows those pages and that vocabulary instead. Ask it for
+            an ingress point for your feature in one of the card slots on the home page, in that
+            page team's own words for it, and it knows what you mean, where it goes, and how to
+            build the page around it as it stands in production, from the first prompt. It does the
+            same for search results, a detail page, a cart or a checkout. Starting needs no Figma
+            link and no design of your own, only a sentence.
+          </p>
+          <p>
+            <strong>What took two and a half to three hours takes minutes now.</strong> Those hours were going into a
+            page that already existed, so a designer gets them back for the experience they own. And
+            someone with no designer to ask, a product manager or an engineer, can put a real idea
+            in front of their team the same afternoon they have it.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="case-section" id="playbook" aria-labelledby="playbook-heading">
+    <div class="container case-section__grid">
+      <div class="case-section__aside reveal">
+        <span class="label case-section__num num">04</span>
+        <h2 class="display-3 case-section__title" id="playbook-heading">An AI Builder Playbook</h2>
+      </div>
+
+      <div class="case-section__body reveal">
+        <div class="prose">
+          <p>
+            I wrote a manual for UX designers who are designing and shipping production experiences
+            with AI and an engineering partner. Most of it comes from my own mistakes on a live
+            retail feature, so
+            it is meant to be worked through in order rather than read once. It has:
+          </p>
+        </div>
+
+        <ul class="case-list">
+          <li><strong>Five phases, in sequence.</strong> Each one states what has to be true before it starts, the steps, what comes out of it, what has to be true before it ends, and how to tell whether it is working.</li>
+          <li><strong>An ownership split.</strong> A designer leads the first two phases, shares the next two with an engineering partner, and owns the last one.</li>
+          <li><strong>Engineering words, defined where they first appear.</strong> A designer does not need to know any of them going in. Picking them up along the way is part of the method.</li>
+        </ul>
+
+        <div class="prose">
+          <p>
+            <strong>My group is adopting it now.</strong>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <nav class="next-case" aria-label="Next">
+    <div class="container">
+      <a class="next-case__link" href="work/pay-bill.html">
+        <span>
+          <span class="label">Case studies</span>
+          <span class="display-2 next-case__title">Amazon Visa Pay Bill</span>
+        </span>
+        <span class="next-case__glyph arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+  </nav>
+</main>
+
+<footer class="cta on-dark" id="contact">
+  <div class="aurora" aria-hidden="true" style="opacity: 0.5">
+    <span class="aurora__blob aurora__blob--2"></span>
+    <span class="aurora__blob aurora__blob--3"></span>
+  </div>
+
+  <div class="container cta__inner">
+    <p class="label label--accent">Contact</p>
+    <h2 class="display-1 cta__title reveal" style="margin-top: var(--s-4)">
+      Interested in working <span class="grad-text">together?</span>
+    </h2>
+    <p class="lead reveal">
+      These pages are a trailer. The rest, including the parts that didn't ship, is better in
+      conversation.
+    </p>
+
+    <div class="cta__contact reveal">
+      <a class="cta__line cta__line--email" href="mailto:rishabh.ux@gmail.com">
+        rishabh.ux@gmail.com <span class="arrow" aria-hidden="true">→</span>
+      </a>
+      <a class="cta__line cta__line--phone" href="tel:+18123619841">+1 (812) 361 9841</a>
+    </div>
+
+    <div class="cta__base">
+      <p>© <span data-year>2026</span> Rishabh Singh. Designed and built by me.</p>
+      <p>New York, NY</p>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js" defer></script>
+</body>
+</html>

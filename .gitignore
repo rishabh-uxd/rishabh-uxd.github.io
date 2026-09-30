@@ -1,0 +1,21 @@
+# macOS
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Static host CLI state
+.netlify/
+.vercel/
+
+# Local only
+iterations/
+prototypes/**/*.py
+work/_TEMPLATE.html
+*.md
+!README.md

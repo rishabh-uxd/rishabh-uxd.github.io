@@ -1,0 +1,159 @@
+
+:root {
+  --bg: #EDE4D6;
+  --bg-raised: #FBF7F0;
+  --bg-raised-2: #E4D9C7;
+  --bg-glass: rgba(251, 247, 240, 0.66);
+  --bg-glass-strong: rgba(251, 247, 240, 0.88);
+
+  --bg-dark: #14110C;
+  --bg-dark-raised: #1F1A13;
+
+  --text: #191409;
+  --text-dim: #514834;
+  --text-faint: #5E5540;
+
+  --text-on-dark: #EDE4D6;
+  --text-on-dark-2: #BDB3A2;
+
+  --stroke: rgba(25, 20, 9, 0.12);
+  --stroke-strong: rgba(25, 20, 9, 0.24);
+  --stroke-on-dark: rgba(237, 228, 214, 0.14);
+
+  --forest: #146A47;
+  --forest-deep: #0E4E34;
+  --forest-lift: #2E8C62;
+  --forest-bright: #6CCBA0;
+
+  --accent: var(--forest);
+  --accent-2: var(--forest-deep);
+  --accent-lift: var(--forest-lift);
+  --accent-3: var(--forest-bright);
+  --accent-ink: #FFFFFF;
+
+  --grad-accent: linear-gradient(115deg, var(--accent), var(--accent-2));
+  --grad-accent-soft: linear-gradient(115deg,
+      color-mix(in oklab, var(--accent) 18%, transparent),
+      color-mix(in oklab, var(--accent-3) 18%, transparent));
+  --grad-text: linear-gradient(100deg, var(--accent-2) 4%, var(--accent) 55%, var(--accent-lift) 100%);
+  --grad-accent-text: var(--grad-accent);
+  --glow: 0 0 60px -12px color-mix(in oklab, var(--accent) 45%, transparent);
+
+  --positive: #0B7B3C;
+
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display",
+               "Segoe UI", Helvetica, Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --w-regular: 400;
+  --w-medium: 500;
+  --w-semibold: 600;
+  --w-bold: 700;
+  --w-black: 800;
+
+  --t-mega: clamp(2.75rem, 1rem + 6vw, 6rem);
+  --t-display-1: clamp(2.25rem, 1.3rem + 3.6vw, 4.25rem);
+  --t-display-2: clamp(1.75rem, 1.3rem + 1.7vw, 2.75rem);
+  --t-display-3: clamp(1.5rem, 1.2rem + 1.4vw, 2.25rem);
+  --t-stat: clamp(1.75rem, 1.35rem + 1.1vw, 2.5rem);
+  --t-lead: clamp(1.125rem, 1rem + 0.55vw, 1.5rem);
+  --t-deck: clamp(1.25rem, 1.05rem + 0.7vw, 1.75rem);
+  --t-body: 1.0625rem;
+  --t-small: 0.9375rem;
+  --t-micro: 0.8125rem;
+  --t-label: 0.75rem;
+
+  --lh-mega: 1.05;
+  --lh-tight: 1.05;
+  --lh-snug: 1.16;
+  --lh-normal: 1.45;
+  --lh-relaxed: 1.6;
+
+  --track-mega: -0.045em;
+  --track-display: -0.03em;
+  --track-tight: -0.014em;
+  --track-label: 0.16em;
+
+  --grad-text-bleed: 0.06em;
+
+  --page-max: clamp(1280px, 78vw, 1800px);
+
+  --measure: 54ch;
+  --gutter: clamp(1.25rem, 0.6rem + 3vw, 3.5rem);
+
+  --measure-card: 48ch;
+
+  --measure-case: 55ch;
+  --t-body-case: 1.25rem;
+
+  --measure-case-wide: 58ch;
+  --t-body-lead: clamp(var(--t-body-case), 2vw, 1.375rem);
+
+  --t-lead-wide: clamp(1.125rem, 2.5vw, 1.5rem);
+
+  --shots-gap: clamp(var(--s-5), 3vw, var(--s-7));
+
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4rem;
+  --s-9: 6rem;
+  --s-10: 9rem;
+  --section-y: clamp(4.5rem, 2rem + 9vw, 10rem);
+
+  --proto-h: 81rem;
+  --proto-h-5: 76rem;
+  --proto-h-4: 71rem;
+  --proto-h-3: 63rem;
+  --proto-h-2: 59rem;
+  --proto-h-1: 51rem;
+
+  --case-hero-phone-h: clamp(26rem, 64vh, 60rem);
+
+  --r-sm: 6px;
+  --r-md: 12px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --r-2xl: 40px;
+  --r-full: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(60, 46, 28, 0.10);
+  --shadow-md: 0 18px 40px -22px rgba(60, 46, 28, 0.32);
+  --shadow-lg: 0 44px 90px -40px rgba(60, 46, 28, 0.40);
+  --drop-shadow-lg: drop-shadow(0 26px 34px rgba(60, 46, 28, 0.30));
+
+  --dur-fast: 140ms;
+  --dur-base: 300ms;
+  --dur-slow: 700ms;
+  --dur-xslow: 1200ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --z-grid: 0;
+  --z-progress: 300;
+  --z-nav: 200;
+  --z-skip: 400;
+}
+
+.on-dark {
+  --bg: var(--bg-dark);
+  --bg-raised: var(--bg-dark-raised);
+  --bg-raised-2: #29221A;
+  --bg-glass: rgba(255, 255, 255, 0.07);
+  --bg-glass-strong: rgba(255, 255, 255, 0.12);
+  --text: var(--text-on-dark);
+  --text-dim: var(--text-on-dark-2);
+  --text-faint: #918872;
+  --stroke: var(--stroke-on-dark);
+  --stroke-strong: rgba(237, 228, 214, 0.28);
+  --grad-text: linear-gradient(100deg, var(--text) 8%, var(--accent-3) 55%, var(--accent-lift) 100%);
+  --grad-accent-text: linear-gradient(115deg,
+      var(--accent-3),
+      color-mix(in srgb, var(--accent-3) 72%, #FFFFFF));
+  color-scheme: dark;
+}
